@@ -1,6 +1,7 @@
 import { IAppGlobalConfig, IAppSession, IAppUi } from "./app.reducer.interface";
-
-
+import {ActionReducerMap} from '@ngrx/store'
+import * as reducers from './reducers'
+import { globalConfig } from './actions/globalConfig.action';
 
 export const APP_UI_DEFAULT: IAppUi = {
   appTitle: {
@@ -16,24 +17,16 @@ export const APP_UI_DEFAULT: IAppUi = {
   drawerAttached: false,
 };
 
-export const APP_SESSION_DEFAULT: IAppSession= {
-  isLoading: false,
-  isLoggedIn: false,
-  user: {fullName:'', email:'', lastSession:new Date(), avatarText:''},
-  token: '',
-  loginError: false,
-  fromStorage: false,
-  sessionExpired: false,
-};
 
-export const APP_GLOBAL_CONFIG_DEFAULT: IAppGlobalConfig = {
-  isLoading: false,
-  loaded: false,
-  error: false,
-};
 
-export class AppState {
-  ui: IAppUi = APP_UI_DEFAULT;
-  session: IAppSession = APP_SESSION_DEFAULT;
-  globalConfig: IAppGlobalConfig = APP_GLOBAL_CONFIG_DEFAULT;
+export interface AppState {
+  // ui: IAppUi;
+  session: IAppSession;
+  globalConfig: IAppGlobalConfig;
 }
+
+export const appReducers: ActionReducerMap<AppState>={
+  session: reducers.SessionReducer,
+  globalConfig:reducers.GlobalConfigReducer
+}
+

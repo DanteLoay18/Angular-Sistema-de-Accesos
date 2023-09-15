@@ -1,0 +1,17 @@
+<div class="loader-error-root">
+  <div>
+    <div class="mat-body loader-error-text-container">
+      <h1 style="color: darkorchid;">:(</h1>
+    </div>
+    <div [innerHtml]="message" class="mat-body loader-error-text-container">
+    </div>
+    <div>
+      <ngx-sigape-base-button
+        icon="account_circle"
+        color="primary"
+        label="Aceptar"
+        (on-click)="handleRetry()"
+      ></ngx-sigape-base-button>
+    </div>
+  </div>
+</div>

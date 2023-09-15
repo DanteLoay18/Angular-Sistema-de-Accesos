@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { AppState, IAppGlobalConfig, globalConfig } from '@sac/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -7,14 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit{
 
+  state$: Observable<IAppGlobalConfig> = of();
+
+  private store= inject(Store<AppState>)
 
   ngOnInit(): void {
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get('token');
-    if (token) {
-      localStorage.setItem('token', token);
-    }
-    history.replaceState(null, '', window.location.href.split('?')[0]);
+    this.store.dispatch(globalConfig());
+    this.state$ = this.store.select('globalConfig');
+    //TODO : VALIDAR SI ESTA LOGEADO SI NO REDIRIGIRLO A /LOCALHOST:4200/AUTH/LOGIN
   }
 
 }

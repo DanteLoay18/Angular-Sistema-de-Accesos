@@ -1,0 +1,12 @@
+<ng-container *ngIf="session$ | async as state">
+  <ngx-sigape-loader-configuration
+    text="Iniciando sesión... Espere por favor..."
+    *ngIf="state.isLoading"
+  ></ngx-sigape-loader-configuration>
+
+  <app-login-error
+    [message]="errorMessage"
+    (on-retry)="handleRetryLogin()"
+    *ngIf="state.loginError"
+  ></app-login-error>
+</ng-container>

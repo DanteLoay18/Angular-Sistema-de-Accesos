@@ -1,4 +1,5 @@
 import { IAppTitle } from "ngx-sigape";
+import { IUsuario } from "../interfaces/usuario.interface";
 
 export interface IAppUi {
   drawerMini: boolean;
@@ -11,12 +12,6 @@ export interface IAppUi {
   drawerAttached: boolean;
 }
 
-export interface IAppUser {
-  fullName: string;
-  email: string;
-  lastSession: any;
-  avatarText: string;
-}
 
 
 export interface IAppSession {
@@ -43,7 +38,7 @@ export interface IAppSession {
    * Normalmente cuando el servidor retorna status = 401
    */
   sessionExpired: boolean;
-  user: IAppUser;
+  user: IUsuario | null;
 }
 
 export interface IAppGlobalConfig {
