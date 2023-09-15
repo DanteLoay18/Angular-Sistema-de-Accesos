@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HomePageRoutingModule } from './home-page-routing.module';
 import { WellcomeComponent } from './components/wellcome/wellcome.component';
 import { HomeComponent } from './container/home/home.component';
+import { SharedModule } from 'ngx-sigape';
 
 
 
@@ -15,6 +16,7 @@ import { HomeComponent } from './container/home/home.component';
   imports: [
     CommonModule,
     HomePageRoutingModule,
+    SharedModule
   ]
 })
 export class HomePageModule { }

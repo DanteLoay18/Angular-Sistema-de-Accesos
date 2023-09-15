@@ -24,6 +24,8 @@ export interface ISistema {
 export interface IMenu {
   id:          string;
   nombre:      string;
+  url:        string;
+  icono:       string;
   esSubmenu:   boolean;
   esEliminado: boolean;
   submenus?:   IMenu[];

@@ -10,7 +10,7 @@ export class LocalStorageService {
     try {
       localStorage.setItem(key, data);
     } catch (e) {
-      console.log('Error saving to localStorage', e);
+
     }
   };
 
@@ -19,7 +19,6 @@ export class LocalStorageService {
      return localStorage.getItem(key);
     } catch (e) {
 
-      console.log('Error get to localStorage', e);
       return null;
     }
   }

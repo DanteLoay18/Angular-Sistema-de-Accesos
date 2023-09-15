@@ -1,0 +1,20 @@
+<ngx-sigape-layout
+  [router]="router"
+  [appTitle]="title"
+  [drawerMini]="false"
+  [drawerOpen]="isMobile?drawerMobileOpen:drawerOpen"
+  [appMenu]="menus"
+  [isMobile]="isMobile"
+  [user]="usuario"
+  (on-toogle-drawer)="handleToogleDrawer($event)"
+  (on-logout)="handleLogout()"
+  [drawerAttached]="drawerAttached"
+  (on-toogle-drawer-attached)="handleToogleAttachDrawer($event)"
+  (on-change-mobile-size)="handleChangeMobileSize($event)"
+  (on-click-logo)="handleClickLogo()"
+  (on-click-change-password)="handleClickChangePassword()"
+>
+
+<router-outlet></router-outlet>
+
+</ngx-sigape-layout>

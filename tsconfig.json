@@ -26,6 +26,9 @@
     "paths":{
       "@sac/core": [
         "src/app/core"
+      ],
+      "@sac/mantenimiento/*": [
+        "projects/mantenimiento/src/*"
       ]
     }
   },

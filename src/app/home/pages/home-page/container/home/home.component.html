@@ -2,7 +2,26 @@
 <ng-container *ngIf="session$ | async as state">
 
   <ng-container *ngIf="state.isLoggedIn;else login">
+    <ngx-sigape-layout
+        [router]="router"
+        [appTitle]="title"
+        [drawerMini]="false"
+        [drawerOpen]="isMobile?drawerMobileOpen:drawerOpen"
+        [appMenu]="menus"
+        [isMobile]="isMobile"
+        [user]="usuario"
+        (on-toogle-drawer)="handleToogleDrawer($event)"
+        (on-logout)="handleLogout()"
+        [drawerAttached]="drawerAttached"
+        (on-toogle-drawer-attached)="handleToogleAttachDrawer($event)"
+        (on-change-mobile-size)="handleChangeMobileSize($event)"
+        (on-click-logo)="handleClickLogo()"
+        (on-click-change-password)="handleClickChangePassword()"
+      >
 
+      <img src="../../../../../../assets/imagen-fondo.png" class="center" alt="Logo Universidad Nacional de Ucayali">
+
+      </ngx-sigape-layout>
   </ng-container>
 
   <ng-template #login>

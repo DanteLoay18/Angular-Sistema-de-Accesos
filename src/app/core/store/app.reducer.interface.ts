@@ -1,17 +1,6 @@
 import { IAppTitle } from "ngx-sigape";
 import { IUsuario } from "../interfaces/usuario.interface";
 
-export interface IAppUi {
-  drawerMini: boolean;
-  drawerOpen: boolean;
-  drawerMobileOpen: boolean;
-  appTitle: IAppTitle;
-  appMenu: any[];
-  isMobile: boolean;
-  blockUi: boolean;
-  drawerAttached: boolean;
-}
-
 
 
 export interface IAppSession {
@@ -42,6 +31,7 @@ export interface IAppSession {
 }
 
 export interface IAppGlobalConfig {
+  guidSistema: string;
   isLoading: boolean;
   loaded: boolean;
   error: boolean;
