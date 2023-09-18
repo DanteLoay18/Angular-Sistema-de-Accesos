@@ -58,7 +58,7 @@ export const estadoInicial: IDataGridElement<IOpcion>= {
 export const SessionReducer = createReducer(
   estadoInicial,
   on(opcionesActions.CargarListadoDeOpciones, (state) => ({...state, loading:true})),
-  on(opcionesActions.CargarListadoDeOpcionesSuccess, (state, { listado }) => ({ ...state, loading:false, source:listado  })),
+  on(opcionesActions.CargarListadoDeOpcionesSuccess, (state, { listado }) => ({ ...state, loading:false,error:null, source:listado  })),
   on(opcionesActions.CargarListadoDeOpcionesFail, (state, {error}) => ({ ...state, loading:false, error:error })),
 );
 
