@@ -1,16 +1,27 @@
-<ngx-sigape-page-title text="OPCIONES"></ngx-sigape-page-title>
 
-<app-form-search-opcion ></app-form-search-opcion>
+<ng-container *ngIf="state$ | async as state">
+
+  <ng-container *ngIf="!state.loading">
+    <ngx-sigape-page-title text="OPCIONES"></ngx-sigape-page-title>
+
+    <app-form-search-opcion ></app-form-search-opcion>
 
 
-<h3>Listado de Opciones</h3>
+    <h3>Listado de Opciones</h3>
 
-<ngx-sigape-data-grid
-  (on-load-data)="handleLoadData($event)"
-  [loading]="gridElement.loading"
-  [source]="gridElement.source"
-  [definition]="gridElement.definition"
-  [serverError]="gridElement.error"
-  (on-click-button)="handleClickButton($event)"
-  >
-</ngx-sigape-data-grid>
+    <ngx-sigape-data-grid
+      (on-load-data)="handleLoadData($event)"
+      [loading]="state.opcion.loading"
+      [source]="state.opcion.source"
+      [definition]="state.opcion.definition"
+      [serverError]="state.opcion.error"
+      (on-click-button)="handleClickButton($event)"
+      >
+    </ngx-sigape-data-grid>
+
+  </ng-container>
+
+  <ng-container *ngIf="state.loading">
+    <ngx-sigape-loader-configuration></ngx-sigape-loader-configuration>
+  </ng-container>
+</ng-container>

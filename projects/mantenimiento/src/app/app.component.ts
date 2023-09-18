@@ -33,7 +33,6 @@ export class AppComponent implements AfterContentInit{
 
   ngAfterContentInit(): void {
     this.templates.push(this.perfiles, this.opciones, this.usuarios)
-    console.log(this.templates)
  }
 
  user={

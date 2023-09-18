@@ -48,7 +48,7 @@ export class FormSearchOpcionComponent implements OnInit {
 
 
   handleSearch = (formValue:any) => {
-    console.log(formValue);
+
   };
 
   handleClear = () => {
@@ -56,7 +56,6 @@ export class FormSearchOpcionComponent implements OnInit {
   };
 
   handleClickNew = () => {
-    console.log('Nuevo')
     this.clickNew.emit();
   };
 
