@@ -21,7 +21,8 @@ export function appInitializerFn(
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule
   ],

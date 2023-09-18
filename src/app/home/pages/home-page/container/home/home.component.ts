@@ -17,10 +17,6 @@ export class HomeComponent implements OnInit{
   session$ = this.store.select('session');
   guidSistema :string= ""
 
-
-
-
-
   usuario:any={
             lastSession: "Última sesión: " + moment().format("DD/MM/YYYY"),
             avatarText: "SU",

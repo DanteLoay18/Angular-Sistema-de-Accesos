@@ -1,0 +1,16 @@
+<ngx-sigape-page-title text="OPCIONES"></ngx-sigape-page-title>
+
+<app-form-search-opcion ></app-form-search-opcion>
+
+
+<h3>Listado de Opciones</h3>
+
+<ngx-sigape-data-grid
+  (on-load-data)="handleLoadData($event)"
+  [loading]="gridElement.loading"
+  [source]="gridElement.source"
+  [definition]="gridElement.definition"
+  [serverError]="gridElement.error"
+  (on-click-button)="handleClickButton($event)"
+  >
+</ngx-sigape-data-grid>

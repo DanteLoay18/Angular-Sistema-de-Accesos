@@ -1,20 +1,37 @@
-<ngx-sigape-layout
-  [router]="router"
-  [appTitle]="title"
-  [drawerMini]="false"
-  [drawerOpen]="isMobile?drawerMobileOpen:drawerOpen"
-  [appMenu]="menus"
-  [isMobile]="isMobile"
-  [user]="usuario"
-  (on-toogle-drawer)="handleToogleDrawer($event)"
-  (on-logout)="handleLogout()"
-  [drawerAttached]="drawerAttached"
-  (on-toogle-drawer-attached)="handleToogleAttachDrawer($event)"
-  (on-change-mobile-size)="handleChangeMobileSize($event)"
-  (on-click-logo)="handleClickLogo()"
-  (on-click-change-password)="handleClickChangePassword()"
->
 
-<router-outlet></router-outlet>
+<ng-container *ngIf="session$ | async as state">
 
-</ngx-sigape-layout>
+  <ng-container *ngIf="state.isLoggedIn;else login">
+      <ngx-sigape-layout
+      [router]="router"
+      [appTitle]="title"
+      [drawerMini]="false"
+      [drawerOpen]="isMobile?drawerMobileOpen:drawerOpen"
+      [appMenu]="menus"
+      [isMobile]="isMobile"
+      [user]="usuario"
+      (on-toogle-drawer)="handleToogleDrawer($event)"
+      (on-logout)="handleLogout()"
+      [drawerAttached]="drawerAttached"
+      (on-toogle-drawer-attached)="handleToogleAttachDrawer($event)"
+      (on-change-mobile-size)="handleChangeMobileSize($event)"
+      (on-click-logo)="handleClickLogo()"
+      (on-click-change-password)="handleClickChangePassword()"
+    >
+
+    <router-outlet></router-outlet>
+
+    </ngx-sigape-layout>
+  </ng-container>
+
+
+  <ng-template #login>
+
+    <div class="col-12 text-center">
+      <button mat-raised-button color="primary" (click)="handleLogin()">Accede Ahora</button>
+    </div>
+
+  </ng-template>
+</ng-container>
+
+

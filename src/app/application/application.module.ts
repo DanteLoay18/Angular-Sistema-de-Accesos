@@ -8,8 +8,8 @@ import { SharedModule } from 'ngx-sigape';
 
 @NgModule({
   declarations: [
-
-    ApplicationComponent
+    
+    ApplicationComponent,
   ],
   imports: [
     CommonModule,

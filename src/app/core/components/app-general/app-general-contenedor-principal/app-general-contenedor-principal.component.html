@@ -1,0 +1,35 @@
+<mat-card class="actividad-container-root" [ngClass]="{'fix-loader': loading}">
+  <ng-container *ngIf="loading;else contentTemplate">
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Cargando...</span>
+    </div>
+  </ng-container>
+
+</mat-card>
+
+
+<ng-template #contentTemplate>
+    <div class="vertical-tabs">
+      <mat-tab-group class="vertical-tabs" animationDuration="0" (selectedTabChange)="handleChangeTab($event)">
+        <ng-container *ngFor="let tab of contentSource;">
+
+          <mat-tab *ngIf="tab.visible" [label]="tab.name">
+            <ng-template matTabContent>
+              <ng-container >
+                <div class="tab-container">
+                    <ng-template *ngTemplateOutlet="templates[tab.key]; context : {user : user}" >
+
+                    </ng-template>
+
+                </div>
+              </ng-container>
+            </ng-template>
+          </mat-tab>
+        </ng-container>
+
+
+      </mat-tab-group>
+    </div>
+</ng-template>
+
+
