@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit{
   drawerMobileOpen: boolean = false;
 
   title:IAppTitle = {
-    full:'Sistema Integrado de Gestión Administrativa de Programas de Estudio',
+    full:'Sistema de Administracion de Accesos',
     mini:'SIGAPE'
   }
 

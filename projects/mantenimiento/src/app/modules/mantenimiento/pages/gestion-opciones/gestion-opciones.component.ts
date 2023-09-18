@@ -38,9 +38,15 @@ export class GestionOpcionesComponent {
   handleClickButton = (e: any) => {
 		switch (e.action) {
 
-			case 'AGREGAR':
+			case 'EDITAR':
+      
+      break;
+      case 'CONSULTAR':
 
-				break;
+      break;
+      case 'ELIMINAR':
+
+      break;
       default:
         break;
 		}

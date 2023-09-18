@@ -1,7 +1,7 @@
 
 <ng-container *ngIf="session$ | async as state">
 
-  <ng-container *ngIf="state.isLoggedIn && !state.isLoading;">
+  <ng-container *ngIf="state.isLoggedIn || state.isLoading; else login">
       <ngx-sigape-layout
       [router]="router"
       [appTitle]="title"
@@ -24,8 +24,7 @@
     </ngx-sigape-layout>
   </ng-container>
 
-<ng-container *ngIf="!state.isLoading && state.loginError">
-  <ng-template  >
+  <ng-template  #login>
 
     <div class="col-12 text-center">
       <button mat-raised-button color="primary" (click)="handleLogin()">Accede Ahora</button>
@@ -34,7 +33,6 @@
   </ng-template>
 
 
-</ng-container>
 
 </ng-container>
 
