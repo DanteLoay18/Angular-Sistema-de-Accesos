@@ -59,6 +59,7 @@ export class FormSearchOpcionComponent implements OnInit {
   };
 
   handleClickNew = () => {
+    this.store.dispatch(opcionActions.EstadoInicialModal());
     this.store.dispatch(opcionActions.CargarModalOpcion({tipoFormulario:FormType.REGISTRAR, title:'Agregar Opcion'}))
     this.dialogService.open(AgregarOpcionComponent,'lg');
   };

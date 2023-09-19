@@ -21,6 +21,7 @@ const MESSAGES = {
   styleUrls: ['./agregar-opcion.component.scss']
 })
 export class AgregarOpcionComponent implements OnInit {
+
   private dialogRef = inject(MatDialogRef<AgregarOpcionComponent>);
   private store= inject(Store);
   form!: FormModel<IOpcion>;
@@ -33,25 +34,24 @@ export class AgregarOpcionComponent implements OnInit {
   ]);
 
   consultar= FormType.CONSULTAR;
-  formType!:FormType ;
-  formOpcion!: IOpcion;
+
 
   ngOnInit(): void {
     this.state$.subscribe(({opcion})=>{
-      this.formType=opcion.modalOpcion.type
-      this.formOpcion=opcion.modalOpcion.form
+      this.buildForm(opcion.modalOpcion.form,opcion.modalOpcion.type );
     })
-    this.buildForm();
+
+
   }
   handleClose = () => {
     this.dialogRef.close();
   };
 
-  private buildForm() {
+  private buildForm(formOpcion:IOpcion, formType:FormType) {
     this.buildValidations();
     this.form = new FormModel<any>(
-      this.formType,
-      this.formOpcion,
+      formType,
+      formOpcion,
       this.validators,
       {
         onSave: this.onSave,
@@ -76,7 +76,6 @@ export class AgregarOpcionComponent implements OnInit {
 
   submit(){
     this.form.submit();
-    console.log(this.form)
     this.store.dispatch(fromOpcion.AgregarOpcion({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, esEmergente:this.form.model['esEmergente'].value, tieneOpciones:false}));
     this.dialogRef.close();
   }
@@ -91,6 +90,16 @@ export class AgregarOpcionComponent implements OnInit {
 export class Opcion{
   nombre:string='';
   icono:string='';
-  esEmergente:boolean=false;
-  tieneOpciones:boolean=false;
+  esEmergente:boolean | string=false;
+  tieneOpciones:boolean | string=false;
+
+  static createOpcion(nombre: string, icono:string, esEmergente:boolean | string){
+    const opcion = new Opcion();
+
+    opcion.nombre=nombre;
+    opcion.icono=icono;
+    opcion.esEmergente=esEmergente;
+    opcion.tieneOpciones=false;
+    return opcion;
+}
 }

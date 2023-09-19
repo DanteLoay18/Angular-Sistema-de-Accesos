@@ -46,5 +46,17 @@ export class OpcionService {
     return this.http.post<IOpcion>( url,{nombre, icono, esEmergente, tieneOpciones}, {headers} );
   }
 
+  buscarOpcionPorId(id:string):Observable<IOpcion>{
+
+    const url   = `${ this.baseUrl }/api/opcion/findOpcionById/${id}`;
+
+    let token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${ token }`);
+
+
+    return this.http.get<IOpcion>( url, {headers} );
+  }
 
 }

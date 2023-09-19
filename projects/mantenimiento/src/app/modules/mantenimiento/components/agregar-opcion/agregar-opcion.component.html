@@ -6,7 +6,8 @@
   [cancelLabel]="'Cerrar'"
   [cancelIcon]="'close'"
   [loading]="state.opcion.modalOpcion.isLoading"
-  (on-submit)="submit()">
+  (on-submit)="submit()"
+  [formType]="state.opcion.modalOpcion.type">
 
   <div class="row">
     <div class="col-6">

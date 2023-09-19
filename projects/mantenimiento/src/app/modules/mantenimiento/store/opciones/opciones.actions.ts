@@ -38,6 +38,16 @@ export const AgregarOpcionFail= createAction(
   props<{ error : any}>()
 );
 
-export const setModalReadOnly= createAction(
-  '[Opcion] Set Modal Read Only'
+export const SetModalReadOnly= createAction(
+  '[Opcion] Set Modal Read Only',
+  props<{ id : string}>()
+);
+
+export const CargarDataModalSuccess= createAction(
+  '[Opcion] Cargar Data Modal Success',
+  props<{ opcion : IOpcion}>()
+);
+
+export const EstadoInicialModal= createAction(
+  '[Opcion] Estado Inicial Modal'
 );

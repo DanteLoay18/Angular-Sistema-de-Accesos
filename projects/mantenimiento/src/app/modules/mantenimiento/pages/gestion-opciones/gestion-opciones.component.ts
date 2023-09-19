@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { DialogService, IDataGridElement } from 'ngx-sigape';
-import * as fromOpcion from '../../../mantenimiento/store/opciones/opciones.actions'
+import * as opcionActions from '../../../mantenimiento/store/opciones/opciones.actions'
+import { AgregarOpcionComponent } from '../../components/agregar-opcion/agregar-opcion.component';
 @Component({
   selector: 'app-gestion-opciones',
   templateUrl: './gestion-opciones.component.html',
@@ -20,13 +21,13 @@ export class GestionOpcionesComponent {
     this.state$.subscribe(({opcion})=>{
 
     })
-    this.store.dispatch(fromOpcion.CargarListadoDeOpciones({page:1, pageSize:10}));
+    this.store.dispatch(opcionActions.CargarListadoDeOpciones({page:1, pageSize:10}));
 
   }
 
   handleLoadData = (e:any) => {
-
-    this.store.dispatch(fromOpcion.CargarListadoDeOpciones({page:e.page, pageSize:e.pageSize}))
+    this.store.dispatch(opcionActions.EstadoInicialModal());
+    this.store.dispatch(opcionActions.CargarListadoDeOpciones({page:e.page, pageSize:e.pageSize}))
 
 
   }
@@ -42,7 +43,7 @@ export class GestionOpcionesComponent {
 
       break;
       case 'CONSULTAR':
-
+        this.openModalConsultar(e.item._id)
       break;
       case 'ELIMINAR':
 
@@ -53,6 +54,7 @@ export class GestionOpcionesComponent {
 	};
 
   openModalConsultar(id:string){
-
+    this.store.dispatch(opcionActions.SetModalReadOnly({id}));
+    this.dialogService.open(AgregarOpcionComponent,'lg')
   }
 }

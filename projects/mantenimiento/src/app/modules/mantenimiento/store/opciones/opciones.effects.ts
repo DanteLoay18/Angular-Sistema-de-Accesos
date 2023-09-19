@@ -47,10 +47,8 @@ export class OpcionesEffects{
 
   agregarOpcion$ = createEffect(()=>  this.actions$.pipe(
     ofType(OpcionesActions.AgregarOpcion),
-    tap(console.log),
     exhaustMap(({nombre, icono, esEmergente, tieneOpciones})=> this.opcionService.agregarOpcion(nombre, icono, esEmergente, tieneOpciones)
                       .pipe(
-                        tap(console.log),
                         map((opcion) => (OpcionesActions.AgregarOpcionSuccess({opcion}))),
                         catchError((error) => of(OpcionesActions.AgregarOpcionFail({error})))
                       )
@@ -80,6 +78,17 @@ export class OpcionesEffects{
     { dispatch: false }
   );
 
+
+  setModalConsulta$ = createEffect(()=>  this.actions$.pipe(
+    ofType(OpcionesActions.SetModalReadOnly),
+    exhaustMap(({id})=> this.opcionService.buscarOpcionPorId(id)
+                      .pipe(
+
+                        map((opcion) => (OpcionesActions.CargarDataModalSuccess({opcion})))
+                      )
+                )
+    )
+  )
 
 
 

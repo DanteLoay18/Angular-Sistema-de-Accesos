@@ -60,7 +60,8 @@ export const estadoInicial: IDataGridElement<IOpcion>= {
        isLoading:false,
        error:null,
        type:null,
-       form: new Opcion()
+       form: new Opcion(),
+       codigoOpcion:''
     }
 };
 
@@ -72,6 +73,9 @@ export const SessionReducer = createReducer(
   on(opcionesActions.AgregarOpcion, (state) => ({...state, modalOpcion:{ ...state.modalOpcion,isLoading:true}})),
   on(opcionesActions.AgregarOpcionSuccess, (state, { opcion }) => ({ ...state, modalOpcion:{ ...state.modalOpcion,isLoading:false, error:null}})),
   on(opcionesActions.AgregarOpcionFail, (state, {error}) => ({ ...state, modalOpcion:{ ...state.modalOpcion,isLoading:false, error:error} })),
-  on(opcionesActions.CargarModalOpcion, (state, {title, tipoFormulario})=> ({...state, modalOpcion:{ ...state.modalOpcion, title, type:tipoFormulario}}))
-);
+  on(opcionesActions.CargarModalOpcion, (state, {title, tipoFormulario})=> ({...state, modalOpcion:{ ...state.modalOpcion, title, type:tipoFormulario}})),
+  on(opcionesActions.SetModalReadOnly, (state,{id})=> ({...state, modalOpcion:{ ...state.modalOpcion, title:'Consulta de Opcion', isLoading:true, type:FormType.CONSULTAR, codigoOpcion:id}})),
+  on(opcionesActions.CargarDataModalSuccess, (state,{opcion})=> ({...state, modalOpcion:{ ...state.modalOpcion, form: Opcion.createOpcion(opcion.nombre, opcion.icono, opcion.esEmergente), isLoading:false}})),
+  on(opcionesActions.EstadoInicialModal, (state) =>({...state, modalOpcion:estadoInicial.modalOpcion}))
+  );
 
