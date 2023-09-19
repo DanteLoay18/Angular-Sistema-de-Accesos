@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit{
                   return {
                     label: this.capitalizarPalabras(menu.nombre),
                     icon: menu.icono.toLowerCase(),
-                    link: menu.url.toLowerCase()
+                    link: menu.url.toLowerCase(),
                   }
                 })
 

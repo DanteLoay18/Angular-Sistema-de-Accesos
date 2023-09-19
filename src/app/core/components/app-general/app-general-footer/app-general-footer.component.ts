@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,6 +14,6 @@ export class AppGeneralFooterComponent {
 
 
   handleRegresar=()=>{
-    this.router.navigate(['/mantenimiento']);
+    this.router.navigate(['/']);
   };
 }

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as moment from 'moment';
-import { IAppTitle } from 'ngx-sigape';
+import { IAppTitle, MultilevelNodes } from 'ngx-sigape';
 import { IPerfiles } from '../core/interfaces/perfiles.interface';
 import { SessionActions, buildUrlLogin } from '@sac/core';
 
@@ -28,7 +28,7 @@ export class ApplicationComponent {
              NOMBRE_ROL: "ROL DEFAULT"
            },
  }
- menus: any[]  = [
+ menus: MultilevelNodes[]  = [
 
  ];
 
@@ -63,11 +63,13 @@ export class ApplicationComponent {
            sistemas.forEach(sistema=>{
              if(sistema.id===this.guidSistema){
 
-               const menus=sistema.menus.map(menu => {
+               const menus:MultilevelNodes[]=sistema.menus.map(menu => {
                  return {
+                   id:menu.id,
                    label: this.capitalizarPalabras(menu.nombre),
                    icon: menu.icono.toLowerCase(),
-                   link: menu.url.toLowerCase()
+                   link: menu.url.toLowerCase(),
+                   data: {}
                  }
                })
 

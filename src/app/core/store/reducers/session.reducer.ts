@@ -1,6 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
 import {SessionActions} from '../actions'
-import { IUsuario } from "../../interfaces/usuario.interface";
 import { IAppSession } from "../app.reducer.interface";
 
 

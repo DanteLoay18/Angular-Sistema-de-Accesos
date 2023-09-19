@@ -10,6 +10,6 @@ export interface AppState {
 
 export const appReducers: ActionReducerMap<AppState>={
   session: reducers.SessionReducer,
-  globalConfig:reducers.GlobalConfigReducer
+  globalConfig:reducers.GlobalConfigReducer,
 }
 
