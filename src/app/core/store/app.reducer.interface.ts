@@ -13,7 +13,6 @@ export interface IAppSession {
    */
   isLoggedIn: boolean;
   token: string;
-  // user: IAppUser,
   /**
    * Indica a que url se debe retornar una vez logueado
    */

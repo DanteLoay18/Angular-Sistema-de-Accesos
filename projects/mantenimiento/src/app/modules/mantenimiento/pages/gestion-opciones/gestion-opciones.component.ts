@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { DialogService, IDataGridElement } from 'ngx-sigape';
+import { AlertService, DialogService, IDataGridElement } from 'ngx-sigape';
 import * as opcionActions from '../../../mantenimiento/store/opciones/opciones.actions'
 import { AgregarOpcionComponent } from '../../components/agregar-opcion/agregar-opcion.component';
 @Component({
@@ -12,7 +12,7 @@ export class GestionOpcionesComponent {
 
   gridElement!: IDataGridElement<any>;
   private store= inject(Store);
-
+  private alertService= inject(AlertService);
   state$ =  this.store.select('mantenimiento');
 
   constructor(private dialogService: DialogService) { }
@@ -40,13 +40,13 @@ export class GestionOpcionesComponent {
 		switch (e.action) {
 
 			case 'EDITAR':
-
+        this.openModalEditar(e.item._id);
       break;
       case 'CONSULTAR':
-        this.openModalConsultar(e.item._id)
+        this.openModalConsultar(e.item._id);
       break;
       case 'ELIMINAR':
-
+        this.handleDeleteOpcion(e.item._id);
       break;
       default:
         break;
@@ -55,6 +55,26 @@ export class GestionOpcionesComponent {
 
   openModalConsultar(id:string){
     this.store.dispatch(opcionActions.SetModalReadOnly({id}));
-    this.dialogService.open(AgregarOpcionComponent,'lg')
+    this.dialogService.open(AgregarOpcionComponent,'md')
+  }
+
+  openModalEditar(id:string){
+    this.store.dispatch(opcionActions.SetModalReadOnly({id}));
+    this.dialogService.open(AgregarOpcionComponent,'md')
+  }
+
+  async handleDeleteOpcion(id:string){
+    var page:number;
+    var pageSize:number;
+    this.store.select('mantenimiento').subscribe(({opcion})=>{
+      page=opcion.source.page;
+      pageSize=opcion.source.pageSize
+    })
+    this.alertService.open('¿Está seguro de eliminar el registro?', undefined, { confirm: true }).then((confirm) => {
+      if (confirm) {
+         this.store.dispatch(opcionActions.EliminarOpcion({id,page,pageSize}));
+
+      }
+    });
   }
 }

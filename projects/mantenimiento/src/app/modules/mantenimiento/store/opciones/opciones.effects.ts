@@ -47,9 +47,9 @@ export class OpcionesEffects{
 
   agregarOpcion$ = createEffect(()=>  this.actions$.pipe(
     ofType(OpcionesActions.AgregarOpcion),
-    exhaustMap(({nombre, icono, esEmergente, tieneOpciones})=> this.opcionService.agregarOpcion(nombre, icono, esEmergente, tieneOpciones)
+    exhaustMap(({nombre, icono, esEmergente, tieneOpciones,page,pageSize})=> this.opcionService.agregarOpcion(nombre, icono, esEmergente, tieneOpciones)
                       .pipe(
-                        map((opcion) => (OpcionesActions.AgregarOpcionSuccess({opcion}))),
+                        map((opcion) => (OpcionesActions.AgregarOpcionSuccess({opcion,page,pageSize}))),
                         catchError((error) => of(OpcionesActions.AgregarOpcionFail({error})))
                       )
                 )
@@ -60,10 +60,30 @@ export class OpcionesEffects{
     ofType(OpcionesActions.AgregarOpcionSuccess),
     tap(({opcion})=>{
       this.alertService.open(`<div style="color: black;">El registro se guardo correctamente</div>`, '', { icon: "success", htmlContent: true });
-      // this.dialogRef.close()
-     })
-   ),
-   { dispatch: false }
+
+     }),
+     exhaustMap(({page, pageSize})=> this.opcionService.obtenerOpcionesPaginado(page,pageSize)
+     .pipe(
+       map((listado)=>{
+         const items= listado.items.map((listado)=>{
+
+           return {
+             ...listado,
+             esEmergente:listado.esEmergente ? 'SI' : 'NO',
+             tieneOpciones: listado.tieneOpciones ? 'SI' : 'NO',
+           };
+
+         })
+         return {
+           ...listado,
+           items
+         }
+       }),
+       map((paginacion) => (OpcionesActions.CargarListadoDeOpcionesSuccess({listado:paginacion}))),
+       catchError((error) => of(OpcionesActions.CargarListadoDeOpcionesFail({error})))
+     )
+)
+   )
   )
 
   agregarOpcionFail$ = createEffect(
@@ -78,6 +98,58 @@ export class OpcionesEffects{
     { dispatch: false }
   );
 
+  eliminarOpcion$ = createEffect(()=>  this.actions$.pipe(
+    ofType(OpcionesActions.EliminarOpcion),
+    exhaustMap(({id, page,pageSize})=> this.opcionService.eliminarOpcion(id)
+                      .pipe(
+                        map((opcion) => (OpcionesActions.EliminarOpcionSuccess({opcion,page,pageSize}))),
+                        catchError((error) => of(OpcionesActions.EliminarOpcionFail({error})))
+                      )
+                )
+    )
+  )
+
+  eliminarOpcionSuccess$ = createEffect(()=>  this.actions$.pipe(
+    ofType(OpcionesActions.EliminarOpcionSuccess),
+    tap(()=>{
+      this.alertService.open('Registro eliminado', undefined, { icon: 'success' });
+
+     }),
+     exhaustMap(({page, pageSize})=> this.opcionService.obtenerOpcionesPaginado(page,pageSize)
+     .pipe(
+       map((listado)=>{
+         const items= listado.items.map((listado)=>{
+
+           return {
+             ...listado,
+             esEmergente:listado.esEmergente ? 'SI' : 'NO',
+             tieneOpciones: listado.tieneOpciones ? 'SI' : 'NO',
+           };
+
+         })
+         return {
+           ...listado,
+           items
+         }
+       }),
+       map((paginacion) => (OpcionesActions.CargarListadoDeOpcionesSuccess({listado:paginacion}))),
+       catchError((error) => of(OpcionesActions.CargarListadoDeOpcionesFail({error})))
+     )
+)
+   ),
+  )
+
+  eliminarOpcionFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(OpcionesActions.EliminarOpcionFail),
+        tap(({error}) => {
+           this.alertService.open(`<div style="color: black;">${error.error.message}</div>`, '<div style="color: red;">Error</div>', { icon: "error", htmlContent: true });
+
+        })
+      ),
+    { dispatch: false }
+  );
 
   setModalConsulta$ = createEffect(()=>  this.actions$.pipe(
     ofType(OpcionesActions.SetModalReadOnly),

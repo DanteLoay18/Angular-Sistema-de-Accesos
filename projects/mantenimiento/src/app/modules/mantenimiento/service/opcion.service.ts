@@ -59,4 +59,15 @@ export class OpcionService {
     return this.http.get<IOpcion>( url, {headers} );
   }
 
+  eliminarOpcion(id:string){
+    const url   = `${ this.baseUrl }/api/opcion/deleteopcion/${id}`;
+
+    let token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${ token }`);
+
+
+    return this.http.delete<IOpcion>( url, {headers} );
+  }
 }

@@ -76,6 +76,9 @@ export const SessionReducer = createReducer(
   on(opcionesActions.CargarModalOpcion, (state, {title, tipoFormulario})=> ({...state, modalOpcion:{ ...state.modalOpcion, title, type:tipoFormulario}})),
   on(opcionesActions.SetModalReadOnly, (state,{id})=> ({...state, modalOpcion:{ ...state.modalOpcion, title:'Consulta de Opcion', isLoading:true, type:FormType.CONSULTAR, codigoOpcion:id}})),
   on(opcionesActions.CargarDataModalSuccess, (state,{opcion})=> ({...state, modalOpcion:{ ...state.modalOpcion, form: Opcion.createOpcion(opcion.nombre, opcion.icono, opcion.esEmergente), isLoading:false}})),
+  on(opcionesActions.EliminarOpcion, (state)=> ({...state})),
+  on(opcionesActions.EliminarOpcionSuccess, (state,{opcion})=> ({...state})),
+  on(opcionesActions.EliminarOpcionFail, (state,{error})=> ({...state})),
   on(opcionesActions.EstadoInicialModal, (state) =>({...state, modalOpcion:estadoInicial.modalOpcion}))
   );
 

@@ -11,7 +11,7 @@ export class AppGeneralContenedorPrincipalComponent {
   @Input() templates:TemplateRef<any>[]=[]
 
   contentTemplate:any;
-  // TEMPLATES
+
   selectedIndexValue = 0;
 
 

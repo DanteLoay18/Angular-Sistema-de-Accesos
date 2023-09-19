@@ -74,30 +74,10 @@
       }
     }
 
-    // .mat-tab-label:after {
-    //   content: '';
-    //   width: 0px;
-    //   height: 0px;
-    //   border-style: solid;
-    //   border-width: 15px 5px 15px 20px;
-    //   border-color: transparent transparent transparent red;
-    //   display: inline-block;
-    //   vertical-align: middle;
-    //   position: absolute;
-    //   // bottom: 0;
-    //   // left: -13px;
-    //   right: 0;
-    //   margin: 0 auto;
-    // }
   }
 
   .horizontal-tabs {
 
-    //.mat-tab-label-active {
-      //background: $primary-color-contrast!important;
-      //color: #0ba80b !important;
-      //background: morado !important;
-    //}
 
     .mat-mdc-tab-group {
       flex-direction: column;
@@ -113,14 +93,7 @@
 
 
     .mat-mdc-tab-label {
-      // height: 35px !important;
-      // opacity: 1 !important;
-      // border-top: $primary-color solid 1px;
-      // border-right: $primary-color solid 1px;
-      // border-left: $primary-color solid 1px;
-      // border-top-left-radius: 5px;
-      // border-top-right-radius: 5px;
-      // margin-right: 2px;
+
 
 
       height: 70px !important;

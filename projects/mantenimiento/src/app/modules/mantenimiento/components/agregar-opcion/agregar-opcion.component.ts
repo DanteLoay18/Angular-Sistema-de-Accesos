@@ -8,13 +8,6 @@ import { Store } from '@ngrx/store';
 import * as fromOpcion from '../../store/opciones/opciones.actions';
 
 
-const MESSAGES = {
-  CONFIRM_SAVE: '¿Está seguro de GUARDAR los datos de la opcion?',
-  CONFIRM_UPDATE: '¿Está seguro de ACTUALIZAR los datos de la opcion?',
-  CONFIRM_SAVE_SUCCES: 'El registro se guardó correctamente',
-  CONFIRM_UPDATE_SUCCES: 'El registro se actualizó correctamente'
-};
-
 @Component({
   selector: 'app-agregar-opcion',
   templateUrl: './agregar-opcion.component.html',
@@ -75,8 +68,14 @@ export class AgregarOpcionComponent implements OnInit {
   }
 
   submit(){
+    var page:number=0;
+    var pageSize:number=0;
+    this.store.select('mantenimiento').subscribe(({opcion})=>{
+      page=opcion.source.page;
+      pageSize=opcion.source.pageSize
+    })
     this.form.submit();
-    this.store.dispatch(fromOpcion.AgregarOpcion({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, esEmergente:this.form.model['esEmergente'].value, tieneOpciones:false}));
+    this.store.dispatch(fromOpcion.AgregarOpcion({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, esEmergente:this.form.model['esEmergente'].value, tieneOpciones:false, page,pageSize}));
     this.dialogRef.close();
   }
 

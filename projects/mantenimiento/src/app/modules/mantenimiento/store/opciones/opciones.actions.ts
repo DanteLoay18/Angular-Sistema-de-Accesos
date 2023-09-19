@@ -25,12 +25,12 @@ export const CargarModalOpcion= createAction(
 
 export const AgregarOpcion= createAction(
   '[Opcion] Agregar Opcion',
-  props<{ nombre:string, icono:string, esEmergente:boolean, tieneOpciones:boolean }>()
+  props<{ nombre:string, icono:string, esEmergente:boolean, tieneOpciones:boolean,page:number, pageSize:number }>()
 );
 
 export const AgregarOpcionSuccess= createAction(
   '[Opcion] Agregar Opcion Success',
-  props<{ opcion : IOpcion}>()
+  props<{ opcion : IOpcion,page:number, pageSize:number}>()
 );
 
 export const AgregarOpcionFail= createAction(
@@ -50,4 +50,19 @@ export const CargarDataModalSuccess= createAction(
 
 export const EstadoInicialModal= createAction(
   '[Opcion] Estado Inicial Modal'
+);
+
+export const EliminarOpcion= createAction(
+  '[Opcion] Eliminar Opcion ',
+  props<{ id: string, page:number, pageSize:number}>()
+);
+
+export const EliminarOpcionSuccess= createAction(
+  '[Opcion] Eliminar Opcion Success',
+  props<{ opcion: IOpcion, page:number, pageSize:number}>()
+);
+
+export const EliminarOpcionFail= createAction(
+  '[Opcion] Eliminar Opcion Fail',
+  props<{ error: any}>()
 );

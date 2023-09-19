@@ -34,15 +34,10 @@ export class FormSearchOpcionComponent implements OnInit {
 
   private buildForm = () => {
     this.form = new FormModel(
-      // tipo formulario
       FormType.BUSCAR,
-      // default model
       DEFAULT_MODEL,
-      // validators
       {},
-      // opciones
       {
-        // on search se ejecutara cuando el "tipo formulario" sea de tipo FormType.BUSCAR
         onSearch: this.handleSearch
       }
     );
@@ -61,7 +56,7 @@ export class FormSearchOpcionComponent implements OnInit {
   handleClickNew = () => {
     this.store.dispatch(opcionActions.EstadoInicialModal());
     this.store.dispatch(opcionActions.CargarModalOpcion({tipoFormulario:FormType.REGISTRAR, title:'Agregar Opcion'}))
-    this.dialogService.open(AgregarOpcionComponent,'lg');
+    this.dialogService.open(AgregarOpcionComponent,'md');
   };
 
 
