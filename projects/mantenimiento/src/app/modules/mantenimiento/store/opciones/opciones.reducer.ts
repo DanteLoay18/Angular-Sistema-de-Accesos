@@ -69,9 +69,9 @@ export const SessionReducer = createReducer(
   on(opcionesActions.CargarListadoDeOpciones, (state) => ({...state, loading:true})),
   on(opcionesActions.CargarListadoDeOpcionesSuccess, (state, { listado }) => ({ ...state, loading:false,error:null, source:listado  })),
   on(opcionesActions.CargarListadoDeOpcionesFail, (state, {error}) => ({ ...state, loading:false, error:error })),
-  on(opcionesActions.AgregarOpcion, (state) => ({...state, loading:true})),
-  on(opcionesActions.AgregarOpcionSuccess, (state, { opcion }) => ({ ...state, loading:false,error:null })),
-  on(opcionesActions.AgregarOpcionFail, (state, {error}) => ({ ...state, loading:false, error:error })),
+  on(opcionesActions.AgregarOpcion, (state) => ({...state, modalOpcion:{ ...state.modalOpcion,isLoading:true}})),
+  on(opcionesActions.AgregarOpcionSuccess, (state, { opcion }) => ({ ...state, modalOpcion:{ ...state.modalOpcion,isLoading:false, error:null}})),
+  on(opcionesActions.AgregarOpcionFail, (state, {error}) => ({ ...state, modalOpcion:{ ...state.modalOpcion,isLoading:false, error:error} })),
   on(opcionesActions.CargarModalOpcion, (state, {title, tipoFormulario})=> ({...state, modalOpcion:{ ...state.modalOpcion, title, type:tipoFormulario}}))
 );
 

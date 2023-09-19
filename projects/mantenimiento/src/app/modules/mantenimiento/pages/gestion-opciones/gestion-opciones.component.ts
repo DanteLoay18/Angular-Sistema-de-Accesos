@@ -52,4 +52,7 @@ export class GestionOpcionesComponent {
 		}
 	};
 
+  openModalConsultar(id:string){
+
+  }
 }

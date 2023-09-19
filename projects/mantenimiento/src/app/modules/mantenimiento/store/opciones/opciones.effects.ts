@@ -5,7 +5,7 @@ import { exhaustMap, of } from 'rxjs';
 import * as OpcionesActions from './opciones.actions'
 import { OpcionService } from '../../service/opcion.service';
 import { map, catchError, tap } from 'rxjs/operators';
-
+import { AlertService } from 'ngx-sigape';
 
 
 
@@ -17,6 +17,7 @@ export class OpcionesEffects{
   private actions$ = inject(Actions);
   private opcionService= inject(OpcionService);
   private router= inject(Router);
+  private alertService= inject(AlertService);
 
   listarOpcion$ = createEffect(()=>  this.actions$.pipe(
     ofType(OpcionesActions.CargarListadoDeOpciones),
@@ -51,11 +52,33 @@ export class OpcionesEffects{
                       .pipe(
                         tap(console.log),
                         map((opcion) => (OpcionesActions.AgregarOpcionSuccess({opcion}))),
-                        catchError((error) => of(OpcionesActions.CargarListadoDeOpcionesFail({error})))
+                        catchError((error) => of(OpcionesActions.AgregarOpcionFail({error})))
                       )
                 )
     )
   )
+
+  agregarOpcionSuccess$ = createEffect(()=>  this.actions$.pipe(
+    ofType(OpcionesActions.AgregarOpcionSuccess),
+    tap(({opcion})=>{
+      this.alertService.open(`<div style="color: black;">El registro se guardo correctamente</div>`, '', { icon: "success", htmlContent: true });
+      // this.dialogRef.close()
+     })
+   ),
+   { dispatch: false }
+  )
+
+  agregarOpcionFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(OpcionesActions.AgregarOpcionFail),
+        tap(({error}) => {
+           this.alertService.open(`<div style="color: black;">${error.error.message}</div>`, '<div style="color: red;">Error</div>', { icon: "error", htmlContent: true });
+
+        })
+      ),
+    { dispatch: false }
+  );
 
 
 

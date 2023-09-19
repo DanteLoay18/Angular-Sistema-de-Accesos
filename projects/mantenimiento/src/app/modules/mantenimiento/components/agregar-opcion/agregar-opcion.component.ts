@@ -54,7 +54,7 @@ export class AgregarOpcionComponent implements OnInit {
       this.formOpcion,
       this.validators,
       {
-
+        onSave: this.onSave,
       }
     )
   }
@@ -67,12 +67,18 @@ export class AgregarOpcionComponent implements OnInit {
     };
   }
 
+  onSave(formValue: any, options: ISubmitOptions): Observable<any> {
 
+
+
+    return of()
+  }
 
   submit(){
     this.form.submit();
     console.log(this.form)
     this.store.dispatch(fromOpcion.AgregarOpcion({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, esEmergente:this.form.model['esEmergente'].value, tieneOpciones:false}));
+    this.dialogRef.close();
   }
 
   handleInputChange({ value }: any, model:string) {

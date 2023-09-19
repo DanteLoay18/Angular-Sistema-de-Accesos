@@ -38,3 +38,6 @@ export const AgregarOpcionFail= createAction(
   props<{ error : any}>()
 );
 
+export const setModalReadOnly= createAction(
+  '[Opcion] Set Modal Read Only'
+);
