@@ -9,14 +9,13 @@ import * as opcionesActions from './opciones.actions'
 
 
 export const estadoInicial: IDataGridElement<IOpcion>= {
-  error: null,
+    error: null,
     loading: false,
     definition: {
         columns: [
 
             { label: 'Nombre', field: 'nombre' },
             { label: 'Icono', field: 'icono' },
-            { label: 'Tiene Opciones', field: 'tieneOpciones' },
             { label: 'Emergente', field: 'esEmergente' },
             {
               label: 'Acciones',
@@ -60,5 +59,8 @@ export const SessionReducer = createReducer(
   on(opcionesActions.CargarListadoDeOpciones, (state) => ({...state, loading:true})),
   on(opcionesActions.CargarListadoDeOpcionesSuccess, (state, { listado }) => ({ ...state, loading:false,error:null, source:listado  })),
   on(opcionesActions.CargarListadoDeOpcionesFail, (state, {error}) => ({ ...state, loading:false, error:error })),
+  on(opcionesActions.AgregarOpcion, (state) => ({...state, loading:true})),
+  on(opcionesActions.AgregarOpcionSuccess, (state, { opcion }) => ({ ...state, loading:false,error:null })),
+  on(opcionesActions.AgregarOpcionFail, (state, {error}) => ({ ...state, loading:false, error:error })),
 );
 

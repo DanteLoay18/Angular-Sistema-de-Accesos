@@ -39,7 +39,7 @@ export class GestionOpcionesComponent {
 		switch (e.action) {
 
 			case 'EDITAR':
-      
+
       break;
       case 'CONSULTAR':
 
@@ -51,6 +51,5 @@ export class GestionOpcionesComponent {
         break;
 		}
 	};
-
 
 }

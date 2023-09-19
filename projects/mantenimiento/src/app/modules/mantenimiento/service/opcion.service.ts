@@ -33,6 +33,18 @@ export class OpcionService {
     return this.http.get<Paginado<IOpcion>>( url, {headers} );
   }
 
+  agregarOpcion(nombre:string, icono:string, esEmergente:boolean, tieneOpciones:boolean):Observable<IOpcion>{
+
+    const url   = `${ this.baseUrl }/api/opcion/createOpcion`;
+
+    let token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${ token }`);
+
+
+    return this.http.post<IOpcion>( url,{nombre, icono, esEmergente, tieneOpciones}, {headers} );
+  }
 
 
 }

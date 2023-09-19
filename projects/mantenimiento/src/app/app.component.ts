@@ -23,6 +23,16 @@ export class AppComponent implements AfterContentInit{
       name:'Gestion de Usuarios',
       visible:true,
       key:2
+    },
+    {
+      name:'Gestion de Menus',
+      visible:true,
+      key:2
+    },
+    {
+      name:'Gestion de Sistemas',
+      visible:true,
+      key:2
     }
   ]
   @ViewChild('perfiles', {static:true}) perfiles!:TemplateRef<any>;

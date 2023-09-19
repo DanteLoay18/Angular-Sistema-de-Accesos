@@ -1,0 +1,48 @@
+<ngx-sigape-modal-form-container
+  [title]="'Agregar Opcion'"
+  (on-dismiss)="handleClose()"
+  [cancelLabel]="'Cerrar'"
+  [cancelIcon]="'close'"
+  (on-submit)="submit()">
+
+  <div class="row">
+    <div class="col-6">
+      <ngx-sigape-form-model-field
+        variant="mask"
+        label="Nombre"
+        matTooltip="Nombre Opcion"
+        [formModelField]="form.model['nombre']"
+        (on-change)="handleInputChange($event)"
+        appLetterOnly
+       ></ngx-sigape-form-model-field>
+    </div>
+    <div class="col-6">
+      <ngx-sigape-form-model-field
+        variant="mask"
+        label="Icono"
+        matTooltip="Icono Opcion"
+        [formModelField]="form.model['icono']"
+       ></ngx-sigape-form-model-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+
+      <ngx-sigape-form-model-field
+        variant="select"
+        label="Es Emergente"
+        placeholder="--Todos--"
+        matTooltip="Es emergente Opcion"
+        [formModelField]="form.model['esEmergente']"
+        [options]="listaEsEmergente"
+       ></ngx-sigape-form-model-field>
+
+
+
+
+    </div>
+
+  </div>
+
+</ngx-sigape-modal-form-container>

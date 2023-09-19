@@ -44,7 +44,18 @@ export class OpcionesEffects{
     )
   )
 
-
+  agregarOpcion$ = createEffect(()=>  this.actions$.pipe(
+    ofType(OpcionesActions.AgregarOpcion),
+    tap(console.log),
+    exhaustMap(({nombre, icono, esEmergente, tieneOpciones})=> this.opcionService.agregarOpcion(nombre, icono, esEmergente, tieneOpciones)
+                      .pipe(
+                        tap(console.log),
+                        map((opcion) => (OpcionesActions.AgregarOpcionSuccess({opcion}))),
+                        catchError((error) => of(OpcionesActions.CargarListadoDeOpcionesFail({error})))
+                      )
+                )
+    )
+  )
 
 
 

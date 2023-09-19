@@ -2,7 +2,11 @@
 <ng-container *ngIf="state$ | async as state">
 
   <ng-container *ngIf="!state.loading">
-    <ngx-sigape-page-title text="OPCIONES"></ngx-sigape-page-title>
+    <div>
+      <h4 *ngIf="true" > <span class="badge bg-secondary"
+          style="background-color:#3F51B5 !important; color:#FFFFFF; font-weight:bold">ACTIVIDAD</span> :
+        GESTION DE OPCIONES</h4>
+    </div>
 
     <app-form-search-opcion ></app-form-search-opcion>
 

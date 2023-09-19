@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
-import { ComboList, FormModel, FormType, IComboList } from 'ngx-sigape';
+import { Component, EventEmitter, Output, OnInit, inject } from '@angular/core';
+import { ComboList, DialogService, FormModel, FormType, IComboList } from 'ngx-sigape';
+import { AgregarOpcionComponent } from '../agregar-opcion/agregar-opcion.component';
 
 interface ISearchModel {
   nombre: string;
@@ -17,12 +18,12 @@ const DEFAULT_MODEL: ISearchModel = {
   styleUrls: ['./form-search-opcion.component.scss']
 })
 export class FormSearchOpcionComponent implements OnInit {
-  @Output() clickNew: EventEmitter<any> = new EventEmitter();
+
 
   form!: FormModel<ISearchModel>;
 
   listaEdades: IComboList = new ComboList([]);
-
+  private dialogService = inject(DialogService);
 
   ngOnInit() {
     this.buildForm();
@@ -56,7 +57,7 @@ export class FormSearchOpcionComponent implements OnInit {
   };
 
   handleClickNew = () => {
-    this.clickNew.emit();
+    this.dialogService.open(AgregarOpcionComponent,'lg');
   };
 
 

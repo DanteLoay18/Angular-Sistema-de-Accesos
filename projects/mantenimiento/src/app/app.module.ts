@@ -8,21 +8,30 @@ import { SharedModule } from 'ngx-sigape';
 import { GestionOpcionesComponent } from './modules/mantenimiento/pages/gestion-opciones/gestion-opciones.component';
 import { FormSearchOpcionComponent } from './modules/mantenimiento/components/form-search-opcion/form-search-opcion.component';
 import { StoreModule } from '@ngrx/store';
-import { reducers } from './modules/mantenimiento/store/app.reducer';
 import * as fromMantenimiento from './modules/mantenimiento/store/app.reducer'
 import { EffectsModule } from '@ngrx/effects';
 import { OpcionesEffects } from './modules/mantenimiento/store/opciones/opciones.effects';
+import { AgregarOpcionComponent } from './modules/mantenimiento/components/agregar-opcion/agregar-opcion.component';
+import { MatSlideToggleModule, _MatSlideToggleRequiredValidatorModule } from '@angular/material/slide-toggle';
+import { ReactiveFormsModule} from '@angular/forms';
+import { LetterOnlyDirective } from './modules/mantenimiento/directives/letter-only.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
     GestionOpcionesComponent,
-    FormSearchOpcionComponent
+    FormSearchOpcionComponent,
+    AgregarOpcionComponent,
+    LetterOnlyDirective
   ],
   imports: [
     CommonModule,
     AppRoutingModule,
     AppGeneralModule,
     SharedModule,
+    MatSlideToggleModule,
+    _MatSlideToggleRequiredValidatorModule,
+    ReactiveFormsModule,
     StoreModule.forFeature({
       name:'mantenimiento',
       reducer: fromMantenimiento.reducers
