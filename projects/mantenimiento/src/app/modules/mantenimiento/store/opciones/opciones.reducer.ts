@@ -1,7 +1,10 @@
-import { IDataGridElement } from "ngx-sigape";
+
 import { IOpcion } from "../../interfaces/opcion.interface";
 import { createReducer, on } from "@ngrx/store";
 import * as opcionesActions from './opciones.actions'
+import { IDataGridElement } from "../../interfaces/dataGridElement.interface";
+import { FormType } from "ngx-sigape";
+import { Opcion } from "../../components/agregar-opcion/agregar-opcion.component";
 
 
 
@@ -51,6 +54,13 @@ export const estadoInicial: IDataGridElement<IOpcion>= {
         total: 0,
         orderBy: undefined,
         orderDir: undefined
+    },
+    modalOpcion :{
+       title:'',
+       isLoading:false,
+       error:null,
+       type:null,
+       form: new Opcion()
     }
 };
 
@@ -62,5 +72,6 @@ export const SessionReducer = createReducer(
   on(opcionesActions.AgregarOpcion, (state) => ({...state, loading:true})),
   on(opcionesActions.AgregarOpcionSuccess, (state, { opcion }) => ({ ...state, loading:false,error:null })),
   on(opcionesActions.AgregarOpcionFail, (state, {error}) => ({ ...state, loading:false, error:error })),
+  on(opcionesActions.CargarModalOpcion, (state, {title, tipoFormulario})=> ({...state, modalOpcion:{ ...state.modalOpcion, title, type:tipoFormulario}}))
 );
 
