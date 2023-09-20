@@ -70,4 +70,16 @@ export class OpcionService {
 
     return this.http.delete<IOpcion>( url, {headers} );
   }
+
+  editarOpcion(id:string, nombre:string, icono:string, esEmergente:boolean, tieneOpciones:boolean){
+    const url   = `${ this.baseUrl }/api/opcion/updateOpcion/${id}`;
+
+    let token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${ token }`);
+
+
+    return this.http.put<IOpcion>( url,{nombre, icono, esEmergente, tieneOpciones}, {headers} );
+  }
 }

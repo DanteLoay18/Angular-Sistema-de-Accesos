@@ -48,6 +48,7 @@ export class AgregarOpcionComponent implements OnInit {
       this.validators,
       {
         onSave: this.onSave,
+        onUpdate: this.handleUpdate
       }
     )
   }
@@ -61,22 +62,33 @@ export class AgregarOpcionComponent implements OnInit {
   }
 
   onSave(formValue: any, options: ISubmitOptions): Observable<any> {
-
-
-
+    return of()
+  }
+  handleUpdate(formValue: any, options: ISubmitOptions): Observable<any> {
     return of()
   }
 
   submit(){
     var page:number=0;
     var pageSize:number=0;
+    var type!:FormType;
+    var id:string=""
     this.store.select('mantenimiento').subscribe(({opcion})=>{
       page=opcion.source.page;
-      pageSize=opcion.source.pageSize
+      pageSize=opcion.source.pageSize;
+      type=opcion.modalOpcion.type
+      id=opcion.modalOpcion.codigoOpcion
     })
     this.form.submit();
-    this.store.dispatch(fromOpcion.AgregarOpcion({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, esEmergente:this.form.model['esEmergente'].value, tieneOpciones:false, page,pageSize}));
-    this.dialogRef.close();
+
+    if(type===FormType.REGISTRAR){
+      this.store.dispatch(fromOpcion.AgregarOpcion({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, esEmergente:this.form.model['esEmergente'].value, tieneOpciones:false, page,pageSize}));
+       this.dialogRef.close();
+    }else if(type===FormType.EDITAR){
+      this.store.dispatch(fromOpcion.EditarOpcion({id,nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, esEmergente:this.form.model['esEmergente'].value, tieneOpciones:false, page,pageSize}));
+      this.dialogRef.close();
+    }
+
   }
 
   handleInputChange({ value }: any, model:string) {

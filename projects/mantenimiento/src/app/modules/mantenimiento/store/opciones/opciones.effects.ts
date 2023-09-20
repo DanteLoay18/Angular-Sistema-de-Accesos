@@ -151,6 +151,59 @@ export class OpcionesEffects{
     { dispatch: false }
   );
 
+  editarOpcion$ = createEffect(()=>  this.actions$.pipe(
+    ofType(OpcionesActions.EditarOpcion),
+    exhaustMap(({id,nombre, icono, esEmergente, tieneOpciones, page,pageSize})=> this.opcionService.editarOpcion(id,nombre, icono, esEmergente, tieneOpciones)
+                      .pipe(
+                        map((opcion) => (OpcionesActions.EditarOpcionSuccess({opcion,page,pageSize}))),
+                        catchError((error) => of(OpcionesActions.EditarOpcionFail({error})))
+                      )
+                )
+    )
+  )
+
+  editarOpcionSuccess$ = createEffect(()=>  this.actions$.pipe(
+    ofType(OpcionesActions.EditarOpcionSuccess),
+    tap(()=>{
+      this.alertService.open('El Registro se actualizo correctamente', undefined, { icon: 'success' });
+
+     }),
+     exhaustMap(({page, pageSize})=> this.opcionService.obtenerOpcionesPaginado(page,pageSize)
+     .pipe(
+       map((listado)=>{
+         const items= listado.items.map((listado)=>{
+
+           return {
+             ...listado,
+             esEmergente:listado.esEmergente ? 'SI' : 'NO',
+             tieneOpciones: listado.tieneOpciones ? 'SI' : 'NO',
+           };
+
+         })
+         return {
+           ...listado,
+           items
+         }
+       }),
+       map((paginacion) => (OpcionesActions.CargarListadoDeOpcionesSuccess({listado:paginacion}))),
+       catchError((error) => of(OpcionesActions.CargarListadoDeOpcionesFail({error})))
+     )
+)
+   ),
+  )
+
+  editarOpcionFail$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(OpcionesActions.EditarOpcionFail),
+        tap(({error}) => {
+           this.alertService.open(`<div style="color: black;">${error.error.message}</div>`, '<div style="color: red;">Error</div>', { icon: "error", htmlContent: true });
+
+        })
+      ),
+    { dispatch: false }
+  );
+
   setModalConsulta$ = createEffect(()=>  this.actions$.pipe(
     ofType(OpcionesActions.SetModalReadOnly),
     exhaustMap(({id})=> this.opcionService.buscarOpcionPorId(id)
@@ -162,6 +215,16 @@ export class OpcionesEffects{
     )
   )
 
+  setModalEditar$ = createEffect(()=>  this.actions$.pipe(
+    ofType(OpcionesActions.SetModalEditar),
+    exhaustMap(({id})=> this.opcionService.buscarOpcionPorId(id)
+                      .pipe(
+
+                        map((opcion) => (OpcionesActions.CargarDataModalSuccess({opcion})))
+                      )
+                )
+    )
+  )
 
 
 }

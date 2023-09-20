@@ -59,7 +59,7 @@ export class GestionOpcionesComponent {
   }
 
   openModalEditar(id:string){
-    this.store.dispatch(opcionActions.SetModalReadOnly({id}));
+    this.store.dispatch(opcionActions.SetModalEditar({id}));
     this.dialogService.open(AgregarOpcionComponent,'md')
   }
 

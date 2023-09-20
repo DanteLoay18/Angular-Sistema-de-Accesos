@@ -43,6 +43,11 @@ export const SetModalReadOnly= createAction(
   props<{ id : string}>()
 );
 
+export const SetModalEditar= createAction(
+  '[Opcion] Set Modal Editar',
+  props<{ id : string}>()
+);
+
 export const CargarDataModalSuccess= createAction(
   '[Opcion] Cargar Data Modal Success',
   props<{ opcion : IOpcion}>()
@@ -64,5 +69,20 @@ export const EliminarOpcionSuccess= createAction(
 
 export const EliminarOpcionFail= createAction(
   '[Opcion] Eliminar Opcion Fail',
+  props<{ error: any}>()
+);
+
+export const EditarOpcion= createAction(
+  '[Opcion] Editar Opcion ',
+  props<{ id: string, nombre:string, icono:string, esEmergente:boolean, tieneOpciones:boolean, page:number, pageSize:number}>()
+);
+
+export const EditarOpcionSuccess= createAction(
+  '[Opcion] Editar Opcion Success',
+  props<{ opcion: IOpcion, page:number, pageSize:number}>()
+);
+
+export const EditarOpcionFail= createAction(
+  '[Opcion] Editar Opcion Fail',
   props<{ error: any}>()
 );
