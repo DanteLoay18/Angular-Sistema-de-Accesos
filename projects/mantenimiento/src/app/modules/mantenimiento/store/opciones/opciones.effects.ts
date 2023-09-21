@@ -14,7 +14,6 @@ export class OpcionesEffects{
 
   private actions$ = inject(Actions);
   private opcionService= inject(OpcionService);
-  private router= inject(Router);
   private alertService= inject(AlertService);
 
   listarOpcion$ = createEffect(()=>  this.actions$.pipe(

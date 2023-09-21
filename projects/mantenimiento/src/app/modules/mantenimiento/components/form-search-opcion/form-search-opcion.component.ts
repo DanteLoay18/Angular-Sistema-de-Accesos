@@ -3,15 +3,9 @@ import { ComboList, DialogService, FormModel, FormType, IComboList } from 'ngx-s
 import { AgregarOpcionComponent } from '../agregar-opcion/agregar-opcion.component';
 import { Store } from '@ngrx/store';
 import * as opcionActions from '../../store/opciones/opciones.actions'
-interface ISearchModel {
-  nombre: string;
-  edad: number;
-}
+import { IOpcion } from '../../interfaces/opcion.interface';
 
-const DEFAULT_MODEL: ISearchModel = {
-  nombre: '',
-  edad: 0
-};
+
 
 @Component({
   selector: 'app-form-search-opcion',
@@ -21,21 +15,28 @@ const DEFAULT_MODEL: ISearchModel = {
 export class FormSearchOpcionComponent implements OnInit {
 
 
-  form!: FormModel<ISearchModel>;
 
   listaEdades: IComboList = new ComboList([]);
   private dialogService = inject(DialogService);
   private store = inject(Store);
-
-  ngOnInit() {
-    this.buildForm();
-
+  form!: FormModel<IOpcion>;
+  state$= this.store.select('mantenimiento');
+  formOpcion:IOpcion={
+    nombre:'',
+    icono:'',
+    esEmergente:null,
+    tieneOpciones:false
   }
 
-  private buildForm = () => {
-    this.form = new FormModel(
+  ngOnInit(): void {
+   this.buildForm();
+  }
+
+  private buildForm() {
+
+    this.form = new FormModel<any>(
       FormType.BUSCAR,
-      DEFAULT_MODEL,
+      this.formOpcion,
       {},
       {
         onSearch: this.handleSearch
@@ -43,14 +44,20 @@ export class FormSearchOpcionComponent implements OnInit {
     );
   };
 
+  listaEsEmergente: IComboList = new ComboList([
+    { label: "SI", value: true },
+    { label: "NO", value: false }
+  ]);
 
 
   handleSearch = (formValue:any) => {
-
+    console.log(formValue)
   };
 
   handleClear = () => {
-
+    this.form.model['nombre'].setValue('');
+    this.form.model['icono'].setValue('');
+    this.form.model['esEmergente'].setValue('');
   };
 
   handleClickNew = () => {
@@ -59,7 +66,28 @@ export class FormSearchOpcionComponent implements OnInit {
     this.dialogService.open(AgregarOpcionComponent,'md');
   };
 
+  handleInputChange({ value }: any, model:string) {
+    if(model==="nombre"){
+      if (/^[A-Za-z]+$/.test(value)) {
+        // Si el valor es válido, asigna el valor en mayúsculas
+        this.form.model[model].setValue(value.toUpperCase());
+      } else {
+        // Si el valor no es válido, asigna solo la parte válida del valor
+        this.form.model[model].setValue(value.slice(0, -1));
+      }
+    }else if(model==='icono'){
+      if (/^[A-Za-z_]+$/.test(value)) {
+        // Si el valor es válido, asigna el valor en mayúsculas
+        this.form.model[model].setValue(value.toUpperCase());
+      } else {
+        // Si el valor no es válido, asigna solo la parte válida del valor
+        this.form.model[model].setValue(value.slice(0, -1));
+      }
+    }
 
+
+
+  }
 
 
 }

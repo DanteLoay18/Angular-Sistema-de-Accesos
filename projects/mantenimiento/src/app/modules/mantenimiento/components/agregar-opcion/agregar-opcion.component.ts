@@ -5,7 +5,6 @@ import { ComboList, FormModel, FormType, IComboList, ISubmitOptions, Validators 
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromOpcion from '../../store/opciones/opciones.actions';
-import { APP_FORM_VALIDATOR } from '@sac/core';
 
 
 @Component({
