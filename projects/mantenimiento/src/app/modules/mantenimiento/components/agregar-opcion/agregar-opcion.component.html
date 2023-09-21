@@ -18,7 +18,7 @@
         [disabled]="state.opcion.modalOpcion.isLoading || state.opcion.modalOpcion.type == consultar"
         [formModelField]="form.model['nombre']"
         (on-change)="handleInputChange($event, 'nombre')"
-        appLetterOnly
+        appLetterOnly="nombre"
        ></ngx-sigape-form-model-field>
     </div>
     <div class="col-6">
@@ -29,7 +29,7 @@
         [disabled]="state.opcion.modalOpcion.isLoading || state.opcion.modalOpcion.type == consultar"
         [formModelField]="form.model['icono']"
         (on-change)="handleInputChange($event, 'icono')"
-        appLetterOnly
+        appLetterOnly="icono"
        ></ngx-sigape-form-model-field>
     </div>
   </div>
@@ -40,7 +40,7 @@
       <ngx-sigape-form-model-field
         variant="select"
         label="Es Emergente"
-        placeholder="--Todos--"
+        placeholder="--Seleccione --"
         matTooltip="Es emergente Opcion"
         [disabled]="state.opcion.modalOpcion.isLoading || state.opcion.modalOpcion.type == consultar"
         [formModelField]="form.model['esEmergente']"

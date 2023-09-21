@@ -8,8 +8,6 @@ import { map, catchError, tap } from 'rxjs/operators';
 import { AlertService } from 'ngx-sigape';
 
 
-
-
 @Injectable()
 export class OpcionesEffects{
 

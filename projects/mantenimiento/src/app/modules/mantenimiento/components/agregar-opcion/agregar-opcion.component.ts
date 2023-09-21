@@ -2,10 +2,10 @@ import { Component, OnInit, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { IOpcion } from '../../interfaces/opcion.interface';
 import { ComboList, FormModel, FormType, IComboList, ISubmitOptions, Validators } from 'ngx-sigape';
-import { APP_FORM_VALIDATOR } from '@sac/core';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromOpcion from '../../store/opciones/opciones.actions';
+import { APP_FORM_VALIDATOR } from '@sac/core';
 
 
 @Component({
@@ -69,31 +69,50 @@ export class AgregarOpcionComponent implements OnInit {
   }
 
   submit(){
-    var page:number=0;
-    var pageSize:number=0;
-    var type!:FormType;
-    var id:string=""
-    this.store.select('mantenimiento').subscribe(({opcion})=>{
-      page=opcion.source.page;
-      pageSize=opcion.source.pageSize;
-      type=opcion.modalOpcion.type
-      id=opcion.modalOpcion.codigoOpcion
-    })
-    this.form.submit();
+    if(this.form.submit()){
+      let page:number=0;
+      let pageSize:number=0;
+      let type!:FormType;
+      let id:string=""
+      this.store.select('mantenimiento').subscribe(({opcion})=>{
+        page=opcion.source.page;
+        pageSize=opcion.source.pageSize;
+        type=opcion.modalOpcion.type
+        id=opcion.modalOpcion.codigoOpcion
+      })
 
-    if(type===FormType.REGISTRAR){
-      this.store.dispatch(fromOpcion.AgregarOpcion({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, esEmergente:this.form.model['esEmergente'].value, tieneOpciones:false, page,pageSize}));
-       this.dialogRef.close();
-    }else if(type===FormType.EDITAR){
-      this.store.dispatch(fromOpcion.EditarOpcion({id,nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, esEmergente:this.form.model['esEmergente'].value, tieneOpciones:false, page,pageSize}));
-      this.dialogRef.close();
+      if(type===FormType.REGISTRAR){
+        this.store.dispatch(fromOpcion.AgregarOpcion({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, esEmergente:this.form.model['esEmergente'].value, tieneOpciones:false, page,pageSize}));
+        this.dialogRef.close();
+      }else if(type===FormType.EDITAR){
+        this.store.dispatch(fromOpcion.EditarOpcion({id,nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, esEmergente:this.form.model['esEmergente'].value, tieneOpciones:false, page,pageSize}));
+        this.dialogRef.close();
+      }
     }
+
 
   }
 
   handleInputChange({ value }: any, model:string) {
+    if(model==="nombre"){
+      if (/^[A-Za-z]+$/.test(value)) {
+        // Si el valor es válido, asigna el valor en mayúsculas
+        this.form.model[model].setValue(value.toUpperCase());
+      } else {
+        // Si el valor no es válido, asigna solo la parte válida del valor
+        this.form.model[model].setValue(value.slice(0, -1));
+      }
+    }else if(model==='icono'){
+      if (/^[A-Za-z_]+$/.test(value)) {
+        // Si el valor es válido, asigna el valor en mayúsculas
+        this.form.model[model].setValue(value.toUpperCase());
+      } else {
+        // Si el valor no es válido, asigna solo la parte válida del valor
+        this.form.model[model].setValue(value.slice(0, -1));
+      }
+    }
 
-    this.form.model[model].value = value.toUpperCase();
+
 
   }
 }
@@ -101,10 +120,10 @@ export class AgregarOpcionComponent implements OnInit {
 export class Opcion{
   nombre:string='';
   icono:string='';
-  esEmergente:boolean | string=false;
+  esEmergente:boolean | string | null=null;
   tieneOpciones:boolean | string=false;
 
-  static createOpcion(nombre: string, icono:string, esEmergente:boolean | string){
+  static createOpcion(nombre: string, icono:string, esEmergente:boolean |string | null){
     const opcion = new Opcion();
 
     opcion.nombre=nombre;

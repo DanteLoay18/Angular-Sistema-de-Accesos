@@ -18,9 +18,6 @@ export class GestionOpcionesComponent {
   constructor(private dialogService: DialogService) { }
 
   ngOnInit() {
-    this.state$.subscribe(({opcion})=>{
-
-    })
     this.store.dispatch(opcionActions.CargarListadoDeOpciones({page:1, pageSize:10}));
 
   }
@@ -64,8 +61,8 @@ export class GestionOpcionesComponent {
   }
 
   async handleDeleteOpcion(id:string){
-    var page:number;
-    var pageSize:number;
+    let page:number;
+    let pageSize:number;
     this.store.select('mantenimiento').subscribe(({opcion})=>{
       page=opcion.source.page;
       pageSize=opcion.source.pageSize

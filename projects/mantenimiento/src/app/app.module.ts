@@ -13,8 +13,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { OpcionesEffects } from './modules/mantenimiento/store/opciones/opciones.effects';
 import { AgregarOpcionComponent } from './modules/mantenimiento/components/agregar-opcion/agregar-opcion.component';
 import { MatSlideToggleModule, _MatSlideToggleRequiredValidatorModule } from '@angular/material/slide-toggle';
-import { ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { LetterOnlyDirective } from './modules/mantenimiento/directives/letter-only.directive';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { LetterOnlyDirective } from './modules/mantenimiento/directives/letter-o
     LetterOnlyDirective
   ],
   imports: [
+    FormsModule,
     CommonModule,
     AppRoutingModule,
     AppGeneralModule,
@@ -38,7 +40,9 @@ import { LetterOnlyDirective } from './modules/mantenimiento/directives/letter-o
     }),
     EffectsModule.forFeature([OpcionesEffects])
   ],
-  providers: [],
+  providers: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
