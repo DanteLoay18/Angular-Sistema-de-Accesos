@@ -59,6 +59,36 @@ export class OpcionService {
     return this.http.get<IOpcion>( url, {headers} );
   }
 
+  buscarOpcionPaginado(nombre:string, icono:string, esEmergente:boolean |string | null, pageSize:number):Observable<Paginado<IOpcion>>{
+
+    const queryParams:any = {};
+
+    if (nombre.length>0) {
+      queryParams['nombre'] = nombre;
+    }
+
+    if (icono.length>0) {
+      queryParams['icono'] = icono;
+    }
+
+    if (esEmergente !== null) {
+      queryParams['esEmergente'] = esEmergente;
+    }
+    const url   = `${ this.baseUrl }/api/opcion/findByBusqueda`;
+
+    let token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${ token }`);
+
+    if(Object.keys(queryParams).length === 0){
+      return this.obtenerOpcionesPaginado(1,pageSize)
+    }else{
+      return this.http.get<Paginado<IOpcion>>( url, {headers, params:{...queryParams, pageSize:pageSize}} );
+    }
+
+  }
+
   eliminarOpcion(id:string){
     const url   = `${ this.baseUrl }/api/opcion/deleteopcion/${id}`;
 

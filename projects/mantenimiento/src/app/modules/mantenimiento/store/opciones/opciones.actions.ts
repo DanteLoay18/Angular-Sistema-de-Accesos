@@ -86,3 +86,18 @@ export const EditarOpcionFail= createAction(
   '[Opcion] Editar Opcion Fail',
   props<{ error: any}>()
 );
+
+export const BuscarOpcion= createAction(
+  '[Opcion] Buscar Opcion ',
+  props<{nombre:string, icono:string, esEmergente:boolean, pageSize:number}>()
+);
+
+export const BuscarOpcionSuccess= createAction(
+  '[Opcion] Buscar Opcion Success',
+  props<{ listado:IDataGridSource<IOpcion>}>()
+);
+
+export const BuscarOpcionFail= createAction(
+  '[Opcion] Buscar Opcion Fail',
+  props<{ error:any}>()
+);

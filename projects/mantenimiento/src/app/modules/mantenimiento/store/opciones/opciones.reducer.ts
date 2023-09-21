@@ -46,6 +46,7 @@ export const estadoInicial: IDataGridElement<IOpcion>= {
           },
         ]
     },
+    esBusqueda:false,
     source: {
         items: [
         ],
@@ -67,7 +68,7 @@ export const estadoInicial: IDataGridElement<IOpcion>= {
 
 export const SessionReducer = createReducer(
   estadoInicial,
-  on(opcionesActions.CargarListadoDeOpciones, (state) => ({...state, loading:true})),
+  on(opcionesActions.CargarListadoDeOpciones, (state) => ({...state, loading:true, esBusqueda:false})),
   on(opcionesActions.CargarListadoDeOpcionesSuccess, (state, { listado }) => ({ ...state, loading:false,error:null, source:listado  })),
   on(opcionesActions.CargarListadoDeOpcionesFail, (state, {error}) => ({ ...state, loading:false, error:error })),
   on(opcionesActions.AgregarOpcion, (state) => ({...state, modalOpcion:{ ...state.modalOpcion,isLoading:true}})),
@@ -83,6 +84,9 @@ export const SessionReducer = createReducer(
   on(opcionesActions.EditarOpcion, (state)=> ({...state})),
   on(opcionesActions.EditarOpcionSuccess, (state,{opcion})=> ({...state})),
   on(opcionesActions.EditarOpcionFail, (state,{error})=> ({...state})),
-  on(opcionesActions.EstadoInicialModal, (state) =>({...state, modalOpcion:estadoInicial.modalOpcion}))
+  on(opcionesActions.EstadoInicialModal, (state) =>({...state, modalOpcion:estadoInicial.modalOpcion})),
+  on(opcionesActions.BuscarOpcion, (state) => ({...state, loading:true, esBusqueda:true})),
+  on(opcionesActions.BuscarOpcionSuccess, (state, { listado }) => ({ ...state, loading:false,error:null, source:listado  })),
+  on(opcionesActions.BuscarOpcionFail, (state, { error }) => ({ ...state, loading:false,error:error  })),
   );
 

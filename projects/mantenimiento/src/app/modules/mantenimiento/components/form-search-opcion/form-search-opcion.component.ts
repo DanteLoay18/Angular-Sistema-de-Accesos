@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, OnInit, inject } from '@angular/core';
+import { Component,  OnInit, inject } from '@angular/core';
 import { ComboList, DialogService, FormModel, FormType, IComboList } from 'ngx-sigape';
 import { AgregarOpcionComponent } from '../agregar-opcion/agregar-opcion.component';
 import { Store } from '@ngrx/store';
@@ -51,7 +51,7 @@ export class FormSearchOpcionComponent implements OnInit {
 
 
   handleSearch = (formValue:any) => {
-    console.log(formValue)
+
   };
 
   handleClear = () => {
@@ -69,18 +69,14 @@ export class FormSearchOpcionComponent implements OnInit {
   handleInputChange({ value }: any, model:string) {
     if(model==="nombre"){
       if (/^[A-Za-z]+$/.test(value)) {
-        // Si el valor es válido, asigna el valor en mayúsculas
         this.form.model[model].setValue(value.toUpperCase());
       } else {
-        // Si el valor no es válido, asigna solo la parte válida del valor
         this.form.model[model].setValue(value.slice(0, -1));
       }
     }else if(model==='icono'){
       if (/^[A-Za-z_]+$/.test(value)) {
-        // Si el valor es válido, asigna el valor en mayúsculas
         this.form.model[model].setValue(value.toUpperCase());
       } else {
-        // Si el valor no es válido, asigna solo la parte válida del valor
         this.form.model[model].setValue(value.slice(0, -1));
       }
     }
@@ -88,6 +84,14 @@ export class FormSearchOpcionComponent implements OnInit {
 
 
   }
-
+  handleSubmit(){
+    let pageSize:number=0;
+    this.state$.subscribe(({opcion})=>{
+      pageSize=opcion.source.pageSize;
+    })
+    if(this.form.submit()){
+      this.store.dispatch(opcionActions.BuscarOpcion({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, esEmergente:this.form.model['esEmergente'].value, pageSize:pageSize}))
+    }
+  }
 
 }
