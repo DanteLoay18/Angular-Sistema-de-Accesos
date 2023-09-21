@@ -225,7 +225,7 @@ export class OpcionesEffects{
 
   buscarOpcion$ = createEffect(()=>  this.actions$.pipe(
     ofType(OpcionesActions.BuscarOpcion),
-    exhaustMap(({nombre, icono, esEmergente, pageSize})=> this.opcionService.buscarOpcionPaginado(nombre, icono, esEmergente,pageSize)
+    exhaustMap(({nombre, icono, esEmergente,page, pageSize})=> this.opcionService.buscarOpcionPaginado(nombre, icono, esEmergente,page,pageSize)
                       .pipe(
                         map((listado)=>{
                           const items= listado.items.map((listado)=>{

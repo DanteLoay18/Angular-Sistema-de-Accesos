@@ -5,6 +5,6 @@ export interface IDataGridElement<T> {
   definition: IDataGridDefinition;
   source: IDataGridSource<T>;
   error: any;
-  esBusqueda:boolean;
+  busqueda:any;
   modalOpcion: any;
 }

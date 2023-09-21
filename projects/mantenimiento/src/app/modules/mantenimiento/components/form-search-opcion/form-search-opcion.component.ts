@@ -90,7 +90,13 @@ export class FormSearchOpcionComponent implements OnInit {
       pageSize=opcion.source.pageSize;
     })
     if(this.form.submit()){
-      this.store.dispatch(opcionActions.BuscarOpcion({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, esEmergente:this.form.model['esEmergente'].value, pageSize:pageSize}))
+      if(this.form.model['nombre'].value==="" && this.form.model['icono'].value==="" && this.form.model['esEmergente'].value===null){
+        this.store.dispatch(opcionActions.CargarListadoDeOpciones({page:1, pageSize}))
+      }else{
+        this.store.dispatch(opcionActions.BuscarOpcion({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, esEmergente:this.form.model['esEmergente'].value,page:1, pageSize:pageSize}))
+      }
+
+
     }
   }
 

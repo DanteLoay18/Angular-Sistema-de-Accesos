@@ -89,7 +89,7 @@ export const EditarOpcionFail= createAction(
 
 export const BuscarOpcion= createAction(
   '[Opcion] Buscar Opcion ',
-  props<{nombre:string, icono:string, esEmergente:boolean, pageSize:number}>()
+  props<{nombre:string, icono:string, esEmergente:boolean, page:number,pageSize:number}>()
 );
 
 export const BuscarOpcionSuccess= createAction(

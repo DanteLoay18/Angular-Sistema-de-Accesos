@@ -59,7 +59,7 @@ export class OpcionService {
     return this.http.get<IOpcion>( url, {headers} );
   }
 
-  buscarOpcionPaginado(nombre:string, icono:string, esEmergente:boolean |string | null, pageSize:number):Observable<Paginado<IOpcion>>{
+  buscarOpcionPaginado(nombre:string, icono:string, esEmergente:boolean |string | null,page:number, pageSize:number):Observable<Paginado<IOpcion>>{
 
     const queryParams:any = {};
 
@@ -81,11 +81,9 @@ export class OpcionService {
     const headers = new HttpHeaders()
       .set('Authorization', `Bearer ${ token }`);
 
-    if(Object.keys(queryParams).length === 0){
-      return this.obtenerOpcionesPaginado(1,pageSize)
-    }else{
-      return this.http.get<Paginado<IOpcion>>( url, {headers, params:{...queryParams, pageSize:pageSize}} );
-    }
+
+    return this.http.get<Paginado<IOpcion>>( url, {headers, params:{...queryParams,page, pageSize}} );
+
 
   }
 

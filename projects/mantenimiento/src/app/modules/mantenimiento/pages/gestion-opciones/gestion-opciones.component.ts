@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { AlertService, DialogService, IDataGridElement } from 'ngx-sigape';
 import * as opcionActions from '../../../mantenimiento/store/opciones/opciones.actions'
 import { AgregarOpcionComponent } from '../../components/agregar-opcion/agregar-opcion.component';
+import { take } from 'rxjs';
 @Component({
   selector: 'app-gestion-opciones',
   templateUrl: './gestion-opciones.component.html',
@@ -23,8 +24,15 @@ export class GestionOpcionesComponent {
   }
 
   handleLoadData = (e:any) => {
-    this.store.dispatch(opcionActions.EstadoInicialModal());
-    this.store.dispatch(opcionActions.CargarListadoDeOpciones({page:e.page, pageSize:e.pageSize}))
+    this.state$.pipe(take(1)).subscribe(({opcion})=>{
+      if(!opcion.busqueda.esBusqueda){
+        this.store.dispatch(opcionActions.EstadoInicialModal());
+        this.store.dispatch(opcionActions.CargarListadoDeOpciones({page:e.page, pageSize:e.pageSize}))
+      }else{
+        this.store.dispatch(opcionActions.BuscarOpcion({nombre:opcion.busqueda.nombre, icono:opcion.busqueda.icono, esEmergente:opcion.busqueda.esEmergente,page:e.page, pageSize:e.pageSize}))
+      }
+    })
+
 
 
   }
