@@ -2,7 +2,7 @@
     (on-submit)="handleSubmit()"
     (on-reset)="handleClear()"
     (on-new)="handleClickNew()"
-
+    [hideNew]="true"
 >
 
     <div class="">
@@ -48,4 +48,14 @@
 </ngx-sigape-data-grid-from-filter>
 
 
-
+<div class="toolbar">
+    <div class="toolbarstart mat-typography col-page-size">
+      <div class="toolbarend">
+        <ngx-sigape-button-nuevo
+          [disabled]="false"
+          (on-click)="handleClickNew()"
+          *ngIf="tieneNuevoOpcion"
+        ></ngx-sigape-button-nuevo>
+    </div>
+  </div>
+</div>

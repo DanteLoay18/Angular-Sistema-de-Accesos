@@ -27,9 +27,18 @@ export class FormSearchOpcionComponent implements OnInit {
     esEmergente:null,
     tieneOpciones:false
   }
+  tieneNuevoOpcion:boolean=false;
 
   ngOnInit(): void {
    this.buildForm();
+   this.state$.subscribe(({opcion})=>{
+      opcion.current.opciones.map(({nombre, icono, esEmergente, esEliminado}:any)=>{
+        if(nombre==="NUEVO" && esEliminado===false){
+          console.log(esEliminado)
+          this.tieneNuevoOpcion=true;
+        }
+      })
+   })
   }
 
   private buildForm() {

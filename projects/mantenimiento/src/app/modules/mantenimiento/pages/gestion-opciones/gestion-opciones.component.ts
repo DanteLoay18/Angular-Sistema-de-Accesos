@@ -43,31 +43,22 @@ export class GestionOpcionesComponent {
               if (url === menu) {
                 submenus?.forEach(({nombre,opciones})=>{
                     if(nombre==="GESTION DE OPCIONES"){
-                      const opcionesArray= opciones?.map(({nombre,icono,esEmergente})=>{
-                          return {
-                              nombre,
-                              icono,
-                              esEmergente
-                          }
-                      })
+                      const opcionesArray = opciones?.filter(({ nombre, esEliminado }) => nombre !== "NUEVO" && esEliminado !== true)
+                                            .map(({ nombre, icono, esEmergente }) => ({
+                                              action: nombre,
+                                              icon: icono.toLowerCase(),
+                                              color: "primary",
+                                              tooltip: this.capitalizarPalabras(nombre.toLowerCase()),
+                                            }));
 
-                      const buttonsFiltrados = opcionesArray?.filter(({nombre})=> nombre!=="NUEVO")!;
-
-                      const buttonsDataGrid=buttonsFiltrados?.map(({nombre,icono,esEmergente})=>{
-                              return {
-
-                                        action: nombre,
-                                        icon: icono.toLowerCase(),
-                                        color: "primary",
-                                        tooltip: this.capitalizarPalabras(nombre.toLowerCase()),
-                                }
-
-                      })
-
-                      this.store.dispatch(opcionActions.CargarFormOpciones({opciones:opcionesArray!}))
-                      this.store.dispatch(opcionActions.CargarDataGridOpciones({columna: {  label: 'Acciones',
-                                                                                            field: 'buttons',
-                                                                                            buttons: buttonsDataGrid!}}))
+                      this.store.dispatch(opcionActions.CargarFormOpciones({ opciones: opcionesArray! }));
+                      this.store.dispatch(opcionActions.CargarDataGridOpciones({
+                        columna: {
+                          label: 'Acciones',
+                          field: 'buttons',
+                          buttons: opcionesArray,
+                        },
+                      }));
                     }
                 })
               }
