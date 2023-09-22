@@ -4,6 +4,7 @@ import * as globalConfigActions from '../actions';
 
 const estadoInicial : IAppGlobalConfig = {
  guidSistema:'aabbc0c9-f77e-45f9-bbe4-0f5d7f060253',
+ menu:"",
  isLoading:false,
  loaded:false,
  error:false
@@ -15,4 +16,5 @@ export const GlobalConfigReducer = createReducer(
   on(globalConfigActions.globalConfig, (state)=> ({...state, isLoading:true})),
   on(globalConfigActions.globalConfigSuccess, (state)=> ({...state, isLoading:false, loaded:true})),
   on(globalConfigActions.globalConfigFail, (state)=> ({...state, isLoading:false, error:true})),
+  on(globalConfigActions.globalConfigCargarMenu, (state, {menu})=> ({...state, menu})),
 )

@@ -6,5 +6,6 @@ export interface IDataGridElement<T> {
   source: IDataGridSource<T>;
   error: any;
   busqueda:any;
+  current:any;
   modalOpcion: any;
 }

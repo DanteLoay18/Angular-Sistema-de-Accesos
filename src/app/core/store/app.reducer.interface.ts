@@ -1,4 +1,4 @@
-import { IAppTitle } from "ngx-sigape";
+
 import { IUsuario } from "../interfaces/usuario.interface";
 
 
@@ -31,6 +31,7 @@ export interface IAppSession {
 
 export interface IAppGlobalConfig {
   guidSistema: string;
+  menu:string;
   isLoading: boolean;
   loaded: boolean;
   error: boolean;

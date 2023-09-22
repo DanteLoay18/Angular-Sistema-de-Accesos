@@ -1,6 +1,7 @@
 import { Component, ViewChild, TemplateRef, AfterContentInit, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IPerfiles, ISistema } from '@sac/core';
+import * as globalActions from 'src/app/core/store/actions';
 import { IContentSource } from 'src/app/core/interfaces/contentSource.interface';
 import { map, filter } from 'rxjs/operators';
 @Component({
@@ -9,6 +10,9 @@ import { map, filter } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit,AfterContentInit{
+  private store= inject(Store);
+
+  state$ =  this.store.select('mantenimiento');
   contentSource:IContentSource[]=[
 
     {
@@ -39,7 +43,6 @@ export class AppComponent implements OnInit,AfterContentInit{
     },
 
   ]
-  private store= inject(Store);
   sistemaId:string=""
   loading:boolean=true;
 
@@ -53,6 +56,7 @@ export class AppComponent implements OnInit,AfterContentInit{
   templates:TemplateRef<any>[]=[]
 
   ngOnInit(): void {
+    this.store.dispatch(globalActions.globalConfigCargarMenu({menu:"mantenimiento"}))
     this.store.select('globalConfig').subscribe(({guidSistema})=>{
       this.sistemaId=guidSistema
     })

@@ -3,7 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { buildUrlLogin, IPerfiles, SessionActions } from '@sac/core';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { IAppTitle } from 'ngx-sigape';
+import { IAppTitle, MultilevelNodes } from 'ngx-sigape';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit{
               NOMBRE_ROL: "ROL DEFAULT"
             },
   }
-  menus: any[]  = [
+  menus: MultilevelNodes[]  = [
 
   ];
 
@@ -60,9 +60,11 @@ export class HomeComponent implements OnInit{
 
                 const menus=sistema.menus.map(menu => {
                   return {
+                    id:menu.id,
                     label: this.capitalizarPalabras(menu.nombre),
                     icon: menu.icono.toLowerCase(),
                     link: menu.url.toLowerCase(),
+                    data:{}
                   }
                 })
 

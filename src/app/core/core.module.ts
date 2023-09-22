@@ -4,17 +4,27 @@ import { LocalStorageService } from './services';
 import { Store } from '@ngrx/store';
 import { APP_LOCAL_STORAGE } from './constants/app.constans';
 import { SessionActions } from './store';
+import * as GlobalConfigActions from './store/actions'
+import { Router } from '@angular/router';
 
 export function appInitializerFn(
   store: Store,
-  localStorage: LocalStorageService
+  localStorage: LocalStorageService,
+
 ) {
   return () => {
     const session = localStorage.get<any>(
       APP_LOCAL_STORAGE.SAC_TOKEN_KEY
     );
+    const menu = window.location.pathname.substring(1);
+
     if(session){
       store.dispatch(SessionActions.SessionValidateUser());
+
+      if(menu){
+        store.dispatch(GlobalConfigActions.globalConfigCargarMenu({menu:menu}));
+
+      }
     }
   };
 }

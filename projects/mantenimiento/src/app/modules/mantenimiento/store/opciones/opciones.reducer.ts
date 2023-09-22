@@ -19,31 +19,8 @@ export const estadoInicial: IDataGridElement<IOpcion>= {
 
             { label: 'Nombre', field: 'nombre' },
             { label: 'Icono', field: 'icono' },
-            { label: 'Emergente', field: 'esEmergente' },
-            {
-              label: 'Acciones',
-              field: 'buttons',
-              buttons: [
-                  {
-                    action: "EDITAR",
-                    icon: "edit",
-                    color: "primary",
-                    tooltip: "Editar",
-                },
-                {
-                  action: "CONSULTAR",
-                  icon: "search",
-                  color: "primary",
-                  tooltip: "Consultar",
-              },
-              {
-                action: "ELIMINAR",
-                icon: "delete",
-                color: "primary",
-                tooltip: "Eliminar",
-            }
-              ]
-          },
+            { label: 'Emergente', field: 'esEmergente' }
+
         ]
     },
     busqueda:{
@@ -52,7 +29,11 @@ export const estadoInicial: IDataGridElement<IOpcion>= {
       icono:"",
       esEmergente:null
     },
-
+    current:{
+      currentForm:"",
+      isLoading:false,
+      opciones:[]
+    },
     source: {
         items: [
         ],
@@ -94,5 +75,14 @@ export const SessionReducer = createReducer(
   on(opcionesActions.BuscarOpcion, (state, {nombre, icono, esEmergente}) => ({...state,busqueda:{...state.busqueda, nombre, icono, esEmergente}, loading:true})),
   on(opcionesActions.BuscarOpcionSuccess, (state, { listado }) => ({ ...state, loading:false,error:null, source:listado , busqueda:{...state.busqueda, esBusqueda:true}  })),
   on(opcionesActions.BuscarOpcionFail, (state, { error }) => ({ ...state, loading:false,error:error, busqueda:{...state.busqueda, esBusqueda:false}  })),
+  on(opcionesActions.CargarForm, (state, {currentForm})=>({...state, current:{...state.current, currentForm, isLoading:true}})),
+  on(opcionesActions.CargarFormOpciones, (state, {opciones})=>({...state, loading:true ,current:{...state.current, opciones, isLoading:false}})),
+  on(opcionesActions.CargarDataGridOpciones, (state, {columna})=> ({...state, loading:false, definition:{
+                                                                                                  columns:[
+                                                                                                    ...estadoInicial.definition.columns,
+                                                                                                    columna
+                                                                                                  ]
+                                                                                                }}))
+
   );
 

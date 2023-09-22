@@ -1,6 +1,17 @@
-<ng-container >
+<ng-container *ngIf="state$ | async as state">
+
+
+
+
+
+  <ng-container *ngIf="state.loading">
+    <ngx-sigape-loader-configuration></ngx-sigape-loader-configuration>
+  </ng-container>
 
 </ng-container>
+
+
+
 <div>
   <h3 *ngIf="true" > <span class="badge bg-secondary"
       style="background-color:#3F51B5 !important; color:#FFFFFF; font-weight:bold">PROCESO</span> :
@@ -31,7 +42,3 @@
   </ng-template>
 </app-app-general-contenedor-principal>
 <app-app-general-footer></app-app-general-footer>
-
-<ng-template sigapeTemplate="HOlaaa">
-
-</ng-template>

@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { IOpcion } from "../../interfaces/opcion.interface";
-import { FormType, IDataGridSource } from "ngx-sigape";
+import { FormType, IDataGridButton, IDataGridColumnDefinition, IDataGridDefinition, IDataGridSource } from "ngx-sigape";
 
 
 export const CargarListadoDeOpciones= createAction(
@@ -101,3 +101,18 @@ export const BuscarOpcionFail= createAction(
   '[Opcion] Buscar Opcion Fail',
   props<{ error:any}>()
 );
+
+export const CargarForm = createAction(
+  '[Opcion] Cargar Form',
+  props<{ currentForm: string}>()
+)
+
+export const CargarFormOpciones = createAction(
+  '[Opcion] Cargar Form Opciones',
+  props<{ opciones: any[]}>()
+)
+
+export const CargarDataGridOpciones = createAction(
+  '[Opcion] Cargar Data Grid Column de Opciones',
+  props<{ columna: IDataGridColumnDefinition}>()
+)
