@@ -177,19 +177,7 @@ table {
   }
 }
 
-:host {
-  ::ng-deep {
 
-    .cdk-overlay-container{
-      background-color: black;
-      .mat-mdc-option-active{
-        display: inline-flex;
-      }
-    }
 
-  }}
-.cdk-overlay-container{
-  .mat-mdc-option-active{
-    display: inline-flex;
-  }
-}
+
+

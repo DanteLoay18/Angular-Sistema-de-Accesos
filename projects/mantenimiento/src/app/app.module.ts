@@ -15,7 +15,7 @@ import { AgregarOpcionComponent } from './modules/mantenimiento/components/agreg
 import { MatSlideToggleModule, _MatSlideToggleRequiredValidatorModule } from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { LetterOnlyDirective } from './modules/mantenimiento/directives/letter-only.directive';
-import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { GestionSistemasComponent } from './modules/mantenimiento/pages/gestion-sistemas/gestion-sistemas.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,8 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
     GestionOpcionesComponent,
     FormSearchOpcionComponent,
     AgregarOpcionComponent,
-    LetterOnlyDirective
+    LetterOnlyDirective,
+    GestionSistemasComponent
   ],
   imports: [
     FormsModule,

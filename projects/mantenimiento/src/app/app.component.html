@@ -17,7 +17,7 @@
       style="background-color:#3F51B5 !important; color:#FFFFFF; font-weight:bold">PROCESO</span> :
     MANTENIMIENTO</h3>
 </div>
-<app-app-general-contenedor-principal [loading]="loading"  [contentSource]="contentSource" [templates]="templates">
+<app-app-general-contenedor-principal [loading]="loading"  [contentSource]="contentSource" [templates]="templates" >
 
   <ng-template #perfiles>
 
@@ -38,7 +38,7 @@
   </ng-template>
 
   <ng-template #sistemas>
-
+    <app-gestion-sistemas></app-gestion-sistemas>
   </ng-template>
 </app-app-general-contenedor-principal>
 <app-app-general-footer></app-app-general-footer>

@@ -130,5 +130,5 @@ export class Opcion{
     opcion.esEmergente=esEmergente;
     opcion.tieneOpciones=false;
     return opcion;
-}
+ }
 }

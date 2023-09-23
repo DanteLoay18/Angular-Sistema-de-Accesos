@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AlertService, DialogService, IDataGridElement } from 'ngx-sigape';
+import { AlertService, DialogService } from 'ngx-sigape';
 import * as opcionActions from '../../../mantenimiento/store/opciones/opciones.actions'
 import { AgregarOpcionComponent } from '../../components/agregar-opcion/agregar-opcion.component';
 import { filter, map, take } from 'rxjs';
@@ -12,13 +12,13 @@ import { IPerfiles, ISistema } from '@sac/core';
 })
 export class GestionOpcionesComponent {
 
-  gridElement!: IDataGridElement<any>;
+
   private store= inject(Store);
   private alertService= inject(AlertService);
+  private dialogService= inject(DialogService);
   state$ =  this.store.select('mantenimiento');
   stateSession$= this.store.select('session');
-  sistemaId:string=""
-  constructor(private dialogService: DialogService) { }
+  sistemaId:string="";
 
   ngOnInit() {
     this.store.dispatch(opcionActions.CargarListadoDeOpciones({page:1, pageSize:10}));
@@ -51,7 +51,9 @@ export class GestionOpcionesComponent {
                                               tooltip: this.capitalizarPalabras(nombre.toLowerCase()),
                                             }));
 
-                      this.store.dispatch(opcionActions.CargarFormOpciones({ opciones: opcionesArray! }));
+                      const opcionesCurrent= opciones?.filter(({esEliminado})=> esEliminado !==true);
+
+                      this.store.dispatch(opcionActions.CargarFormOpciones({ opciones: opcionesCurrent! }));
                       this.store.dispatch(opcionActions.CargarDataGridOpciones({
                         columna: {
                           label: 'Acciones',
