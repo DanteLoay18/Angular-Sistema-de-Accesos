@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { AppGeneralModule } from 'src/app/core/components/app-general/app-general.module';
-import { SharedModule } from 'ngx-sigape';
+import {  SharedModule } from 'ngx-sigape';
 import { GestionOpcionesComponent } from './modules/mantenimiento/pages/gestion-opciones/gestion-opciones.component';
 import { FormSearchOpcionComponent } from './modules/mantenimiento/components/form-search-opcion/form-search-opcion.component';
 import { StoreModule } from '@ngrx/store';
@@ -15,7 +15,11 @@ import { AgregarOpcionComponent } from './modules/mantenimiento/components/agreg
 import { MatSlideToggleModule, _MatSlideToggleRequiredValidatorModule } from '@angular/material/slide-toggle';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { LetterOnlyDirective } from './modules/mantenimiento/directives/letter-only.directive';
+import { NumberOnlyDirective } from './modules/mantenimiento/directives/number-only.directive';
 import { GestionSistemasComponent } from './modules/mantenimiento/pages/gestion-sistemas/gestion-sistemas.component';
+import { SistemasEffects } from './modules/mantenimiento/store/sistema/sistema.effects';
+import { FormSearchSistemaComponent } from './modules/mantenimiento/components/form-search-sistema/form-search-sistema.component';
+import { FormModalSistemaComponent } from './modules/mantenimiento/components/form-modal-sistema/form-modal-sistema.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,10 @@ import { GestionSistemasComponent } from './modules/mantenimiento/pages/gestion-
     FormSearchOpcionComponent,
     AgregarOpcionComponent,
     LetterOnlyDirective,
-    GestionSistemasComponent
+    NumberOnlyDirective,
+    GestionSistemasComponent,
+    FormSearchSistemaComponent,
+    FormModalSistemaComponent
   ],
   imports: [
     FormsModule,
@@ -39,7 +46,7 @@ import { GestionSistemasComponent } from './modules/mantenimiento/pages/gestion-
       name:'mantenimiento',
       reducer: fromMantenimiento.reducers
     }),
-    EffectsModule.forFeature([OpcionesEffects])
+    EffectsModule.forFeature([OpcionesEffects, SistemasEffects])
   ],
   providers: [
 

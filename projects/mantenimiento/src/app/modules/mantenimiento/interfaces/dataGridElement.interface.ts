@@ -7,5 +7,5 @@ export interface IDataGridElement<T> {
   error: any;
   busqueda:any;
   current:any;
-  modalOpcion: any;
+  modal: any;
 }

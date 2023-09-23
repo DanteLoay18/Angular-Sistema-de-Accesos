@@ -34,7 +34,6 @@ export class FormSearchOpcionComponent implements OnInit {
    this.state$.subscribe(({opcion})=>{
       opcion.current.opciones.map(({nombre, icono, esEmergente, esEliminado}:any)=>{
         if(nombre==="NUEVO" && esEliminado===false){
-          console.log(esEliminado)
           this.tieneNuevoOpcion=true;
         }
       })

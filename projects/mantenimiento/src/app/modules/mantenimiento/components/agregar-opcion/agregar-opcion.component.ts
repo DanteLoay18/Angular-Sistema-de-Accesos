@@ -30,7 +30,7 @@ export class AgregarOpcionComponent implements OnInit {
 
   ngOnInit(): void {
     this.state$.subscribe(({opcion})=>{
-      this.buildForm(opcion.modalOpcion.form,opcion.modalOpcion.type );
+      this.buildForm(opcion.modal.form,opcion.modal.type );
     })
 
 
@@ -76,8 +76,8 @@ export class AgregarOpcionComponent implements OnInit {
       this.store.select('mantenimiento').subscribe(({opcion})=>{
         page=opcion.source.page;
         pageSize=opcion.source.pageSize;
-        type=opcion.modalOpcion.type
-        id=opcion.modalOpcion.codigoOpcion
+        type=opcion.modal.type
+        id=opcion.modal.codigoOpcion
       })
 
       if(type===FormType.REGISTRAR){

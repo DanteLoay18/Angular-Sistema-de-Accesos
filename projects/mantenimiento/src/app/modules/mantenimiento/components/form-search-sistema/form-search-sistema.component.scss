@@ -1,0 +1,12 @@
+.toolbar {
+  display: flex;
+}
+
+.toolbarstart {
+  flex: 50%;
+}
+
+.toolbarend {
+  display: flex;
+  justify-content: flex-end;
+}

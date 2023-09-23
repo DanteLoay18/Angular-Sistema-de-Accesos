@@ -7,17 +7,17 @@
 
     <div class="">
       <div class="row m-3">
-        <div class="col-4">
+        <div class="col-6">
           <ngx-sigape-form-model-field
             variant="mask"
             label="Nombre"
             [formModelField]="form.model['nombre']"
             (on-change)="handleInputChange($event, 'nombre')"
-            appLetterOnly="nombre"
+            appLetterOnly="nombreSistema"
           >
           </ngx-sigape-form-model-field>
         </div>
-        <div class="col-4">
+        <div class="col-6">
           <ngx-sigape-form-model-field
             variant="mask"
             label="Icono"
@@ -27,14 +27,26 @@
           >
           </ngx-sigape-form-model-field>
         </div>
-        <div class="col-4">
+
+      </div>
+      <div class="row m-3">
+        <div class="col-6">
           <ngx-sigape-form-model-field
-            variant="select"
-            label="Es Emergente"
-            placeholder="--Seleccione --"
-            [formModelField]="form.model['esEmergente']"
-            [options]="listaEsEmergente"
-       ></ngx-sigape-form-model-field>
+          variant="mask"
+          label="Puerto"
+          [formModelField]="form.model['puerto']"
+          (on-change)="handleInputChange($event, 'puerto')"
+          appNumberOnly
+        ></ngx-sigape-form-model-field>
+        </div>
+        <div class="col-6">
+          <ngx-sigape-form-model-field
+          variant="mask"
+          label="Url"
+          [formModelField]="form.model['url']"
+          (on-change)="handleInputChange($event, 'url')"
+          appLetterOnly="url"
+        ></ngx-sigape-form-model-field>
         </div>
       </div>
 

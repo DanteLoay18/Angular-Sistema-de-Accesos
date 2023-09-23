@@ -1,13 +1,13 @@
 <ng-container *ngIf="state$ | async as state">
 
   <ngx-sigape-modal-form-container
-  [title]="state.opcion.modalOpcion.title"
+  [title]="state.opcion.modal.title"
   (on-dismiss)="handleClose()"
   [cancelLabel]="'Cerrar'"
   [cancelIcon]="'close'"
-  [loading]="state.opcion.modalOpcion.isLoading"
+  [loading]="state.opcion.modal.isLoading"
   (on-submit)="submit()"
-  [formType]="state.opcion.modalOpcion.type">
+  [formType]="state.opcion.modal.type">
 
   <div class="row">
     <div class="col-6">
@@ -15,7 +15,7 @@
         variant="mask"
         label="Nombre"
         matTooltip="Nombre Opcion"
-        [disabled]="state.opcion.modalOpcion.isLoading || state.opcion.modalOpcion.type == consultar"
+        [disabled]="state.opcion.modal.isLoading || state.opcion.modal.type == consultar"
         [formModelField]="form.model['nombre']"
         (on-change)="handleInputChange($event, 'nombre')"
         appLetterOnly="nombre"
@@ -26,7 +26,7 @@
         variant="mask"
         label="Icono"
         matTooltip="Icono Opcion"
-        [disabled]="state.opcion.modalOpcion.isLoading || state.opcion.modalOpcion.type == consultar"
+        [disabled]="state.opcion.modal.isLoading || state.opcion.modal.type == consultar"
         [formModelField]="form.model['icono']"
         (on-change)="handleInputChange($event, 'icono')"
         appLetterOnly="icono"
@@ -42,7 +42,7 @@
         label="Es Emergente"
         placeholder="--Seleccione --"
         matTooltip="Es emergente Opcion"
-        [disabled]="state.opcion.modalOpcion.isLoading || state.opcion.modalOpcion.type == consultar"
+        [disabled]="state.opcion.modal.isLoading || state.opcion.modal.type == consultar"
         [formModelField]="form.model['esEmergente']"
         [options]="listaEsEmergente"
        ></ngx-sigape-form-model-field>

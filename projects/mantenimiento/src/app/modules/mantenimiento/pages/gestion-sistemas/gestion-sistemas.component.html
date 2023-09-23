@@ -1,24 +1,24 @@
 
 <ng-container *ngIf="state$ | async as state">
 
-  <ng-container *ngIf="!state.opcion.current.isLoading">
+  <ng-container *ngIf="!state.sistema.current.isLoading">
     <div>
       <h4 *ngIf="true" > <span class="badge bg-secondary"
           style="background-color:#3F51B5 !important; color:#FFFFFF; font-weight:bold">ACTIVIDAD</span> :
         GESTION DE SISTEMAS</h4>
     </div>
 
-    <app-form-search-opcion ></app-form-search-opcion>
+    <app-form-search-sistema></app-form-search-sistema>
 
 
     <h3>Listado de Sistemas</h3>
 
     <ngx-sigape-data-grid
       (on-load-data)="handleLoadData($event)"
-      [loading]="state.opcion.loading"
-      [source]="state.opcion.source"
-      [definition]="state.opcion.definition"
-      [serverError]="state.opcion.error"
+      [loading]="state.sistema.loading"
+      [source]="state.sistema.source"
+      [definition]="state.sistema.definition"
+      [serverError]="state.sistema.error"
       (on-click-button)="handleClickButton($event)"
       >
     </ngx-sigape-data-grid>
@@ -26,7 +26,7 @@
   </ng-container>
 
 
-    <ngx-sigape-loader-block-ui [show]="state.opcion.current.isLoading"></ngx-sigape-loader-block-ui>
+    <ngx-sigape-loader-block-ui [show]="state.sistema.current.isLoading"></ngx-sigape-loader-block-ui>
 
 
 

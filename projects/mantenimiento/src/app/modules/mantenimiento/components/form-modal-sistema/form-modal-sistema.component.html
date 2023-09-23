@@ -1,0 +1,95 @@
+<ng-container *ngIf="state$ | async as state">
+
+  <ngx-sigape-modal-form-container
+  [title]="state.sistema.modal.title"
+  (on-dismiss)="handleClose()"
+  [cancelLabel]="'Cerrar'"
+  [cancelIcon]="'close'"
+  [loading]="state.sistema.modal.isLoading"
+  (on-submit)="submit()"
+  [formType]="state.sistema.modal.type">
+
+  <div class="row">
+    <div class="col-6">
+      <ngx-sigape-form-model-field
+        variant="mask"
+        label="Nombre"
+        matTooltip="Nombre Sistema"
+        [disabled]="state.sistema.modal.isLoading || state.sistema.modal.type == consultar"
+        [formModelField]="form.model['nombre']"
+        (on-change)="handleInputChange($event, 'nombre')"
+        appLetterOnly="nombre"
+       ></ngx-sigape-form-model-field>
+    </div>
+    <div class="col-6">
+      <ngx-sigape-form-model-field
+        variant="mask"
+        label="Icono"
+        matTooltip="Icono Sistema"
+        [disabled]="state.sistema.modal.isLoading || state.sistema.modal.type == consultar"
+        [formModelField]="form.model['icono']"
+        (on-change)="handleInputChange($event, 'icono')"
+        appLetterOnly="icono"
+       ></ngx-sigape-form-model-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+
+      <ngx-sigape-form-model-field
+        variant="mask"
+        label="Puerto"
+        matTooltip="Puerto Sistema"
+        [disabled]="state.sistema.modal.isLoading || state.sistema.modal.type == consultar"
+        [formModelField]="form.model['puerto']"
+        (on-change)="handleInputChange($event, 'puerto')"
+        appNumberOnly
+       ></ngx-sigape-form-model-field>
+
+
+
+
+    </div>
+
+    <div class="col-6">
+
+      <ngx-sigape-form-model-field
+        variant="mask"
+        label="Url"
+        matTooltip="Url Sistema"
+        [disabled]="state.sistema.modal.isLoading || state.sistema.modal.type == consultar"
+        [formModelField]="form.model['url']"
+        (on-change)="handleInputChange($event, 'url')"
+        appLetterOnly="url"
+       ></ngx-sigape-form-model-field>
+
+
+
+
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+
+      <ngx-sigape-form-model-field
+      variant="mask"
+      label="Imagen"
+      matTooltip="Imagen sistema"
+      [disabled]="state.sistema.modal.isLoading || state.sistema.modal.type == consultar"
+      [formModelField]="form.model['imagen']"
+      (on-change)="handleInputChange($event, 'imagen')"
+      appLetterOnly="imagen"
+     ></ngx-sigape-form-model-field>
+
+    </div>
+  </div>
+
+</ngx-sigape-modal-form-container>
+
+
+
+</ng-container>
+

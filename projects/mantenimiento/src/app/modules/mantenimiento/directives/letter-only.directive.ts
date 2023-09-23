@@ -15,7 +15,7 @@ export class LetterOnlyDirective {
       const inputValue = (event.target as HTMLInputElement).value;
       const newValue = inputValue.replace(/[^a-zA-Z]/g, ''); // Permite solo letras (mayúsculas y minúsculas)
       (event.target as HTMLInputElement).value = newValue; // Actualiza el valor en el elemento HTM
-    }else if(this.appLetterOnly==='icono'){
+    }else if(this.appLetterOnly==='icono' || this.appLetterOnly==="url"){
       const inputValue = (event.target as HTMLInputElement).value;
       const newValue = inputValue.replace(/[^a-zA-Z_]/g, ''); // Permite letras (mayúsculas y minúsculas) y guiones bajos
       (event.target as HTMLInputElement).value = newValue;
