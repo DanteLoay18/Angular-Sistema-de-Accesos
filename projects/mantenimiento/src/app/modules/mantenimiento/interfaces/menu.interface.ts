@@ -4,5 +4,4 @@ export interface IMenu{
   url?:string;
   opciones?:string[] | number;
   submenus?:string[] | number;
-  // opciones:
 }

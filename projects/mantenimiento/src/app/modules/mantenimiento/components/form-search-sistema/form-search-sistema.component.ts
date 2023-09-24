@@ -1,5 +1,5 @@
 import { CargarModalOpcion } from './../../store/opciones/opciones.actions';
-import { Component,inject } from '@angular/core';
+import { Component,OnInit,inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { DialogService, FormModel, FormType } from 'ngx-sigape';
 import { ISistema } from '../../interfaces/sistema.interface';
@@ -10,7 +10,7 @@ import { FormModalSistemaComponent } from '../form-modal-sistema/form-modal-sist
   templateUrl: './form-search-sistema.component.html',
   styleUrls: ['./form-search-sistema.component.scss']
 })
-export class FormSearchSistemaComponent {
+export class FormSearchSistemaComponent implements OnInit{
   private dialogService = inject(DialogService);
   private store = inject(Store);
   form!: FormModel<ISistema>;
@@ -69,22 +69,19 @@ export class FormSearchSistemaComponent {
     const validationRules:any = {
       nombre: /^[A-Za-z\s]+$/,
       icono: /^[A-Za-z_]+$/,
-      url: /^[A-Za-z_]+$/,
+      url: /^[A-Za-z]+$/,
       puerto: /^[0-9]+$/,
     };
 
-    // Verifica si el modelo tiene una regla de validación definida
     if (validationRules.hasOwnProperty(model)) {
       const regex = validationRules[model];
       if (regex.test(value)) {
-        // Si el valor cumple con la regla de validación, asigna el valor transformado
         if (model === 'nombre' || model === 'icono' || model === 'url') {
           this.form.model[model].setValue(value.toUpperCase());
         } else {
           this.form.model[model].setValue(value);
         }
       } else {
-        // Si no cumple con la regla de validación, elimina el último carácter
         this.form.model[model].setValue(value.slice(0, -1));
       }
     }

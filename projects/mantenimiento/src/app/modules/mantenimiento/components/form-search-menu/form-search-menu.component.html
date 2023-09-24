@@ -1,1 +1,53 @@
-<p>form-search-menu works!</p>
+
+<ngx-sigape-data-grid-from-filter
+    (on-submit)="handleSubmit()"
+    (on-reset)="handleClear()"
+    [hideNew]="true"
+>
+
+    <div class="">
+      <div class="row m-3">
+        <div class="col-6">
+          <ngx-sigape-form-model-field
+            variant="mask"
+            label="Nombre"
+            [formModelField]="form.model['nombre']"
+            (on-change)="handleInputChange($event, 'nombre')"
+            appLetterOnly="nombreSistema"
+          >
+          </ngx-sigape-form-model-field>
+        </div>
+        <div class="col-6">
+          <ngx-sigape-form-model-field
+            variant="mask"
+            label="Icono"
+            [formModelField]="form.model['icono']"
+            (on-change)="handleInputChange($event, 'icono')"
+            appLetterOnly="icono"
+          >
+          </ngx-sigape-form-model-field>
+        </div>
+
+      </div>
+      <div class="row m-3">
+
+        <div class="col-6">
+          <ngx-sigape-form-model-field
+          variant="mask"
+          label="Url"
+          [formModelField]="form.model['url']"
+          (on-change)="handleInputChange($event, 'url')"
+          appLetterOnly="url"
+        ></ngx-sigape-form-model-field>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+
+
+</ngx-sigape-data-grid-from-filter>
+
