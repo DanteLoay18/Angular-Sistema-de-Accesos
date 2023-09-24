@@ -1,0 +1,11 @@
+
+:host {
+  ::ng-deep {
+
+    .mdc-text-field--disabled {
+      background: #f7f7f7 !important;
+      color: #7b7b7b !important;
+    }
+  }
+
+}

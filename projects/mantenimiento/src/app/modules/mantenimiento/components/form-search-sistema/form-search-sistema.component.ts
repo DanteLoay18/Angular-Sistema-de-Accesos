@@ -66,22 +66,25 @@ export class FormSearchSistemaComponent {
   };
 
   handleInputChange({ value }: any, model:string) {
-    if(model==="nombre"){
-      if (/^[A-Za-z\s]+$/.test(value)) {
-        this.form.model[model].setValue(value.toUpperCase());
+    const validationRules:any = {
+      nombre: /^[A-Za-z\s]+$/,
+      icono: /^[A-Za-z_]+$/,
+      url: /^[A-Za-z_]+$/,
+      puerto: /^[0-9]+$/,
+    };
+
+    // Verifica si el modelo tiene una regla de validación definida
+    if (validationRules.hasOwnProperty(model)) {
+      const regex = validationRules[model];
+      if (regex.test(value)) {
+        // Si el valor cumple con la regla de validación, asigna el valor transformado
+        if (model === 'nombre' || model === 'icono' || model === 'url') {
+          this.form.model[model].setValue(value.toUpperCase());
+        } else {
+          this.form.model[model].setValue(value);
+        }
       } else {
-        this.form.model[model].setValue(value.slice(0, -1));
-      }
-    }else if(model==='icono'  || model==="url"){
-      if (/^[A-Za-z_]+$/.test(value)) {
-        this.form.model[model].setValue(value.toUpperCase());
-      } else {
-        this.form.model[model].setValue(value.slice(0, -1));
-      }
-    }else if(model==="puerto"){
-      if (/^[0-9]+$/.test(value)) {
-        this.form.model[model].setValue(value);
-      } else {
+        // Si no cumple con la regla de validación, elimina el último carácter
         this.form.model[model].setValue(value.slice(0, -1));
       }
     }

@@ -95,18 +95,14 @@ export class AgregarOpcionComponent implements OnInit {
   handleInputChange({ value }: any, model:string) {
     if(model==="nombre"){
       if (/^[A-Za-z]+$/.test(value)) {
-        // Si el valor es válido, asigna el valor en mayúsculas
         this.form.model[model].setValue(value.toUpperCase());
       } else {
-        // Si el valor no es válido, asigna solo la parte válida del valor
         this.form.model[model].setValue(value.slice(0, -1));
       }
     }else if(model==='icono'){
       if (/^[A-Za-z_]+$/.test(value)) {
-        // Si el valor es válido, asigna el valor en mayúsculas
         this.form.model[model].setValue(value.toUpperCase());
       } else {
-        // Si el valor no es válido, asigna solo la parte válida del valor
         this.form.model[model].setValue(value.slice(0, -1));
       }
     }
