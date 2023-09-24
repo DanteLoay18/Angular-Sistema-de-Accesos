@@ -19,6 +19,25 @@ export class MenusEffects{
     ofType(MenusActions.CargarListadoDeMenus),
     exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,false)
                       .pipe(
+                        map((listado)=>{
+                          const items= listado.items.map((listado)=>{
+                            if(Array.isArray(listado.submenus)){
+                              return {
+                                ...listado,
+                                submenus:listado.submenus?.length
+                              };
+                            }
+
+                            return {
+                              ...listado
+                            }
+
+                          })
+                          return {
+                            ...listado,
+                            items
+                          }
+                        }),
                         map((paginacion) => (MenusActions.CargarListadoDeMenusSuccess({listado:paginacion}))),
                         catchError((error) => of(MenusActions.CargarListadoDeMenusFail({error})))
                       )

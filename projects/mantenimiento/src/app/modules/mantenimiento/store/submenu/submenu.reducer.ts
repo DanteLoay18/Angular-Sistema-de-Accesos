@@ -15,6 +15,7 @@ export const estadoInicial: IDataGridElement<IMenu>= {
       columns: [
 
           { label: 'Nombre', field: 'nombre' },
+          { label: 'N° de Opciones', field: 'opciones'}
 
       ]
   },

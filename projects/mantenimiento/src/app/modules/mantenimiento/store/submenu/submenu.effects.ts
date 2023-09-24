@@ -19,6 +19,25 @@ export class SubmenusEffects{
     ofType(MenusActions.CargarListadoDeSubmenus),
     exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,true)
                       .pipe(
+                        map((listado)=>{
+                          const items= listado.items.map((listado)=>{
+                            if(Array.isArray(listado.opciones)){
+                              return {
+                                ...listado,
+                                opciones:listado.opciones?.length
+                              };
+                            }
+
+                            return {
+                              ...listado
+                            }
+
+                          })
+                          return {
+                            ...listado,
+                            items
+                          }
+                        }),
                         map((paginacion) => (MenusActions.CargarListadoDeSubmenusSuccess({listado:paginacion}))),
                         catchError((error) => of(MenusActions.CargarListadoDeSubmenusFail({error})))
                       )
@@ -45,7 +64,25 @@ export class SubmenusEffects{
      }),
      exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,true)
      .pipe(
+      map((listado)=>{
+        const items= listado.items.map((listado)=>{
+          if(Array.isArray(listado.opciones)){
+            return {
+              ...listado,
+              opciones:listado.opciones?.length
+            };
+          }
 
+          return {
+            ...listado
+          }
+
+        })
+        return {
+          ...listado,
+          items
+        }
+      }),
        map((paginacion) => (MenusActions.CargarListadoDeSubmenusSuccess({listado:paginacion}))),
        catchError((error) => of(MenusActions.CargarListadoDeSubmenusFail({error})))
      )
@@ -84,7 +121,25 @@ export class SubmenusEffects{
      }),
      exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,true)
      .pipe(
+      map((listado)=>{
+        const items= listado.items.map((listado)=>{
+          if(Array.isArray(listado.opciones)){
+            return {
+              ...listado,
+              opciones:listado.opciones?.length
+            };
+          }
 
+          return {
+            ...listado
+          }
+
+        })
+        return {
+          ...listado,
+          items
+        }
+      }),
        map((paginacion) => (MenusActions.CargarListadoDeSubmenusSuccess({listado:paginacion}))),
        catchError((error) => of(MenusActions.CargarListadoDeSubmenusFail({error})))
      )
@@ -123,7 +178,25 @@ export class SubmenusEffects{
      }),
      exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,true)
      .pipe(
+      map((listado)=>{
+        const items= listado.items.map((listado)=>{
+          if(Array.isArray(listado.opciones)){
+            return {
+              ...listado,
+              opciones:listado.opciones?.length
+            };
+          }
 
+          return {
+            ...listado
+          }
+
+        })
+        return {
+          ...listado,
+          items
+        }
+      }),
        map((paginacion) => (MenusActions.CargarListadoDeSubmenusSuccess({listado:paginacion}))),
        catchError((error) => of(MenusActions.CargarListadoDeSubmenusFail({error})))
      )

@@ -17,6 +17,7 @@ export const estadoInicial: IDataGridElement<IMenu>= {
           { label: 'Nombre', field: 'nombre' },
           { label: 'Icono', field: 'icono' },
           { label: 'Url', field: 'url' },
+          { label: 'N° de submenus', field: 'submenus' },
 
       ]
   },
