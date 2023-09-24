@@ -2,7 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, of } from 'rxjs';
 import * as SistemaActions from './sistema.action'
-import { OpcionService } from '../../service/opcion.service';
 import { map, catchError, tap } from 'rxjs/operators';
 import { AlertService } from 'ngx-sigape';
 import { SistemaService } from '../../service/sistema.service';

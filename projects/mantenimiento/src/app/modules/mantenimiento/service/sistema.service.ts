@@ -111,7 +111,6 @@ export class SistemaService {
     const headers = new HttpHeaders()
       .set('Authorization', `Bearer ${ token }`);
 
-url
     return this.http.put<IOpcion>( urlPeticion,{nombre, icono, url, puerto,imagen}, {headers} );
   }
 }

@@ -20,6 +20,10 @@ import { GestionSistemasComponent } from './modules/mantenimiento/pages/gestion-
 import { SistemasEffects } from './modules/mantenimiento/store/sistema/sistema.effects';
 import { FormSearchSistemaComponent } from './modules/mantenimiento/components/form-search-sistema/form-search-sistema.component';
 import { FormModalSistemaComponent } from './modules/mantenimiento/components/form-modal-sistema/form-modal-sistema.component';
+import { GestionMenusComponent } from './modules/mantenimiento/pages/gestion-menus/gestion-menus.component';
+import { FormSearchMenuComponent } from './modules/mantenimiento/components/form-search-menu/form-search-menu.component';
+import { FormModalMenuComponent } from './modules/mantenimiento/components/form-modal-menu/form-modal-menu.component';
+import { MenusEffects } from './modules/mantenimiento/store/menu/menu.effects';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,10 @@ import { FormModalSistemaComponent } from './modules/mantenimiento/components/fo
     NumberOnlyDirective,
     GestionSistemasComponent,
     FormSearchSistemaComponent,
-    FormModalSistemaComponent
+    FormModalSistemaComponent,
+    GestionMenusComponent,
+    FormSearchMenuComponent,
+    FormModalMenuComponent,
   ],
   imports: [
     FormsModule,
@@ -46,7 +53,7 @@ import { FormModalSistemaComponent } from './modules/mantenimiento/components/fo
       name:'mantenimiento',
       reducer: fromMantenimiento.reducers
     }),
-    EffectsModule.forFeature([OpcionesEffects, SistemasEffects])
+    EffectsModule.forFeature([OpcionesEffects, SistemasEffects, MenusEffects])
   ],
   providers: [
 
