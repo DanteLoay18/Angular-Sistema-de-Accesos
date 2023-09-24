@@ -1,14 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, of } from 'rxjs';
-import * as MenusActions from './menu.actions'
+import * as MenusActions from './submenu.actions'
 import { map, catchError, tap } from 'rxjs/operators';
 import { AlertService } from 'ngx-sigape';
 import { MenuService } from '../../service/menu.service';
 
 
 @Injectable()
-export class MenusEffects{
+export class SubmenusEffects{
 
 
   private actions$ = inject(Actions);
@@ -16,38 +16,38 @@ export class MenusEffects{
   private alertService= inject(AlertService);
 
   listarMenu$ = createEffect(()=>  this.actions$.pipe(
-    ofType(MenusActions.CargarListadoDeMenus),
-    exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,false)
+    ofType(MenusActions.CargarListadoDeSubmenus),
+    exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,true)
                       .pipe(
-                        map((paginacion) => (MenusActions.CargarListadoDeMenusSuccess({listado:paginacion}))),
-                        catchError((error) => of(MenusActions.CargarListadoDeMenusFail({error})))
+                        map((paginacion) => (MenusActions.CargarListadoDeSubmenusSuccess({listado:paginacion}))),
+                        catchError((error) => of(MenusActions.CargarListadoDeSubmenusFail({error})))
                       )
                 )
     )
   )
 
   agregarMenu$ = createEffect(()=>  this.actions$.pipe(
-    ofType(MenusActions.AgregarMenu),
-    exhaustMap(({nombre, icono, url ,esSubmenu,page,pageSize})=> this.menuService.agregarMenu(nombre,esSubmenu, icono, url, )
+    ofType(MenusActions.AgregarSubmenu),
+    exhaustMap(({nombre,esSubmenu,page,pageSize})=> this.menuService.agregarMenu(nombre,esSubmenu )
                       .pipe(
-                        map(() => (MenusActions.AgregarMenuSuccess({page,pageSize}))),
-                        catchError((error) => of(MenusActions.AgregarMenuFail({error})))
+                        map(() => (MenusActions.AgregarSubmenuSuccess({page,pageSize}))),
+                        catchError((error) => of(MenusActions.AgregarSubmenuFail({error})))
                       )
                 )
     )
   )
 
   agregarMenuSuccess$ = createEffect(()=>  this.actions$.pipe(
-    ofType(MenusActions.AgregarMenuSuccess),
+    ofType(MenusActions.AgregarSubmenuSuccess),
     tap(()=>{
       this.alertService.open(`<div style="color: black;">El registro se guardo correctamente</div>`, '', { icon: "success", htmlContent: true });
 
      }),
-     exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,false)
+     exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,true)
      .pipe(
 
-       map((paginacion) => (MenusActions.CargarListadoDeMenusSuccess({listado:paginacion}))),
-       catchError((error) => of(MenusActions.CargarListadoDeMenusFail({error})))
+       map((paginacion) => (MenusActions.CargarListadoDeSubmenusSuccess({listado:paginacion}))),
+       catchError((error) => of(MenusActions.CargarListadoDeSubmenusFail({error})))
      )
 )
    )
@@ -56,37 +56,37 @@ export class MenusEffects{
   agregarMenuFail$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(MenusActions.AgregarMenuFail),
+        ofType(MenusActions.AgregarSubmenuFail),
         tap(({error}) => {
            this.alertService.open(`<div style="color: black;">${error.error.message}</div>`, '<div style="color: red;">Error</div>', { icon: "error", htmlContent: true });
 
         })
       ),
-    { dispatch: false }
+    { dispatch: true }
   );
 
   eliminarMenu$ = createEffect(()=>  this.actions$.pipe(
-    ofType(MenusActions.EliminarMenu),
+    ofType(MenusActions.EliminarSubmenu),
     exhaustMap(({id, page,pageSize})=> this.menuService.eliminarMenu(id)
                       .pipe(
-                        map(() => (MenusActions.EliminarMenuSuccess({page,pageSize}))),
-                        catchError((error) => of(MenusActions.EliminarMenuFail({error})))
+                        map(() => (MenusActions.EliminarSubmenuSuccess({page,pageSize}))),
+                        catchError((error) => of(MenusActions.EliminarSubmenuFail({error})))
                       )
                 )
     )
   )
 
   eliminarMenuSuccess$ = createEffect(()=>  this.actions$.pipe(
-    ofType(MenusActions.EliminarMenuSuccess),
+    ofType(MenusActions.EliminarSubmenuSuccess),
     tap(()=>{
       this.alertService.open('Registro eliminado', undefined, { icon: 'success' });
 
      }),
-     exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,false)
+     exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,true)
      .pipe(
 
-       map((paginacion) => (MenusActions.CargarListadoDeMenusSuccess({listado:paginacion}))),
-       catchError((error) => of(MenusActions.CargarListadoDeMenusFail({error})))
+       map((paginacion) => (MenusActions.CargarListadoDeSubmenusSuccess({listado:paginacion}))),
+       catchError((error) => of(MenusActions.CargarListadoDeSubmenusFail({error})))
      )
 )
    ),
@@ -95,37 +95,37 @@ export class MenusEffects{
   eliminarMenuFail$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(MenusActions.EliminarMenuFail),
+        ofType(MenusActions.EliminarSubmenuFail),
         tap(({error}) => {
            this.alertService.open(`<div style="color: black;">${error.error.message}</div>`, '<div style="color: red;">Error</div>', { icon: "error", htmlContent: true });
 
         })
       ),
-    { dispatch: false }
+    { dispatch: true }
   );
 
   editarMenu$ = createEffect(()=>  this.actions$.pipe(
-    ofType(MenusActions.EditarMenu),
-    exhaustMap(({id,nombre, icono, url, page,pageSize})=> this.menuService.editarMenu(id,nombre, icono, url)
+    ofType(MenusActions.EditarSubmenu),
+    exhaustMap(({id,nombre, page,pageSize})=> this.menuService.editarMenu(id,nombre)
                       .pipe(
-                        map((opcion) => (MenusActions.EditarMenuSuccess({page,pageSize}))),
-                        catchError((error) => of(MenusActions.EditarMenuFail({error})))
+                        map((opcion) => (MenusActions.EditarSubmenuSuccess({page,pageSize}))),
+                        catchError((error) => of(MenusActions.EditarSubmenuFail({error})))
                       )
                 )
     )
   )
 
   editarMenuSuccess$ = createEffect(()=>  this.actions$.pipe(
-    ofType(MenusActions.EditarMenuSuccess),
+    ofType(MenusActions.EditarSubmenuSuccess),
     tap(()=>{
       this.alertService.open('El Registro se actualizo correctamente', undefined, { icon: 'success' });
 
      }),
-     exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,false)
+     exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,true)
      .pipe(
 
-       map((paginacion) => (MenusActions.CargarListadoDeMenusSuccess({listado:paginacion}))),
-       catchError((error) => of(MenusActions.CargarListadoDeMenusFail({error})))
+       map((paginacion) => (MenusActions.CargarListadoDeSubmenusSuccess({listado:paginacion}))),
+       catchError((error) => of(MenusActions.CargarListadoDeSubmenusFail({error})))
      )
 )
    ),
@@ -134,13 +134,13 @@ export class MenusEffects{
   editarMenuFail$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(MenusActions.EditarMenuFail),
+        ofType(MenusActions.EditarSubmenuFail),
         tap(({error}) => {
            this.alertService.open(`<div style="color: black;">${error.error.message}</div>`, '<div style="color: red;">Error</div>', { icon: "error", htmlContent: true });
 
         })
       ),
-    { dispatch: false }
+    { dispatch: true }
   );
 
   setModalConsulta$ = createEffect(()=>  this.actions$.pipe(
@@ -166,11 +166,11 @@ export class MenusEffects{
   )
 
   buscarMenu$ = createEffect(()=>  this.actions$.pipe(
-    ofType(MenusActions.BuscarMenu),
-    exhaustMap(({nombre, icono, url,page, pageSize})=> this.menuService.buscarMenuPaginado(nombre, false,page,pageSize,icono, url ,)
+    ofType(MenusActions.BuscarSubmenu),
+    exhaustMap(({nombre,page, pageSize})=> this.menuService.buscarMenuPaginado(nombre,true,page,pageSize)
                       .pipe(
-                        map((paginacion) => (MenusActions.BuscarMenuSuccess({listado:paginacion}))),
-                        catchError((error) => of(MenusActions.BuscarMenuFail({error})))
+                        map((paginacion) => (MenusActions.BuscarSubmenuSuccess({listado:paginacion}))),
+                        catchError((error) => of(MenusActions.BuscarSubmenuFail({error})))
                       )
                 )
     )

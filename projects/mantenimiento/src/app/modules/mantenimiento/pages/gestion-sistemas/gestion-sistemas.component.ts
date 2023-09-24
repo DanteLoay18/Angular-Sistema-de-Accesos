@@ -48,7 +48,10 @@ export class GestionSistemasComponent implements OnInit{
                                               icon: icono.toLowerCase(),
                                               color: "primary",
                                               tooltip: this.capitalizarPalabras(nombre.toLowerCase()),
-                                            }));
+                                            })).sort((a, b) => {
+                                              const order = [ "CONSULTAR", "EDITAR", "ELIMINAR"];
+                                              return order.indexOf(a.action) - order.indexOf(b.action);
+                                            });
 
                       const opcionesCurrent= opciones?.filter(({esEliminado})=> esEliminado !==true);
 

@@ -58,7 +58,7 @@ export class MenuService {
     return this.http.get<IMenu>( url, {headers} );
   }
 
-  buscarMenuPaginado(nombre:string, icono:string, url:string,esSubmenu:boolean, page:number, pageSize:number):Observable<Paginado<IMenu>>{
+  buscarMenuPaginado(nombre:string,esSubmenu:boolean, page:number, pageSize:number, icono?:string, url?:string):Observable<Paginado<IMenu>>{
 
     const queryParams:any = {};
 
@@ -66,11 +66,11 @@ export class MenuService {
       queryParams['nombre'] = nombre;
     }
 
-    if (icono.length>0) {
+    if (icono && icono?.length>0 ) {
       queryParams['icono'] = icono;
     }
 
-    if (url.length>0) {
+    if (url && url?.length>0) {
       queryParams['url'] = url;
     }
 

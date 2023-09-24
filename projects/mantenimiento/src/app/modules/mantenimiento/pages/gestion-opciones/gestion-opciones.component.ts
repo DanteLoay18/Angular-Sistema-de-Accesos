@@ -44,12 +44,15 @@ export class GestionOpcionesComponent {
                 submenus?.forEach(({nombre,opciones})=>{
                     if(nombre==="GESTION DE OPCIONES"){
                       const opcionesArray = opciones?.filter(({ nombre, esEliminado }) => nombre !== "NUEVO" && esEliminado !== true)
-                                            .map(({ nombre, icono, esEmergente }) => ({
+                                            .map(({ nombre, icono }) => ({
                                               action: nombre,
                                               icon: icono.toLowerCase(),
                                               color: "primary",
                                               tooltip: this.capitalizarPalabras(nombre.toLowerCase()),
-                                            }));
+                                            })).sort((a, b) => {
+                                              const order = ["CONSULTAR", "EDITAR", "ELIMINAR"];
+                                              return order.indexOf(a.action) - order.indexOf(b.action);
+                                            });
 
                       const opcionesCurrent= opciones?.filter(({esEliminado})=> esEliminado !==true);
 

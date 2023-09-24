@@ -24,6 +24,7 @@ import { GestionMenusComponent } from './modules/mantenimiento/pages/gestion-men
 import { FormSearchMenuComponent } from './modules/mantenimiento/components/form-search-menu/form-search-menu.component';
 import { FormModalMenuComponent } from './modules/mantenimiento/components/form-modal-menu/form-modal-menu.component';
 import { MenusEffects } from './modules/mantenimiento/store/menu/menu.effects';
+import { SubmenusEffects } from './modules/mantenimiento/store/submenu/submenu.effects';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import { MenusEffects } from './modules/mantenimiento/store/menu/menu.effects';
       name:'mantenimiento',
       reducer: fromMantenimiento.reducers
     }),
-    EffectsModule.forFeature([OpcionesEffects, SistemasEffects, MenusEffects])
+    EffectsModule.forFeature([OpcionesEffects, SistemasEffects, MenusEffects, SubmenusEffects])
   ],
   providers: [
 

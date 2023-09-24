@@ -10,11 +10,20 @@
 
     <app-form-search-menu></app-form-search-menu>
 
+    <div class="row">
+      <div class="col-md-8">
+
+      </div>
+      <div class="col-md-4 text-end">
+        <ngx-sigape-base-button label="Agregar Menu" color="accent" icon="add_circle" (on-click)="handleClickAgregarMenu()"
+                        [disabled]="state.isLoading"></ngx-sigape-base-button>
+      </div>
+    </div>
 
     <h3>Listado de Menus</h3>
 
     <ngx-sigape-data-grid
-      (on-load-data)="handleLoadData($event)"
+      (on-load-data)="handleLoadDataMenu($event)"
       [loading]="state.menu.loading"
       [source]="state.menu.source"
       [definition]="state.menu.definition"
@@ -23,14 +32,24 @@
       >
     </ngx-sigape-data-grid>
 
+    <div class="row mt-5">
+      <div class="col-md-8">
+
+      </div>
+      <div class="col-md-4 text-end">
+        <ngx-sigape-base-button label="Agregar Submenu" color="accent" icon="add_circle" (on-click)="handleClickAgregarMenu()"
+                        [disabled]="state.isLoading"></ngx-sigape-base-button>
+      </div>
+    </div>
+
     <h3>Listado de Submenus</h3>
 
     <ngx-sigape-data-grid
-      (on-load-data)="handleLoadData($event)"
-      [loading]="state.menu.loading"
-      [source]="state.menu.source"
-      [definition]="state.menu.definition"
-      [serverError]="state.menu.error"
+      (on-load-data)="handleLoadDataSubmenu($event)"
+      [loading]="state.submenu.loading"
+      [source]="state.submenu.source"
+      [definition]="state.submenu.definition"
+      [serverError]="state.submenu.error"
       (on-click-button)="handleClickButton($event)"
       >
     </ngx-sigape-data-grid>

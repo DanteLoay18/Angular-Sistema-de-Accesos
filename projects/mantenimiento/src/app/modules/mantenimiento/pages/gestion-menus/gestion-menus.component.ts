@@ -1,7 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AlertService, DialogService } from 'ngx-sigape';
-import * as MenusActions from '../../store/menu/menu.actions'
+import * as MenusActions from '../../store/menu/menu.actions';
+import * as SubmenusActions from '../../store/submenu/submenu.actions';
 import { FormModalMenuComponent } from '../../components/form-modal-menu/form-modal-menu.component';
 import { take, filter } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -21,6 +22,7 @@ export class GestionMenusComponent implements OnInit{
 
   ngOnInit(): void {
     this.store.dispatch(MenusActions.CargarListadoDeMenus({page:1, pageSize:10}));
+    this.store.dispatch(SubmenusActions.CargarListadoDeSubmenus({page:1, pageSize:10}));
     this.store.select('globalConfig').subscribe(({guidSistema})=>{
       this.sistemaId=guidSistema
     })
@@ -42,22 +44,51 @@ export class GestionMenusComponent implements OnInit{
               if (url === menu) {
                 submenus?.forEach(({nombre,opciones})=>{
                     if(nombre==="GESTION DE MENUS"){
-                      const opcionesArray = opciones?.filter(({ nombre, esEliminado }) => nombre !== "NUEVO" && esEliminado !== true)
-                                            .map(({ nombre, icono, esEmergente }) => ({
-                                              action: nombre,
-                                              icon: icono.toLowerCase(),
-                                              color: "primary",
-                                              tooltip: this.capitalizarPalabras(nombre.toLowerCase()),
-                                            }));
+                      const opcionesMenusArray = opciones
+                                                        ?.filter(({ nombre, esEliminado }) => nombre !== "NUEVO" && esEliminado !== true)
+                                                        .filter(({nombre, esEliminado})=> nombre!=="OPCIONES" && esEliminado !== true)
+                                                        .map(({ nombre, icono }) => ({
+                                                          action: nombre,
+                                                          icon: icono.toLowerCase(),
+                                                          color: "primary",
+                                                          tooltip: this.capitalizarPalabras(nombre.toLowerCase()),
+                                                        }))
+                                                        .sort((a, b) => {
+                                                          const order = ["SUBMENUS", "CONSULTAR", "EDITAR", "ELIMINAR"];
+                                                          return order.indexOf(a.action) - order.indexOf(b.action);
+                                                        });
 
-                      const opcionesCurrent= opciones?.filter(({esEliminado})=> esEliminado !==true);
+                      const opcionesMenusCurrent= opciones?.filter(({nombre,esEliminado})=> nombre!=="OPCIONES" && esEliminado !==true);
+                      const opcionesSubmenusArray = opciones
+                                                        ?.filter(({ nombre, esEliminado }) => nombre !== "NUEVO" && esEliminado !== true)
+                                                        .filter(({nombre, esEliminado})=> nombre!=="SUBMENUS" && esEliminado !== true)
+                                                        .map(({ nombre, icono }) => ({
+                                                          action: nombre,
+                                                          icon: icono.toLowerCase(),
+                                                          color: "primary",
+                                                          tooltip: this.capitalizarPalabras(nombre.toLowerCase()),
+                                                        }))
+                                                        .sort((a, b) => {
+                                                          const order = ["OPCIONES", "CONSULTAR", "EDITAR", "ELIMINAR"];
+                                                          return order.indexOf(a.action) - order.indexOf(b.action);
+                                                        });
 
-                      this.store.dispatch(MenusActions.CargarFormMenus({ opciones: opcionesCurrent! }));
+                      const opcionesSubmenusCurrent= opciones?.filter(({nombre,esEliminado})=> nombre!=="SUBMENUS" && esEliminado !==true);
+
+                      this.store.dispatch(MenusActions.CargarFormMenus({ opciones: opcionesMenusCurrent! }));
                       this.store.dispatch(MenusActions.CargarDataGridMenus({
                         columna: {
                           label: 'Acciones',
                           field: 'buttons',
-                          buttons: opcionesArray,
+                          buttons: opcionesMenusArray,
+                        },
+                      }));
+                      this.store.dispatch(SubmenusActions.CargarFormSubmenus({ opciones: opcionesSubmenusCurrent! }));
+                      this.store.dispatch(SubmenusActions.CargarDataGridSubmenus({
+                        columna: {
+                          label: 'Acciones',
+                          field: 'buttons',
+                          buttons: opcionesSubmenusArray,
                         },
                       }));
                     }
@@ -75,21 +106,31 @@ export class GestionMenusComponent implements OnInit{
     }).join(' ');
   }
 
-  handleLoadData = (e:any) => {
+  handleLoadDataMenu = (e:any) => {
     this.state$.pipe(take(1)).subscribe(({sistema})=>{
       if(!sistema.busqueda.esBusqueda){
         this.store.dispatch(MenusActions.EstadoInicialModal());
         this.store.dispatch(MenusActions.CargarListadoDeMenus({page:e.page, pageSize:e.pageSize}))
       }else{
         this.store.dispatch(MenusActions.BuscarMenu({nombre:sistema.busqueda.nombre, icono:sistema.busqueda.icono, url:sistema.busqueda.url,page:e.page, pageSize:e.pageSize}))
+        this.store.dispatch(SubmenusActions.BuscarSubmenu({nombre:sistema.busqueda.nombre,page:e.page, pageSize:e.pageSize}))
       }
     })
+  }
 
-
-
+  handleLoadDataSubmenu = (e:any) => {
+    this.state$.pipe(take(1)).subscribe(({sistema})=>{
+      if(!sistema.busqueda.esBusqueda){
+        this.store.dispatch(SubmenusActions.EstadoInicialModal());
+        this.store.dispatch(SubmenusActions.CargarListadoDeSubmenus({page:e.page, pageSize:e.pageSize}))
+      }else{
+        this.store.dispatch(SubmenusActions.BuscarSubmenu({nombre:sistema.busqueda.nombre,page:e.page, pageSize:e.pageSize}))
+      }
+    })
   }
 
   handleClickButton = (e: any) => {
+    console.log(e);
 		switch (e.action) {
 
 			case 'EDITAR':
@@ -129,6 +170,10 @@ export class GestionMenusComponent implements OnInit{
 
       }
     });
+  }
+
+  handleClickAgregarMenu(){
+
   }
 
 }
