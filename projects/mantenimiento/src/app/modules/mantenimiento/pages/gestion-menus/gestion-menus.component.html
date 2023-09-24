@@ -1,7 +1,7 @@
 
 <ng-container *ngIf="state$ | async as state">
 
- <ng-container *ngIf="!state.menu.current.isLoading">   <!--Agregar el otro o sea el state.menu y state.submenu -->
+ <ng-container *ngIf="!state.menu.current.isLoading && !state.submenu.current.isLoading">   <!--Agregar el otro o sea el state.menu y state.submenu -->
     <div>
       <h4 *ngIf="true" > <span class="badge bg-secondary"
           style="background-color:#3F51B5 !important; color:#FFFFFF; font-weight:bold">ACTIVIDAD</span> :
@@ -37,7 +37,7 @@
 
       </div>
       <div class="col-md-4 text-end">
-        <ngx-sigape-base-button label="Agregar Submenu" color="accent" icon="add_circle" (on-click)="handleClickAgregarMenu()"
+        <ngx-sigape-base-button label="Agregar Submenu" color="accent" icon="add_circle" (on-click)="handleClickAgregarSubmenu()"
                         [disabled]="state.isLoading"></ngx-sigape-base-button>
       </div>
     </div>
@@ -57,7 +57,7 @@
   </ng-container>
 
 
-    <ngx-sigape-loader-block-ui [show]="state.menu.current.isLoading"></ngx-sigape-loader-block-ui>
+    <ngx-sigape-loader-block-ui [show]="state.menu.current.isLoading && state.submenu.current.isLoading"></ngx-sigape-loader-block-ui>
 
 
 

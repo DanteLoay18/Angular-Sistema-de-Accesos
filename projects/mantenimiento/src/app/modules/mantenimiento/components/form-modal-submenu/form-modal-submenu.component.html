@@ -1,0 +1,36 @@
+<ng-container *ngIf="state$ | async as state">
+
+  <ngx-sigape-modal-form-container
+  [title]="state.submenu.modal.title"
+  (on-dismiss)="handleClose()"
+  [cancelLabel]="'Cerrar'"
+  [cancelIcon]="'close'"
+  [loading]="state.submenu.modal.isLoading"
+  (on-submit)="submit()"
+  [formType]="state.submenu.modal.type">
+
+  <div class="row">
+    <div class="col-6">
+      <ngx-sigape-form-model-field
+        variant="mask"
+        label="Nombre"
+        matTooltip="Nombre Menu"
+        [disabled]="state.submenu.modal.isLoading || state.submenu.modal.type == consultar"
+        [formModelField]="form.model['nombre']"
+        (on-change)="handleInputChange($event, 'nombre')"
+        appLetterOnly="nombre"
+       ></ngx-sigape-form-model-field>
+    </div>
+
+  </div>
+
+
+
+
+
+</ngx-sigape-modal-form-container>
+
+
+
+</ng-container>
+

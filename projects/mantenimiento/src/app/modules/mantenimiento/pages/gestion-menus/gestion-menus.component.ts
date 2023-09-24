@@ -7,6 +7,8 @@ import { FormModalMenuComponent } from '../../components/form-modal-menu/form-mo
 import { take, filter } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IMenu, IPerfiles, ISistema } from '@sac/core';
+import { FormModalSubmenuComponent } from '../../components/form-modal-submenu/form-modal-submenu.component';
+import { CargarModalOpcion } from '../../store/opciones/opciones.actions';
 @Component({
   selector: 'app-gestion-menus',
   templateUrl: './gestion-menus.component.html',
@@ -29,7 +31,8 @@ export class GestionMenusComponent implements OnInit{
 
 
     const menu = window.location.pathname.substring(1).toUpperCase();
-    this.store.dispatch(MenusActions.CargarForm({currentForm:'sistema'}))
+    this.store.dispatch(MenusActions.CargarForm({currentForm:'menu'}))
+    this.store.dispatch(SubmenusActions.CargarForm({currentForm:'menu'}))
     this.stateSession$.pipe(
         filter(({ user }) => user !== null),
         map(({ user }) => user.perfiles.filter(({ activo }:IPerfiles) => activo)),
@@ -130,17 +133,31 @@ export class GestionMenusComponent implements OnInit{
   }
 
   handleClickButton = (e: any) => {
-    console.log(e);
 		switch (e.action) {
 
 			case 'EDITAR':
-        this.openModalEditar(e.item._id);
+        if(!e.item.esSubmenu){
+          this.openModalEditar(e.item._id);
+        }else{
+          this.openModalSubmenuEditar(e.item._id)
+        }
+
       break;
       case 'CONSULTAR':
-        this.openModalConsultar(e.item._id);
+        if(!e.item.esSubmenu){
+          this.openModalConsultar(e.item._id);
+        }else{
+          this.openModalSubmenuConsultar(e.item._id)
+        }
+
       break;
       case 'ELIMINAR':
-        this.handleDeleteOpcion(e.item._id);
+        if(!e.item.esSubmenu){
+          this.handleDeleteMenu(e.item._id);
+        }else{
+          this.handleDeleteSubmenu(e.item._id);
+        }
+
       break;
       default:
         break;
@@ -152,12 +169,21 @@ export class GestionMenusComponent implements OnInit{
     this.dialogService.open(FormModalMenuComponent,'md')
   }
 
+  openModalSubmenuConsultar(id:string){
+    this.store.dispatch(SubmenusActions.SetModalReadOnly({id}));
+    this.dialogService.open(FormModalSubmenuComponent,'md')
+  }
+
   openModalEditar(id:string){
     this.store.dispatch(MenusActions.SetModalEditar({id}));
     this.dialogService.open(FormModalMenuComponent,'md')
   }
 
-  async handleDeleteOpcion(id:string){
+  openModalSubmenuEditar(id:string){
+    this.store.dispatch(SubmenusActions.SetModalEditar({id}));
+    this.dialogService.open(FormModalSubmenuComponent,'md')
+  }
+  async handleDeleteMenu(id:string){
     let page:number;
     let pageSize:number;
     this.store.select('mantenimiento').subscribe(({sistema})=>{
@@ -172,8 +198,35 @@ export class GestionMenusComponent implements OnInit{
     });
   }
 
+  async handleDeleteSubmenu(id:string){
+    let page:number;
+    let pageSize:number;
+    this.store.select('mantenimiento').subscribe(({sistema})=>{
+      page=sistema.source.page;
+      pageSize=sistema.source.pageSize
+    })
+    this.alertService.open('¿Está seguro de eliminar el registro?', undefined, { confirm: true }).then((confirm) => {
+      if (confirm) {
+         this.store.dispatch(SubmenusActions.EliminarSubmenu({id,page,pageSize}));
+
+      }
+    });
+  }
+
   handleClickAgregarMenu(){
 
+      this.store.dispatch(MenusActions.EstadoInicialModal());
+      this.store.dispatch(MenusActions.SetModalNuevo())
+      this.dialogService.open(FormModalMenuComponent,'md');
+
   }
+
+  handleClickAgregarSubmenu(){
+
+    this.store.dispatch(SubmenusActions.EstadoInicialModal());
+    this.store.dispatch(SubmenusActions.SetModalNuevo())
+    this.dialogService.open(FormModalSubmenuComponent,'md');
+
+}
 
 }

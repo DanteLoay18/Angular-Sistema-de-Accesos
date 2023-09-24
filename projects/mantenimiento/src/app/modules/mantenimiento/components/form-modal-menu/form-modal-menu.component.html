@@ -1,1 +1,65 @@
-<p>form-modal-menu works!</p>
+<ng-container *ngIf="state$ | async as state">
+
+  <ngx-sigape-modal-form-container
+  [title]="state.menu.modal.title"
+  (on-dismiss)="handleClose()"
+  [cancelLabel]="'Cerrar'"
+  [cancelIcon]="'close'"
+  [loading]="state.menu.modal.isLoading"
+  (on-submit)="submit()"
+  [formType]="state.menu.modal.type">
+
+  <div class="row">
+    <div class="col-6">
+      <ngx-sigape-form-model-field
+        variant="mask"
+        label="Nombre"
+        matTooltip="Nombre Menu"
+        [disabled]="state.menu.modal.isLoading || state.menu.modal.type == consultar"
+        [formModelField]="form.model['nombre']"
+        (on-change)="handleInputChange($event, 'nombre')"
+        appLetterOnly="nombre"
+       ></ngx-sigape-form-model-field>
+    </div>
+    <div class="col-6">
+      <ngx-sigape-form-model-field
+        variant="mask"
+        label="Icono"
+        matTooltip="Icono Menu"
+        [disabled]="state.menu.modal.isLoading || state.menu.modal.type == consultar"
+        [formModelField]="form.model['icono']"
+        (on-change)="handleInputChange($event, 'icono')"
+        appLetterOnly="icono"
+       ></ngx-sigape-form-model-field>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-6">
+
+      <ngx-sigape-form-model-field
+        variant="mask"
+        label="Url"
+        matTooltip="Url Menu"
+        [disabled]="state.menu.modal.isLoading || state.menu.modal.type == consultar"
+        [formModelField]="form.model['url']"
+        (on-change)="handleInputChange($event, 'url')"
+        appLetterOnly="url"
+       ></ngx-sigape-form-model-field>
+
+
+
+
+    </div>
+
+  </div>
+
+
+
+</ngx-sigape-modal-form-container>
+
+
+
+</ng-container>
+

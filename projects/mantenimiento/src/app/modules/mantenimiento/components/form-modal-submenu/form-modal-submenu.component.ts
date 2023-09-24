@@ -5,14 +5,15 @@ import { Store } from '@ngrx/store';
 import { IMenu } from '@sac/core';
 import { FormModel, FormType, ISubmitOptions, Validators } from 'ngx-sigape';
 import { Observable, of } from 'rxjs';
-import * as MenusActions from '../../store/menu/menu.actions'
+import * as SubmenuActions from '../../store/submenu/submenu.actions'
+
 @Component({
-  selector: 'app-form-modal-menu',
-  templateUrl: './form-modal-menu.component.html',
-  styleUrls: ['./form-modal-menu.component.scss']
+  selector: 'app-form-modal-submenu',
+  templateUrl: './form-modal-submenu.component.html',
+  styleUrls: ['./form-modal-submenu.component.scss']
 })
-export class FormModalMenuComponent {
-  private dialogRef = inject(MatDialogRef<FormModalMenuComponent>);
+export class FormModalSubmenuComponent {
+  private dialogRef = inject(MatDialogRef<FormModalSubmenuComponent>);
   private store= inject(Store);
   form!: FormModel<IMenu>;
   validators:any;
@@ -22,8 +23,8 @@ export class FormModalMenuComponent {
 
 
   ngOnInit(): void {
-    this.state$.subscribe(({menu})=>{
-      this.buildForm(menu.modal.form,menu.modal.type );
+    this.state$.subscribe(({submenu})=>{
+      this.buildForm(submenu.modal.form,submenu.modal.type );
     })
 
 
@@ -47,9 +48,7 @@ export class FormModalMenuComponent {
 
   buildValidations = () => {
     this.validators = {
-      nombre: [Validators.required, Validators.maxLength(100)],
-      icono: [Validators.required, Validators.maxLength(100)],
-      url: [Validators.required],
+      nombre: [Validators.required, Validators.maxLength(100)]
     };
   }
 
@@ -66,18 +65,18 @@ export class FormModalMenuComponent {
       let pageSize:number=0;
       let type!:FormType;
       let id:string=""
-      this.store.select('mantenimiento').subscribe(({menu})=>{
-        page=menu.source.page;
-        pageSize=menu.source.pageSize;
-        type=menu.modal.type
-        id=menu.modal.codigoOpcion
+      this.store.select('mantenimiento').subscribe(({submenu})=>{
+        page=submenu.source.page;
+        pageSize=submenu.source.pageSize;
+        type=submenu.modal.type
+        id=submenu.modal.codigoOpcion
       })
 
       if(type===FormType.REGISTRAR){
-        this.store.dispatch(MenusActions.AgregarMenu({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, url:this.form.model['url'].value, esSubmenu:false,  page,pageSize}));
+        this.store.dispatch(SubmenuActions.AgregarSubmenu({nombre:this.form.model['nombre'].value, esSubmenu:true,  page,pageSize}));
         this.dialogRef.close();
       }else if(type===FormType.EDITAR){
-        this.store.dispatch(MenusActions.EditarMenu({id,nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, url:this.form.model['url'].value, page,pageSize}));
+        this.store.dispatch(SubmenuActions.EditarSubmenu({id,nombre:this.form.model['nombre'].value, page,pageSize}));
         this.dialogRef.close();
       }
     }
@@ -88,20 +87,14 @@ export class FormModalMenuComponent {
   handleInputChange({ value }: any, model:string) {
     const validationRules:any = {
       nombre: /^[A-Za-z\s]+$/,
-      icono: /^[A-Za-z_]+$/,
-      url: /^[A-Za-z]+$/,
-      puerto: /^[0-9]+$/,
-      imagen: /^[A-Za-z.]+$/,
     };
 
     // Verifica si el modelo tiene una regla de validación definida
     if (validationRules.hasOwnProperty(model)) {
       const regex = validationRules[model];
       if (regex.test(value)) {
-        if (model === 'nombre' || model === 'icono' || model === 'url' || model === 'imagen') {
+        if (model === 'nombre') {
           this.form.model[model].setValue(value.toUpperCase());
-        } else {
-          this.form.model[model].setValue(value);
         }
       } else {
         // Si no cumple con la regla de validación, elimina el último carácter
