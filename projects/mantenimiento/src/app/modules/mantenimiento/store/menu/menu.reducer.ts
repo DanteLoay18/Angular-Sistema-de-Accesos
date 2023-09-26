@@ -128,6 +128,7 @@ export const MenuReducer = createReducer(
                                                                                                       total:cantidad
                                                                                                       },
                                                                                                       isLoading:true}})),
+  on(MenuActions.SetModalSistemaFail, (state, {error})=>({...state, modalSistema:{...state.modalSistema, error, isLoading:false}})),
   on(MenuActions.SetModalSistemaVacio, (state,{cantidad})=>({...state, modalSistema:{...state.modalSistema, source:{
                                                                                                         ...state.source,
                                                                                                         items:[

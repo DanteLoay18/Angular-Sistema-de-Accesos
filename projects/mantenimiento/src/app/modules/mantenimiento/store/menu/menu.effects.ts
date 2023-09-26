@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, of } from 'rxjs';
 import * as MenusActions from './menu.actions'
-import { map, catchError, tap } from 'rxjs/operators';
+import { map, catchError, tap, filter } from 'rxjs/operators';
 import { AlertService, ComboList } from 'ngx-sigape';
 import { MenuService } from '../../service/menu.service';
 import { SistemaService } from '../../service/sistema.service';
@@ -210,9 +210,10 @@ export class MenusEffects{
 
   setModalMenuSistemaSuccess$ = createEffect(()=>  this.actions$.pipe(
     ofType(MenusActions.SetModalSistemaSuccess),
-    exhaustMap(()=> this.sistemaService.obtenerSistemasPaginado(1,10)
+    exhaustMap(({sistema})=> this.sistemaService.obtenerSistemasPaginado(1,10)
                       .pipe(
-                        map(({items})=>{return items.map((item:any)=>{
+                        map(({items})=>{return items.filter((item:any)=> item.nombre!==sistema.nombre).map((item:any)=>{
+
                             return {
                               label:item.nombre,
                               value:item._id

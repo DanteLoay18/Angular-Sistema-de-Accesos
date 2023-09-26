@@ -128,6 +128,11 @@ export const SetModalSistemaSuccess= createAction(
   props<{ sistema: any, cantidad:number }>()
 );
 
+export const SetModalSistemaFail= createAction(
+  '[Menu] Set Modal Sistema Success',
+  props<{ error: any }>()
+);
+
 
 export const SetModalSistemaVacio= createAction(
   '[Menu] Set Modal Sistema Vacio',
