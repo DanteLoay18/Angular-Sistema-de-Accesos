@@ -1,6 +1,7 @@
 import { createAction, props } from "@ngrx/store";
-import { IDataGridColumnDefinition, IDataGridSource } from "ngx-sigape";
-import { IMenu } from "../../interfaces/menu.interface";
+import { IComboList, IDataGridColumnDefinition, IDataGridSource } from "ngx-sigape";
+import { IFormMenuSistema, IMenu } from "../../interfaces/menu.interface";
+import { ISistema } from "@sac/core";
 
 
 
@@ -116,3 +117,25 @@ export const CargarDataGridMenus = createAction(
   '[Menu] Cargar Data Grid Column de Menus',
   props<{ columna: IDataGridColumnDefinition}>()
 )
+
+export const setModalSistema= createAction(
+  '[Menu] Set Modal MenuSistema',
+  props<{ id:string, menuNombre:string}>()
+)
+
+export const SetModalSistemaSuccess= createAction(
+  '[Menu] Set Modal Sistema Success',
+  props<{ sistema: any, cantidad:number }>()
+);
+
+
+export const SetModalSistemaVacio= createAction(
+  '[Menu] Set Modal Sistema Vacio',
+  props<{ cantidad:number}>()
+);
+
+export const CargarComboBoxModalSistema= createAction(
+  '[Menu] Cargar Combo box Modal Sistema',
+  props<{ sistemasList:IComboList}>()
+);
+

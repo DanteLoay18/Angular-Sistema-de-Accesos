@@ -49,6 +49,42 @@ export const estadoInicial: IDataGridElement<IMenu>= {
      type:null,
      form: new Menu(),
      codigoSistema:''
+  },
+  modalSistema:{
+    title: 'Sistema al que pertence',
+    isLoading: false,
+    error: null,
+    type: null,
+    form: new Menu(),
+    gridDefinition: {
+            columns: [
+
+            { label: 'Nombre', field: 'nombre' },
+            {  label: 'Acciones', field: 'buttons',
+              buttons: [
+                {
+                  action: 'ELIMINAR',
+                  icon: 'delete',
+                  color: "primary",
+                  tooltip: 'Eliminar',
+                }
+              ]}
+        ],
+      },
+    source: {
+        items: [
+        ],
+        page: 1,
+        pageSize: 10,
+        total: 0,
+        orderBy: undefined,
+        orderDir: undefined
+    },
+    idMenu: '',
+    menuNombre:'',
+    comboLists: {
+      sistemas: {},
+    }
   }
 };
 
@@ -82,6 +118,26 @@ export const MenuReducer = createReducer(
                                                                                                     ...estadoInicial.definition.columns,
                                                                                                     columna
                                                                                                   ]
-                                                                                                }}))
+                                                                                                }})),
+  on(MenuActions.setModalSistema, (state, {id,menuNombre})=>({...state, modalSistema:{...state.modalSistema, idMenu:id,type:FormType.REGISTRAR,menuNombre, isLoading:true}})),
+  on(MenuActions.SetModalSistemaSuccess, (state,{sistema,cantidad})=>({...state, modalSistema:{...state.modalSistema, source:{
+                                                                                                      ...state.source,
+                                                                                                      items:[
+                                                                                                       sistema
+                                                                                                      ],
+                                                                                                      total:cantidad
+                                                                                                      },
+                                                                                                      isLoading:true}})),
+  on(MenuActions.SetModalSistemaVacio, (state,{cantidad})=>({...state, modalSistema:{...state.modalSistema, source:{
+                                                                                                        ...state.source,
+                                                                                                        items:[
 
+                                                                                                        ],
+                                                                                                        total:cantidad
+                                                                                                        },
+
+                                                                                                        isLoading:false}})),
+  on(MenuActions.CargarComboBoxModalSistema, (state, {sistemasList})=>({...state, modalSistema:{...state.modalSistema,isLoading:false,  comboLists: {
+                                                                                                                          sistemas:{...sistemasList}
+                                                                                                                        }}})),
   );

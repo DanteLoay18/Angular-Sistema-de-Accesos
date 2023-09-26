@@ -8,4 +8,5 @@ export interface IDataGridElement<T> {
   busqueda:any;
   current:any;
   modal: any;
+  modalSistema?:any;
 }

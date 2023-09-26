@@ -3,8 +3,9 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, of } from 'rxjs';
 import * as MenusActions from './menu.actions'
 import { map, catchError, tap } from 'rxjs/operators';
-import { AlertService } from 'ngx-sigape';
+import { AlertService, ComboList } from 'ngx-sigape';
 import { MenuService } from '../../service/menu.service';
+import { SistemaService } from '../../service/sistema.service';
 
 
 @Injectable()
@@ -13,6 +14,7 @@ export class MenusEffects{
 
   private actions$ = inject(Actions);
   private menuService= inject(MenuService);
+  private sistemaService= inject(SistemaService);
   private alertService= inject(AlertService);
 
   listarMenu$ = createEffect(()=>  this.actions$.pipe(
@@ -195,6 +197,32 @@ export class MenusEffects{
     )
   )
 
+  setModalMenuSistema$ = createEffect(()=>  this.actions$.pipe(
+    ofType(MenusActions.setModalSistema),
+    exhaustMap(({id})=> this.menuService.buscarMenuPorId(id)
+                      .pipe(
+                        map(({sistema})=> sistema ? {sistema, cantidad:1} : {sistema, cantidad:0}),
+                        map(({sistema, cantidad}) => ( sistema!==undefined ? MenusActions.SetModalSistemaSuccess({sistema, cantidad}) :  MenusActions.SetModalSistemaVacio({cantidad}))),
+                      )
+                )
+    )
+  )
 
+  setModalMenuSistemaSuccess$ = createEffect(()=>  this.actions$.pipe(
+    ofType(MenusActions.SetModalSistemaSuccess),
+    exhaustMap(()=> this.sistemaService.obtenerSistemasPaginado(1,10)
+                      .pipe(
+                        map(({items})=>{return items.map((item:any)=>{
+                            return {
+                              label:item.nombre,
+                              value:item._id
+                            }
+                        })}),
+                        map((item)=>new ComboList(item)),
+                        map((sistemasList) => (MenusActions.CargarComboBoxModalSistema({sistemasList}) )),
+                      )
+                )
+    )
+  )
 
 }

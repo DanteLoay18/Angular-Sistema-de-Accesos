@@ -32,11 +32,11 @@ export class FormModalMenuComponent {
     this.dialogRef.close();
   };
 
-  private buildForm(formSistema:IMenu, formType:FormType) {
+  private buildForm(formMenu:IMenu, formType:FormType) {
     this.buildValidations();
     this.form = new FormModel<any>(
       formType,
-      formSistema,
+      formMenu,
       this.validators,
       {
         onSave: this.onSave,

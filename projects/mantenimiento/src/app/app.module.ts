@@ -26,6 +26,7 @@ import { FormModalMenuComponent } from './modules/mantenimiento/components/form-
 import { MenusEffects } from './modules/mantenimiento/store/menu/menu.effects';
 import { SubmenusEffects } from './modules/mantenimiento/store/submenu/submenu.effects';
 import { FormModalSubmenuComponent } from './modules/mantenimiento/components/form-modal-submenu/form-modal-submenu.component';
+import { FormModalMenuSistemaComponent } from './modules/mantenimiento/components/form-modal-menu-sistema/form-modal-menu-sistema.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { FormModalSubmenuComponent } from './modules/mantenimiento/components/fo
     FormSearchMenuComponent,
     FormModalMenuComponent,
     FormModalSubmenuComponent,
+    FormModalMenuSistemaComponent,
   ],
   imports: [
     FormsModule,

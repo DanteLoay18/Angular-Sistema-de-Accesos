@@ -3,6 +3,7 @@ export class Menu{
   icono:string='';
   url:string ='';
   esSubmenu:boolean=false;
+  sistema:string='';
   opciones:string[]=[]
   submenus:string[]=[]
 
@@ -22,4 +23,11 @@ export class Menu{
   menu.esSubmenu=true;
   return menu;
 }
+
+  static updateMenuSistema(sistema:string){
+    const menu = new Menu();
+    menu.sistema=sistema;
+
+    return menu;
+  }
 }

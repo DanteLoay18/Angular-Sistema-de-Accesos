@@ -1,0 +1,40 @@
+<ng-container *ngIf="state$ | async as state">
+  <ngx-sigape-modal-container [title]="state.menu.modalSistema.title" [loading]="state.menu.modalSistema.isLoading" (on-dismiss)="handleClose()"
+  [cancelLabel]="'Cerrar'" [cancelIcon]="'close'"
+
+   [formType]="state.menu.modalSistema.type" [showOkButton]="false">
+    <mat-card>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-12 pb-3">
+            <h3>{{state.menu.modalSistema.menuNombre}}</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <ngx-sigape-form-model-field variant="select" label="Listado de sistemas" bindLabel="label"
+              bindValue="value" [disabled]="state.menu.modalSistema.isLoading"
+              [formModelField]="form.model['sistema']" [options]="state.menu.modalSistema.comboLists.sistemas"
+              (on-change)="handleInputChange($event)"
+              [hideRequiredIndicator]="true">
+            </ngx-sigape-form-model-field>
+          </div>
+          <div class="col-md-4 align-self-end" style="margin-left: -12px;">
+            <ngx-sigape-base-button label="Vincular" color="accent" icon="add_circle" (on-click)="handleSubmit()"
+              [disabled]="state.menu.modalSistema.isLoading">
+            </ngx-sigape-base-button>
+          </div>
+        </div>
+        <br>
+        <div class="form-row">
+          <div class="col-md-12">
+            <ngx-sigape-data-grid [loading]="state.menu.modalSistema.isLoading" [source]="state.menu.modalSistema.source" [definition]="state.menu.modalSistema.gridDefinition"
+            (on-click-button)="handleClickButton($event)" (on-load-data)="handleLoadData($event)"
+            >
+          </ngx-sigape-data-grid>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ngx-sigape-modal-container>
+</ng-container>

@@ -9,6 +9,8 @@ import { map } from 'rxjs/operators';
 import { IMenu, IPerfiles, ISistema } from '@sac/core';
 import { FormModalSubmenuComponent } from '../../components/form-modal-submenu/form-modal-submenu.component';
 import { CargarModalOpcion } from '../../store/opciones/opciones.actions';
+import { FormModalSistemaComponent } from '../../components/form-modal-sistema/form-modal-sistema.component';
+import { FormModalMenuSistemaComponent } from '../../components/form-modal-menu-sistema/form-modal-menu-sistema.component';
 @Component({
   selector: 'app-gestion-menus',
   templateUrl: './gestion-menus.component.html',
@@ -157,8 +159,10 @@ export class GestionMenusComponent implements OnInit{
         }else{
           this.handleDeleteSubmenu(e.item._id);
         }
-
       break;
+      case 'SISTEMA':
+        this.handleModalMenuSistema(e.item._id, e.item.nombre)
+        break;
       default:
         break;
 		}
@@ -211,6 +215,11 @@ export class GestionMenusComponent implements OnInit{
 
       }
     });
+  }
+
+  handleModalMenuSistema(id:string, menuNombre:string){
+    this.store.dispatch(MenusActions.setModalSistema({id, menuNombre}));
+    this.dialogService.open(FormModalMenuSistemaComponent,'md')
   }
 
   handleClickAgregarMenu(){

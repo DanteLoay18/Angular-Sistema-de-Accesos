@@ -17,7 +17,7 @@ export class FormSearchMenuComponent implements OnInit{
   formOpcion:IMenu={
     nombre:'',
     icono:'',
-    url:''
+    url:'',
   }
   tieneNuevoOpcion:boolean=false;
 
