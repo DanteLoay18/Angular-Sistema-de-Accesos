@@ -107,6 +107,28 @@ export class MenuService {
     const headers = new HttpHeaders()
       .set('Authorization', `Bearer ${ token }`);
 
-    return this.http.put<IOpcion>( urlPeticion,{nombre, icono, url, opciones, submenus }, {headers} );
+    return this.http.put<IMenu>( urlPeticion,{nombre, icono, url, opciones, submenus }, {headers} );
+  }
+
+  eliminarSistemaMenu(id:string, idSistema:string){
+    const urlPeticion   = `${ this.baseUrl }/api/menu/deleteMenuSistema/${id}/${idSistema}`;
+
+    let token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${ token }`);
+
+    return this.http.delete<IMenu>( urlPeticion, {headers} );
+  }
+
+  agregarSistemaMenu(id:string, sistema:string ){
+    const urlPeticion   = `${ this.baseUrl }/api/menu/updateMenu/${id}`;
+
+    let token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${ token }`);
+
+    return this.http.put<IMenu>( urlPeticion,{sistema }, {headers} );
   }
 }

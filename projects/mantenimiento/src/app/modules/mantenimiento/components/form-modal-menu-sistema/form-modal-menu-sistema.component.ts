@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { ComboList, FormModel, FormType, IComboList, ISubmitOptions, Validators } from 'ngx-sigape';
+import { AlertService, ComboList, FormModel, FormType, IComboList, ISubmitOptions, Validators } from 'ngx-sigape';
 import { IMenu } from '../../interfaces/menu.interface';
-import { Observable, of } from 'rxjs';
-
+import { Observable, of, take } from 'rxjs';
+import * as MenusActions from '../../store/menu/menu.actions'
 @Component({
   selector: 'app-form-modal-menu-sistema',
   templateUrl: './form-modal-menu-sistema.component.html',
@@ -13,6 +13,7 @@ import { Observable, of } from 'rxjs';
 export class FormModalMenuSistemaComponent {
   private dialogRef = inject(MatDialogRef<FormModalMenuSistemaComponent>);
   private store= inject(Store);
+  private alertService= inject(AlertService);
   validators:any;
   state$= this.store.select('mantenimiento');
   form!: FormModel<IMenu>;
@@ -46,13 +47,23 @@ export class FormModalMenuSistemaComponent {
     };
   }
   onSave(formValue: any, options: ISubmitOptions): Observable<any> {
-    console.log(formValue)
     return of()
   }
 
   handleSubmit(){
-    console.log('Holaaa',this.form.model['sistema'])
-    this.form.submit()
+    if(this.form.submit()){
+
+      this.state$.pipe(
+        take(1)
+      ).subscribe(({menu})=>{
+        if(menu.modalSistema.source.items.length>0){
+          this.alertService.open('No se puede agregar un sistema, ya existe uno, primero eliminelo', undefined, { icon: 'error' });
+        }else{
+          this.store.dispatch(MenusActions.agregarSistemaMenu({id:menu.modalSistema.idMenu, idSistema:this.form.model['sistema'].value}))
+        }
+
+      })
+    }
   }
 
   handleInputChange(e:any){
@@ -60,6 +71,13 @@ export class FormModalMenuSistemaComponent {
   }
 
   handleClickButton(e:any){
+    switch(e.action){
+      case 'ELIMINAR':
+        this.handleDelete(e.item._id);
+        break;
+      default:
+        break;
+    }
 
   }
 
@@ -70,4 +88,18 @@ export class FormModalMenuSistemaComponent {
   handleClose = () => {
     this.dialogRef.close();
   };
+
+  handleDelete(idSistema:string){
+
+    this.alertService.open('¿Está seguro de eliminar el sistema del menu?', undefined, { confirm: true }).then((confirm) => {
+      if (confirm) {
+        this.state$.pipe(
+          take(1)
+        ).subscribe(({menu})=>{
+          this.store.dispatch(MenusActions.deleteSistemaMenu({id:menu.modalSistema.idMenu, idSistema}))
+        })
+
+      }
+    });
+  }
 }

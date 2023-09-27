@@ -144,3 +144,31 @@ export const CargarComboBoxModalSistema= createAction(
   props<{ sistemasList:IComboList}>()
 );
 
+export const deleteSistemaMenu= createAction(
+  '[Menu] Delete sistema Menu',
+  props<{ id:string, idSistema:string}>()
+);
+
+export const deleteSistemaMenuSuccess= createAction(
+  '[Menu] Delete sistema Menu Success'
+);
+
+export const deleteSistemaMenuFail= createAction(
+  '[Menu] Delete sistema Menu Fail',
+  props<{ error:any}>()
+);
+
+export const agregarSistemaMenu= createAction(
+  '[Menu] Agregar sistema Menu',
+  props<{ id:string,idSistema:string}>()
+);
+
+export const agregarSistemaMenuSuccess= createAction(
+  '[Menu] Agregar sistema Menu Success',
+  props<{ id:string}>()
+);
+
+export const agregarSistemaMenuFail= createAction(
+  '[Menu] Agregar sistema Menu Fail',
+  props<{error:any}>()
+);

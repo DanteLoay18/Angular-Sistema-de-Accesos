@@ -141,4 +141,16 @@ export const MenuReducer = createReducer(
   on(MenuActions.CargarComboBoxModalSistema, (state, {sistemasList})=>({...state, modalSistema:{...state.modalSistema,isLoading:false,  comboLists: {
                                                                                                                           sistemas:{...sistemasList}
                                                                                                                         }}})),
+  on(MenuActions.deleteSistemaMenu, (state)=>({...state, modalSistema:{...state.modalSistema,isLoading:true}})),
+  on(MenuActions.deleteSistemaMenuSuccess, (state,)=>({...state, modalSistema:{...state.modalSistema,isLoading:false,source:{
+                                                                                                                              ...state.source,
+                                                                                                                              items:[
+
+                                                                                                                              ],
+                                                                                                                              total:0
+                                                                                                                              },}})),
+  on(MenuActions.deleteSistemaMenuFail, (state, {error})=>({...state, modalSistema:{...state.modalSistema,isLoading:false, error }})),
+  on(MenuActions.agregarSistemaMenu, (state)=>({...state, modalSistema:{...state.modalSistema,isLoading:true}})),
+  on(MenuActions.agregarSistemaMenuSuccess, (state,)=>({...state, modalSistema:{...state.modalSistema,isLoading:false}})),
+  on(MenuActions.agregarSistemaMenuFail, (state, {error})=>({...state, modalSistema:{...state.modalSistema,isLoading:false, error }})),
   );

@@ -202,7 +202,7 @@ export class MenusEffects{
     exhaustMap(({id})=> this.menuService.buscarMenuPorId(id)
                       .pipe(
                         map(({sistema})=> sistema ? {sistema, cantidad:1} : {sistema, cantidad:0}),
-                        map(({sistema, cantidad}) => ( sistema!==undefined ? MenusActions.SetModalSistemaSuccess({sistema, cantidad}) :  MenusActions.SetModalSistemaVacio({cantidad}))),
+                        map(({sistema, cantidad}) => ( sistema!==undefined && sistema!==null  ? MenusActions.SetModalSistemaSuccess({sistema, cantidad}) :  MenusActions.SetModalSistemaVacio({cantidad}))),
                       )
                 )
     )
@@ -226,4 +226,75 @@ export class MenusEffects{
     )
   )
 
+  setModalMenuSistemaVacio$ = createEffect(()=>  this.actions$.pipe(
+    ofType(MenusActions.SetModalSistemaVacio),
+    exhaustMap(()=> this.sistemaService.obtenerSistemasPaginado(1,10)
+                      .pipe(
+                        map(({items})=>{return items.map((item:any)=>{
+
+                            return {
+                              label:item.nombre,
+                              value:item._id
+                            }
+                        })}),
+                        map((item)=>new ComboList(item)),
+                        map((sistemasList) => (MenusActions.CargarComboBoxModalSistema({sistemasList}) )),
+                      )
+                )
+    )
+  )
+
+
+  deleteSistemaMenu$ = createEffect(()=>  this.actions$.pipe(
+    ofType(MenusActions.deleteSistemaMenu),
+    exhaustMap(({id,idSistema})=> this.menuService.eliminarSistemaMenu(id,idSistema)
+                      .pipe(
+
+                        map((sistemasList) => (MenusActions.deleteSistemaMenuSuccess() )),
+                        catchError((error) => of(MenusActions.deleteSistemaMenuFail({error})))
+                      )
+                )
+    )
+  )
+
+  deleteSistemaMenuSuccess$ = createEffect(()=>  this.actions$.pipe(
+    ofType(MenusActions.deleteSistemaMenuSuccess),
+    exhaustMap(()=> this.sistemaService.obtenerSistemasPaginado(1,10)
+                      .pipe(
+                        map(({items})=>{return items.map((item:any)=>{
+
+                            return {
+                              label:item.nombre,
+                              value:item._id
+                            }
+                        })}),
+                        map((item)=>new ComboList(item)),
+                        map((sistemasList) => (MenusActions.CargarComboBoxModalSistema({sistemasList}) )),
+                      )
+                )
+    )
+  )
+
+
+  agregarSistemaMenu$ = createEffect(()=>  this.actions$.pipe(
+    ofType(MenusActions.agregarSistemaMenu),
+    exhaustMap(({id,idSistema})=> this.menuService.agregarSistemaMenu(id,idSistema)
+                      .pipe(
+                        map(() => (MenusActions.agregarSistemaMenuSuccess({id}) )),
+                        catchError((error) => of(MenusActions.agregarSistemaMenuFail({error})))
+                      )
+                )
+    )
+  )
+
+  agregarSistemaMenuSuccess$ = createEffect(()=>  this.actions$.pipe(
+    ofType(MenusActions.agregarSistemaMenuSuccess),
+     exhaustMap(({id})=> this.menuService.buscarMenuPorId(id)
+                            .pipe(
+                              map(({sistema})=> sistema ? {sistema, cantidad:1} : {sistema, cantidad:0}),
+                              map(({sistema, cantidad}) => ( sistema!==undefined && sistema!==null  ? MenusActions.SetModalSistemaSuccess({sistema, cantidad}) :  MenusActions.SetModalSistemaVacio({cantidad}))),
+                            )),
+
+    )
+  )
 }
