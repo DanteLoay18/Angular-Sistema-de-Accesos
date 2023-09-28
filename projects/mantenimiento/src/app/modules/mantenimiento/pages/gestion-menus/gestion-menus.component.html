@@ -1,63 +1,21 @@
 
 <ng-container *ngIf="state$ | async as state">
-
- <ng-container *ngIf="!state.menu.current.isLoading && !state.submenu.current.isLoading">   <!--Agregar el otro o sea el state.menu y state.submenu -->
-    <div>
-      <h4 *ngIf="true" > <span class="badge bg-secondary"
-          style="background-color:#3F51B5 !important; color:#FFFFFF; font-weight:bold">ACTIVIDAD</span> :
-        GESTION DE MENUS</h4>
-    </div>
-
-    <app-form-search-menu></app-form-search-menu>
-
-    <div class="row">
-      <div class="col-md-8">
-
-      </div>
-      <div class="col-md-4 text-end">
-        <ngx-sigape-base-button label="Agregar Menu" color="accent" icon="add_circle" (on-click)="handleClickAgregarMenu()"
-                        [disabled]="state.isLoading"></ngx-sigape-base-button>
-      </div>
-    </div>
-
-    <h3>Listado de Menus</h3>
-
-    <ngx-sigape-data-grid
-      (on-load-data)="handleLoadDataMenu($event)"
-      [loading]="state.menu.loading"
-      [source]="state.menu.source"
-      [definition]="state.menu.definition"
-      [serverError]="state.menu.error"
-      (on-click-button)="handleClickButton($event)"
-      >
-    </ngx-sigape-data-grid>
-
-    <div class="row mt-5">
-      <div class="col-md-8">
-
-      </div>
-      <div class="col-md-4 text-end">
-        <ngx-sigape-base-button label="Agregar Submenu" color="accent" icon="add_circle" (on-click)="handleClickAgregarSubmenu()"
-                        [disabled]="state.isLoading"></ngx-sigape-base-button>
-      </div>
-    </div>
-
-    <h3>Listado de Submenus</h3>
-
-    <ngx-sigape-data-grid
-      (on-load-data)="handleLoadDataSubmenu($event)"
-      [loading]="state.submenu.loading"
-      [source]="state.submenu.source"
-      [definition]="state.submenu.definition"
-      [serverError]="state.submenu.error"
-      (on-click-button)="handleClickButton($event)"
-      >
-    </ngx-sigape-data-grid>
-
+  <div>
+    <h4 *ngIf="true" > <span class="badge bg-secondary"
+        style="background-color:#3F51B5 !important; color:#FFFFFF; font-weight:bold">ACTIVIDAD</span> :
+      GESTION DE MENUS</h4>
+  </div>
+ <ng-container *ngIf="!state.menu.current.isLoading">   <!--Agregar el otro o sea el state.menu y state.submenu -->
+        <div [ngSwitch]="state.menu.current.currentForm">
+          <ng-container *ngSwitchCase="'menu'" [ngTemplateOutlet]="menus"
+                        [ngTemplateOutletContext]="{state: state}"></ng-container>
+          <ng-container *ngSwitchCase="'submenus'" [ngTemplateOutlet]="submenus"
+                        [ngTemplateOutletContext]="{state: state}"></ng-container>
+        </div>
   </ng-container>
 
 
-    <ngx-sigape-loader-block-ui [show]="state.menu.current.isLoading && state.submenu.current.isLoading"></ngx-sigape-loader-block-ui>
+    <ngx-sigape-loader-block-ui [show]="state.menu.current.isLoading"></ngx-sigape-loader-block-ui>
 
 
 
@@ -65,3 +23,71 @@
     <ngx-sigape-loader-configuration></ngx-sigape-loader-configuration>
   </ng-container>
 </ng-container>
+
+
+
+
+
+
+<ng-template #menus let-state='state'>
+  <app-form-search-menu></app-form-search-menu>
+
+  <div class="row">
+    <div class="col-md-8">
+
+    </div>
+    <div class="col-md-4 text-end">
+      <ngx-sigape-base-button label="Agregar Menu" color="accent" icon="add_circle" (on-click)="handleClickAgregarMenu()"
+                      [disabled]="state.isLoading"></ngx-sigape-base-button>
+    </div>
+  </div>
+
+  <h3>Listado de Menus</h3>
+
+  <ngx-sigape-data-grid
+    (on-load-data)="handleLoadDataMenu($event)"
+    [loading]="state.menu.loading"
+    [source]="state.menu.source"
+    [definition]="state.menu.definition"
+    [serverError]="state.menu.error"
+    (on-click-button)="handleClickButton($event)"
+    >
+  </ngx-sigape-data-grid>
+
+</ng-template>
+
+<ng-template #submenus let-state='state'>
+  <app-form-search-menu></app-form-search-menu>
+  <div class="row mt-5">
+    <div class="col-md-8">
+
+    </div>
+    <div class="col-md-4 text-end">
+      <ngx-sigape-base-button label="Agregar Submenu" color="accent" icon="add_circle" (on-click)="handleClickAgregarSubmenu()"
+                      [disabled]="state.isLoading"></ngx-sigape-base-button>
+    </div>
+  </div>
+
+  <h3>Listado de Submenus</h3>
+
+  <ngx-sigape-data-grid
+    (on-load-data)="handleLoadDataSubmenu($event)"
+    [loading]="state.submenu.loading"
+    [source]="state.submenu.source"
+    [definition]="state.submenu.definition"
+    [serverError]="state.submenu.error"
+    (on-click-button)="handleClickButton($event)"
+    >
+  </ngx-sigape-data-grid>
+
+  <div class="row">
+
+    <div class="col-md-4 footer-button-container">
+        <ngx-sigape-base-button color="accent" icon="reply" label="Volver a menus" [disabled]="state.submenu.current.isLoading" (on-click)="handleRegresarAMenus()"></ngx-sigape-base-button>
+    </div>
+  </div>
+</ng-template>
+
+
+
+

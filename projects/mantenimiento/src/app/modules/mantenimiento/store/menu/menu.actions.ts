@@ -172,3 +172,12 @@ export const agregarSistemaMenuFail= createAction(
   '[Menu] Agregar sistema Menu Fail',
   props<{error:any}>()
 );
+
+export const irASubmenuMenu= createAction(
+  '[Menu] Ir A submenu',
+  props<{id:string}>()
+);
+
+export const RegresarAMenus =  createAction(
+  '[Menu] Regresar A Menus',
+);

@@ -153,4 +153,6 @@ export const MenuReducer = createReducer(
   on(MenuActions.agregarSistemaMenu, (state)=>({...state, modalSistema:{...state.modalSistema,isLoading:true}})),
   on(MenuActions.agregarSistemaMenuSuccess, (state,)=>({...state, modalSistema:{...state.modalSistema,isLoading:false}})),
   on(MenuActions.agregarSistemaMenuFail, (state, {error})=>({...state, modalSistema:{...state.modalSistema,isLoading:false, error }})),
+  on(MenuActions.irASubmenuMenu, (state)=>({...state, current:{currentForm:'submenus'}})),
+  on(MenuActions.RegresarAMenus, (state)=>({...state, current:{currentForm:'menu'}})),
   );

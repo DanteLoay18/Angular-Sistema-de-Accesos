@@ -118,7 +118,6 @@ export class GestionMenusComponent implements OnInit{
         this.store.dispatch(MenusActions.CargarListadoDeMenus({page:e.page, pageSize:e.pageSize}))
       }else{
         this.store.dispatch(MenusActions.BuscarMenu({nombre:sistema.busqueda.nombre, icono:sistema.busqueda.icono, url:sistema.busqueda.url,page:e.page, pageSize:e.pageSize}))
-        this.store.dispatch(SubmenusActions.BuscarSubmenu({nombre:sistema.busqueda.nombre,page:e.page, pageSize:e.pageSize}))
       }
     })
   }
@@ -162,6 +161,9 @@ export class GestionMenusComponent implements OnInit{
       break;
       case 'SISTEMA':
         this.handleModalMenuSistema(e.item._id, e.item.nombre)
+        break;
+      case 'SUBMENUS':
+        this.handleSubmenuMenu(e.item._id)
         break;
       default:
         break;
@@ -217,6 +219,8 @@ export class GestionMenusComponent implements OnInit{
     });
   }
 
+
+
   handleModalMenuSistema(id:string, menuNombre:string){
     this.store.dispatch(MenusActions.setModalSistema({id, menuNombre}));
     this.dialogService.open(FormModalMenuSistemaComponent,'md')
@@ -236,6 +240,14 @@ export class GestionMenusComponent implements OnInit{
     this.store.dispatch(SubmenusActions.SetModalNuevo())
     this.dialogService.open(FormModalSubmenuComponent,'md');
 
-}
+ }
+
+ handleSubmenuMenu(id:string){
+    this.store.dispatch(MenusActions.irASubmenuMenu({id}));
+ }
+
+ handleRegresarAMenus(){
+  this.store.dispatch(MenusActions.RegresarAMenus());
+ }
 
 }
