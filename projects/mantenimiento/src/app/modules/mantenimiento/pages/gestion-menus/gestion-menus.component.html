@@ -30,7 +30,7 @@
 
 
 <ng-template #menus let-state='state'>
-  <app-form-search-menu></app-form-search-menu>
+  <app-form-search-menu [esMenu]="true"></app-form-search-menu>
 
   <div class="row">
     <div class="col-md-8">
@@ -57,7 +57,7 @@
 </ng-template>
 
 <ng-template #submenus let-state='state'>
-  <app-form-search-menu></app-form-search-menu>
+  <app-form-search-menu [esMenu]="false"></app-form-search-menu>
   <div class="row mt-5">
     <div class="col-md-8">
 

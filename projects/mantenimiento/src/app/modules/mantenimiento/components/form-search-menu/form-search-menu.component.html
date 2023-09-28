@@ -7,7 +7,7 @@
 
     <div class="">
       <div class="row m-3">
-        <div class="col-6">
+        <div class="col-6" >
           <ngx-sigape-form-model-field
             variant="mask"
             label="Nombre"
@@ -17,7 +17,7 @@
           >
           </ngx-sigape-form-model-field>
         </div>
-        <div class="col-6">
+        <div class="col-6" *ngIf="esMenu">
           <ngx-sigape-form-model-field
             variant="mask"
             label="Icono"
@@ -31,7 +31,7 @@
       </div>
       <div class="row m-3">
 
-        <div class="col-6">
+        <div class="col-6" *ngIf="esMenu">
           <ngx-sigape-form-model-field
           variant="mask"
           label="Url"

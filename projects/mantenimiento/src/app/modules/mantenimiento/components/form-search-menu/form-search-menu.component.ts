@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { DialogService, FormModel, FormType } from 'ngx-sigape';
 import { IMenu } from '../../interfaces/menu.interface';
@@ -10,6 +10,7 @@ import * as SubmenusActions from '../../store/submenu/submenu.actions'
   styleUrls: ['./form-search-menu.component.scss']
 })
 export class FormSearchMenuComponent implements OnInit{
+  @Input() esMenu:boolean = false;
   private dialogService = inject(DialogService);
   private store = inject(Store);
   form!: FormModel<IMenu>;
