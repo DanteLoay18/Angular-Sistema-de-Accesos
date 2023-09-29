@@ -81,20 +81,27 @@ export class FormSearchMenuComponent implements OnInit{
 
   }
   handleSubmit(){
-    let pageSize:number=0;
-    this.state$.subscribe(({sistema})=>{
-      pageSize=sistema.source.pageSize;
+    let pageSizeMenu:number=0;
+    let idMenu:string="";
+    let pageSizeSubmenu:number=0;
+    let titulo:string="";
+    this.state$.subscribe(({menu, submenu})=>{
+      pageSizeMenu=menu.source.pageSize;
+      idMenu=submenu.current.idMenu;
+      pageSizeSubmenu=submenu.source.pageSize;
+      titulo=submenu.current.titulo;
     })
     if(this.form.submit()){
-      if(this.form.model['nombre'].value==="" && this.form.model['icono'].value==="" && this.form.model['url'].value===""){
-        this.store.dispatch(MenusActions.CargarListadoDeMenus({page:1, pageSize}))
-        this.store.dispatch(SubmenusActions.CargarListadoDeSubmenus({page:1,pageSize}))
-      }else if(this.form.model['icono'].value==="" && this.form.model['url'].value===""){
-        this.store.dispatch(MenusActions.BuscarMenu({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, url:this.form.model['url'].value,page:1, pageSize:pageSize}))
-        this.store.dispatch(SubmenusActions.BuscarSubmenu({nombre:this.form.model['nombre'].value,page:1, pageSize:pageSize}))
-      }else{
-        this.store.dispatch(MenusActions.BuscarMenu({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, url:this.form.model['url'].value,page:1, pageSize:pageSize}))
-        this.store.dispatch(SubmenusActions.CargarListadoDeSubmenus({page:1,pageSize}))
+      if(this.form.model['nombre'].value==="" && this.form.model['icono'].value==="" && this.form.model['url'].value==="" && this.esMenu){
+        this.store.dispatch(MenusActions.CargarListadoDeMenus({page:1, pageSize:pageSizeMenu}))
+      }else if(this.form.model['nombre'].value==="" && !this.esMenu){
+        this.store.dispatch(SubmenusActions.CargarListadoDeSubmenus({id:idMenu,titulo,page:1, pageSize:pageSizeSubmenu}))
+      }else if(this.esMenu){
+        this.store.dispatch(MenusActions.BuscarMenu({nombre:this.form.model['nombre'].value, icono:this.form.model['icono'].value, url:this.form.model['url'].value,page:1, pageSize:pageSizeMenu}))
+
+
+      }else if(!this.esMenu){
+        this.store.dispatch(SubmenusActions.BuscarSubmenu({nombre:this.form.model['nombre'].value,page:1, pageSize:pageSizeSubmenu}))
       }
 
 

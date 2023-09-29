@@ -6,7 +6,7 @@ import { IMenu } from "../../interfaces/menu.interface";
 
 export const CargarListadoDeSubmenus= createAction(
   '[Submenu] Cargar Listado',
-  props<{ page:number, pageSize:number }>()
+  props<{ id:string, titulo:string, page:number, pageSize:number }>()
 );
 
 export const CargarListadoDeSubmenusSuccess= createAction(
@@ -116,3 +116,19 @@ export const CargarDataGridSubmenus = createAction(
   '[Submenu] Cargar Data Grid Column de Submenus',
   props<{ columna: IDataGridColumnDefinition}>()
 )
+
+export const listadoDeSubmenusPorMenu = createAction(
+  '[Submenu] Cargar Listado de Submenus por Menu',
+  props<{ id:string}>()
+)
+
+export const listadoDeSubmenusPorMenuSuccess = createAction(
+  '[Submenu] Cargar Listado de Submenus por Menu',
+  props<{ id:string}>()
+)
+
+export const limpiarItemsTabla = createAction(
+  '[Submenu] Limpiar items tabla'
+)
+
+

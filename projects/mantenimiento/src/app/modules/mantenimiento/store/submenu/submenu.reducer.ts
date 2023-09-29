@@ -29,6 +29,8 @@ export const estadoInicial: IDataGridElement<IMenu>= {
   current:{
     currentForm:"",
     isLoading:false,
+    titulo:"",
+    idMenu:"",
     opciones:[]
   },
   source: {
@@ -53,7 +55,7 @@ export const estadoInicial: IDataGridElement<IMenu>= {
 
 export const SubmenuReducer = createReducer(
   estadoInicial,
-  on(SubmenuActions.CargarListadoDeSubmenus, (state) => ({...state, loading:true, busqueda:{...state.busqueda, esBusqueda:false} })),
+  on(SubmenuActions.CargarListadoDeSubmenus, (state, {id, titulo}) => ({...state, loading:true, busqueda:{...state.busqueda, esBusqueda:false}, current:{idMenu:id, titulo} })),
   on(SubmenuActions.CargarListadoDeSubmenusSuccess, (state, { listado }) => ({ ...state, loading:false,error:null, source:listado  })),
   on(SubmenuActions.CargarListadoDeSubmenusFail, (state, {error}) => ({ ...state, loading:false, error:error })),
   on(SubmenuActions.AgregarSubmenu, (state) => ({...state, modal:{ ...state.modal,isLoading:true}})),
@@ -80,6 +82,7 @@ export const SubmenuReducer = createReducer(
                                                                                                     ...estadoInicial.definition.columns,
                                                                                                     columna
                                                                                                   ]
-                                                                                                }}))
+                                                                                                }})),
+  on(SubmenuActions.limpiarItemsTabla, (state)=> ({...state, source:{items:[]}}))
 
   );

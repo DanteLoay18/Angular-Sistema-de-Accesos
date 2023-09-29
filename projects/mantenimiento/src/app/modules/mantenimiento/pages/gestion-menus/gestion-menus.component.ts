@@ -6,10 +6,8 @@ import * as SubmenusActions from '../../store/submenu/submenu.actions';
 import { FormModalMenuComponent } from '../../components/form-modal-menu/form-modal-menu.component';
 import { take, filter } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IMenu, IPerfiles, ISistema } from '@sac/core';
+import {  IPerfiles, ISistema } from '@sac/core';
 import { FormModalSubmenuComponent } from '../../components/form-modal-submenu/form-modal-submenu.component';
-import { CargarModalOpcion } from '../../store/opciones/opciones.actions';
-import { FormModalSistemaComponent } from '../../components/form-modal-sistema/form-modal-sistema.component';
 import { FormModalMenuSistemaComponent } from '../../components/form-modal-menu-sistema/form-modal-menu-sistema.component';
 @Component({
   selector: 'app-gestion-menus',
@@ -26,7 +24,6 @@ export class GestionMenusComponent implements OnInit{
 
   ngOnInit(): void {
     this.store.dispatch(MenusActions.CargarListadoDeMenus({page:1, pageSize:10}));
-    this.store.dispatch(SubmenusActions.CargarListadoDeSubmenus({page:1, pageSize:10}));
     this.store.select('globalConfig').subscribe(({guidSistema})=>{
       this.sistemaId=guidSistema
     })
@@ -112,23 +109,23 @@ export class GestionMenusComponent implements OnInit{
   }
 
   handleLoadDataMenu = (e:any) => {
-    this.state$.pipe(take(1)).subscribe(({sistema})=>{
-      if(!sistema.busqueda.esBusqueda){
+    this.state$.pipe(take(1)).subscribe(({menu})=>{
+      if(!menu.busqueda.esBusqueda){
         this.store.dispatch(MenusActions.EstadoInicialModal());
         this.store.dispatch(MenusActions.CargarListadoDeMenus({page:e.page, pageSize:e.pageSize}))
       }else{
-        this.store.dispatch(MenusActions.BuscarMenu({nombre:sistema.busqueda.nombre, icono:sistema.busqueda.icono, url:sistema.busqueda.url,page:e.page, pageSize:e.pageSize}))
+        this.store.dispatch(MenusActions.BuscarMenu({nombre:menu.busqueda.nombre, icono:menu.busqueda.icono, url:menu.busqueda.url,page:e.page, pageSize:e.pageSize}))
       }
     })
   }
 
   handleLoadDataSubmenu = (e:any) => {
-    this.state$.pipe(take(1)).subscribe(({sistema})=>{
-      if(!sistema.busqueda.esBusqueda){
+    this.state$.pipe(take(1)).subscribe(({submenu})=>{
+      if(!submenu.busqueda.esBusqueda){
         this.store.dispatch(SubmenusActions.EstadoInicialModal());
-        this.store.dispatch(SubmenusActions.CargarListadoDeSubmenus({page:e.page, pageSize:e.pageSize}))
+        this.store.dispatch(SubmenusActions.CargarListadoDeSubmenus({id:submenu.current.idMenu,titulo:submenu.current.titulo,page:e.page, pageSize:e.pageSize}))
       }else{
-        this.store.dispatch(SubmenusActions.BuscarSubmenu({nombre:sistema.busqueda.nombre,page:e.page, pageSize:e.pageSize}))
+        this.store.dispatch(SubmenusActions.BuscarSubmenu({nombre:submenu.busqueda.nombre,page:e.page, pageSize:e.pageSize}))
       }
     })
   }
@@ -163,7 +160,8 @@ export class GestionMenusComponent implements OnInit{
         this.handleModalMenuSistema(e.item._id, e.item.nombre)
         break;
       case 'SUBMENUS':
-        this.handleSubmenuMenu(e.item._id)
+        console.log(e.item)
+        this.handleSubmenuMenu(e.item._id,e.item.nombre)
         break;
       default:
         break;
@@ -242,12 +240,14 @@ export class GestionMenusComponent implements OnInit{
 
  }
 
- handleSubmenuMenu(id:string){
+ handleSubmenuMenu(id:string, nombre:string){
     this.store.dispatch(MenusActions.irASubmenuMenu({id}));
+    this.store.dispatch(SubmenusActions.CargarListadoDeSubmenus({id,titulo:`Listado de Submenus de ${nombre}`, page:1, pageSize:10}))
  }
 
  handleRegresarAMenus(){
   this.store.dispatch(MenusActions.RegresarAMenus());
+  this.store.dispatch(SubmenusActions.limpiarItemsTabla())
  }
 
 }

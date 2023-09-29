@@ -131,4 +131,16 @@ export class MenuService {
 
     return this.http.put<IMenu>( urlPeticion,{sistema }, {headers} );
   }
+
+  buscarSubmenusByMenu(id:string, page:number, pageSize:number, esSubmenu:boolean){
+    const url   = `${ this.baseUrl }/api/menu/findMenuBySubmenu/${id}?page=${page}&pageSize=${pageSize}&esSubmenu=${esSubmenu}`;
+
+    let token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${ token }`);
+
+
+    return this.http.get<Paginado<IMenu>>( url, {headers} );
+  }
 }

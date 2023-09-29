@@ -17,7 +17,7 @@ export class SubmenusEffects{
 
   listarMenu$ = createEffect(()=>  this.actions$.pipe(
     ofType(MenusActions.CargarListadoDeSubmenus),
-    exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,true)
+    exhaustMap(({id,page, pageSize})=> this.menuService.buscarSubmenusByMenu(id,page,pageSize,false)
                       .pipe(
                         map((listado)=>{
                           const items= listado.items.map((listado)=>{
