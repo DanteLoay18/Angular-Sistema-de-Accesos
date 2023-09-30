@@ -134,13 +134,7 @@ export const SubmenuReducer = createReducer(
                                                                                                                           opciones:{...opcionesList}
                                                                                                                         }}})),
   on(SubmenuActions.deleteOpcionesSubmenu, (state)=>({...state, modalExtra:{...state.modalExtra,isLoading:true}})),
-  on(SubmenuActions.deleteOpcionesSubmenuSuccess, (state,)=>({...state, modalExtra:{...state.modalExtra,isLoading:false,source:{
-                                                                                                                              ...state.source,
-                                                                                                                              items:[
-
-                                                                                                                              ],
-                                                                                                                              total:0
-                                                                                                                              },}})),
+  on(SubmenuActions.deleteOpcionesSubmenuSuccess, (state,)=>({...state, modalExtra:{...state.modalExtra,isLoading:false}})),
   on(SubmenuActions.deleteOpcionesSubmenuFail, (state, {error})=>({...state, modalExtra:{...state.modalExtra,isLoading:false, error }})),
   on(SubmenuActions.agregarOpcionesSubmenu, (state)=>({...state, modalExtra:{...state.modalExtra,isLoading:true}})),
   on(SubmenuActions.agregarOpcionesSubmenuSuccess, (state,)=>({...state, modalExtra:{...state.modalExtra,isLoading:false}})),

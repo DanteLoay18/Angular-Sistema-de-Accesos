@@ -162,11 +162,12 @@ export const CargarComboBoxModalOpciones= createAction(
 
 export const deleteOpcionesSubmenu= createAction(
   '[Submenu] Delete Opciones Submenu',
-  props<{ id:string, idOpcion:string}>()
+  props<{ id:string, idOpcion:string, submenuNombre:string}>()
 );
 
 export const deleteOpcionesSubmenuSuccess= createAction(
-  '[Submenu] Delete Opciones Submenu Success'
+  '[Submenu] Delete Opciones Submenu Success',
+  props<{ id:string, submenuNombre:string}>()
 );
 
 export const deleteOpcionesSubmenuFail= createAction(

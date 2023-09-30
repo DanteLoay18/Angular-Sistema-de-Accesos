@@ -103,7 +103,7 @@ export class FormModalSubmenuOpcionesComponent {
         this.state$.pipe(
           take(1)
         ).subscribe(({submenu})=>{
-          this.store.dispatch(SubmenuActions.deleteOpcionesSubmenu({id:submenu.modalExtra.idMenu, idOpcion}))
+          this.store.dispatch(SubmenuActions.deleteOpcionesSubmenu({id:submenu.modalExtra.idMenu, idOpcion, submenuNombre:submenu.modalExtra.submenuNombre}))
         })
 
       }

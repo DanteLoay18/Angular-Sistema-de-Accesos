@@ -295,10 +295,10 @@ export class SubmenusEffects{
 
   deleteOpcionesMenu$ = createEffect(()=>  this.actions$.pipe(
     ofType(MenusActions.deleteOpcionesSubmenu),
-    exhaustMap(({id,idOpcion})=> this.menuService.eliminarOpcionSubmenu(id,idOpcion)
+    exhaustMap(({id,idOpcion, submenuNombre})=> this.menuService.eliminarOpcionSubmenu(id,idOpcion)
                       .pipe(
 
-                        map((sistemasList) => (MenusActions.deleteOpcionesSubmenuSuccess() )),
+                        map((sistemasList) => (MenusActions.deleteOpcionesSubmenuSuccess({id,submenuNombre}) )),
                         catchError((error) => of(MenusActions.deleteOpcionesSubmenuFail({error})))
                       )
                 )
@@ -307,7 +307,7 @@ export class SubmenusEffects{
 
   deleteOpcionesMenuSuccess$ = createEffect(()=>  this.actions$.pipe(
     ofType(MenusActions.deleteOpcionesSubmenuSuccess),
-    exhaustMap(()=> this.opcionesService.obtenerOpcionesPaginado(1,10)
+    exhaustMap(({id,submenuNombre})=> this.opcionesService.obtenerOpcionesPaginado(1,10)
                       .pipe(
                         map(({items})=>{return items.map((item:any)=>{
 
@@ -318,6 +318,7 @@ export class SubmenusEffects{
                         })}),
                         map((item)=>new ComboList(item)),
                         map((opcionesList) => (MenusActions.CargarComboBoxModalOpciones({opcionesList}) )),
+                        map(()=>(MenusActions.setModalOpciones({id, submenuNombre})))
                       )
                 )
     )
