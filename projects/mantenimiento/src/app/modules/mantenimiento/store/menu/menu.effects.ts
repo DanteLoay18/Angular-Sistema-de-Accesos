@@ -67,13 +67,31 @@ export class MenusEffects{
      }),
      exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,false)
      .pipe(
+                        map((listado)=>{
+                          const items= listado.items.map((listado)=>{
+                            if(Array.isArray(listado.submenus)){
+                              return {
+                                ...listado,
+                                submenus:listado.submenus?.filter(({esEliminado})=>!esEliminado).length,
+                                sistema: listado.sistema ? 'SI' :'NO'
+                              };
+                            }
 
-       map((paginacion) => (MenusActions.CargarListadoDeMenusSuccess({listado:paginacion}))),
-       catchError((error) => of(MenusActions.CargarListadoDeMenusFail({error})))
-     )
-)
+                            return {
+                              ...listado
+                            }
+
+                          })
+                          return {
+                            ...listado,
+                            items
+                          }
+                        }),
+                        map((paginacion) => (MenusActions.CargarListadoDeMenusSuccess({listado:paginacion}))),
+                        catchError((error) => of(MenusActions.CargarListadoDeMenusFail({error})))
+    )
    )
-  )
+  ))
 
   agregarMenuFail$ = createEffect(
     () =>
@@ -106,9 +124,28 @@ export class MenusEffects{
      }),
      exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,false)
      .pipe(
+      map((listado)=>{
+        const items= listado.items.map((listado)=>{
+          if(Array.isArray(listado.submenus)){
+            return {
+              ...listado,
+              submenus:listado.submenus?.filter(({esEliminado})=>!esEliminado).length,
+              sistema: listado.sistema ? 'SI' :'NO'
+            };
+          }
 
-       map((paginacion) => (MenusActions.CargarListadoDeMenusSuccess({listado:paginacion}))),
-       catchError((error) => of(MenusActions.CargarListadoDeMenusFail({error})))
+          return {
+            ...listado
+          }
+
+        })
+        return {
+          ...listado,
+          items
+        }
+      }),
+      map((paginacion) => (MenusActions.CargarListadoDeMenusSuccess({listado:paginacion}))),
+      catchError((error) => of(MenusActions.CargarListadoDeMenusFail({error})))
      )
 )
    ),
@@ -130,8 +167,9 @@ export class MenusEffects{
     ofType(MenusActions.EditarMenu),
     exhaustMap(({id,nombre, icono, url, page,pageSize})=> this.menuService.editarMenu(id,nombre, icono, url)
                       .pipe(
-                        map((opcion) => (MenusActions.EditarMenuSuccess({page,pageSize}))),
-                        catchError((error) => of(MenusActions.EditarMenuFail({error})))
+
+                        map(() => (MenusActions.EditarMenuSuccess({page,pageSize}))),
+                        catchError((error) => of(MenusActions.EditarMenuFail({error}))),
                       )
                 )
     )
@@ -145,9 +183,28 @@ export class MenusEffects{
      }),
      exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,false)
      .pipe(
+      map((listado)=>{
+        const items= listado.items.map((items)=>{
+          if(Array.isArray(items.submenus)){
+            return {
+              ...items,
+              submenus:items.submenus?.filter(({esEliminado})=>!esEliminado).length,
+              sistema: items.sistema ? 'SI' :'NO'
+            };
+          }
 
-       map((paginacion) => (MenusActions.CargarListadoDeMenusSuccess({listado:paginacion}))),
-       catchError((error) => of(MenusActions.CargarListadoDeMenusFail({error})))
+          return {
+            ...items
+          }
+
+        })
+        return {
+          ...listado,
+          items
+        }
+      }),
+      map((paginacion) => (MenusActions.CargarListadoDeMenusSuccess({listado:paginacion}))),
+      catchError((error) => of(MenusActions.CargarListadoDeMenusFail({error})))
      )
 )
    ),
@@ -162,7 +219,7 @@ export class MenusEffects{
 
         })
       ),
-    { dispatch: false }
+      { dispatch: false }
   );
 
   setModalConsulta$ = createEffect(()=>  this.actions$.pipe(
@@ -316,6 +373,37 @@ export class MenusEffects{
                               map(({sistema, cantidad}) => ( sistema!==undefined && sistema!==null  ? MenusActions.SetModalSistemaSuccess({sistema, cantidad}) :  MenusActions.SetModalSistemaVacio({cantidad}))),
                             )),
 
+    )
+  )
+
+  regresarAMenu$=createEffect(()=>  this.actions$.pipe(
+    ofType(MenusActions.RegresarAMenus),
+    exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,false)
+                      .pipe(
+                        map((listado)=>{
+                          const items= listado.items.map((listado)=>{
+                            if(Array.isArray(listado.submenus)){
+                              return {
+                                ...listado,
+                                submenus:listado.submenus?.filter(({esEliminado})=>!esEliminado).length,
+                                sistema: listado.sistema ? 'SI' :'NO'
+                              };
+                            }
+
+                            return {
+                              ...listado
+                            }
+
+                          })
+                          return {
+                            ...listado,
+                            items
+                          }
+                        }),
+                        map((paginacion) => (MenusActions.CargarListadoDeMenusSuccess({listado:paginacion}))),
+                        catchError((error) => of(MenusActions.CargarListadoDeMenusFail({error})))
+                      )
+                )
     )
   )
 }

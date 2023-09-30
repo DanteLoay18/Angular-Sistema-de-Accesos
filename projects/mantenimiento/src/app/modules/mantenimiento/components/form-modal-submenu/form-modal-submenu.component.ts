@@ -78,7 +78,7 @@ export class FormModalSubmenuComponent {
         this.store.dispatch(SubmenuActions.AgregarSubmenu({idMenu,nombre:this.form.model['nombre'].value,  page,pageSize}));
         this.dialogRef.close();
       }else if(type===FormType.EDITAR){
-        this.store.dispatch(SubmenuActions.EditarSubmenu({id,nombre:this.form.model['nombre'].value, page,pageSize}));
+        this.store.dispatch(SubmenuActions.EditarSubmenu({id,idMenu,nombre:this.form.model['nombre'].value, page,pageSize}));
         this.dialogRef.close();
       }
     }

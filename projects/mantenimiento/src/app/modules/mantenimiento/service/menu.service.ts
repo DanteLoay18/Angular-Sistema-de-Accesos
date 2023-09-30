@@ -110,6 +110,17 @@ export class MenuService {
     return this.http.put<IMenu>( urlPeticion,{nombre, icono, url, opciones, submenus }, {headers} );
   }
 
+  editarSubmenu(id:string, nombre:string, idMenu:string){
+    const urlPeticion   = `${ this.baseUrl }/api/menu/updateMenu/${id}`;
+
+    let token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${ token }`);
+
+    return this.http.put<IMenu>( urlPeticion,{nombre, idMenu}, {headers} );
+  }
+
   eliminarSistemaMenu(id:string, idSistema:string){
     const urlPeticion   = `${ this.baseUrl }/api/menu/deleteMenuSistema/${id}/${idSistema}`;
 

@@ -75,12 +75,12 @@ export const EliminarSubmenuFail= createAction(
 
 export const EditarSubmenu= createAction(
   '[Submenu] Editar Submenu ',
-  props<{ id: string, nombre:string, page:number, pageSize:number}>()
+  props<{ id: string,idMenu:string, nombre:string, page:number, pageSize:number}>()
 );
 
 export const EditarSubmenuSuccess= createAction(
   '[Submenu] Editar Submenu Success',
-  props<{ page:number, pageSize:number}>()
+  props<{ idMenu:string, page:number, pageSize:number}>()
 );
 
 export const EditarSubmenuFail= createAction(

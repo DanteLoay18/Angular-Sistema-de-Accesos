@@ -64,6 +64,7 @@ export class GestionMenusComponent implements OnInit{
                       const opcionesSubmenusArray = opciones
                                                         ?.filter(({ nombre, esEliminado }) => nombre !== "NUEVO" && esEliminado !== true)
                                                         .filter(({nombre, esEliminado})=> nombre!=="SUBMENUS" && esEliminado !== true)
+                                                        .filter(({nombre, esEliminado})=> nombre!=="SISTEMA" && esEliminado !== true)
                                                         .map(({ nombre, icono }) => ({
                                                           action: nombre,
                                                           icon: icono.toLowerCase(),
@@ -160,7 +161,6 @@ export class GestionMenusComponent implements OnInit{
         this.handleModalMenuSistema(e.item._id, e.item.nombre)
         break;
       case 'SUBMENUS':
-        console.log(e.item)
         this.handleSubmenuMenu(e.item._id,e.item.nombre)
         break;
       default:
@@ -248,7 +248,13 @@ export class GestionMenusComponent implements OnInit{
  }
 
  handleRegresarAMenus(){
-  this.store.dispatch(MenusActions.RegresarAMenus());
+  let page=1;
+  let pageSize=10;
+  this.state$.subscribe(({menu})=>{
+    page=menu.source.page;
+    pageSize=menu.source.pageSize
+  })
+  this.store.dispatch(MenusActions.RegresarAMenus({page,pageSize}));
   this.store.dispatch(SubmenusActions.limpiarItemsTabla())
  }
 

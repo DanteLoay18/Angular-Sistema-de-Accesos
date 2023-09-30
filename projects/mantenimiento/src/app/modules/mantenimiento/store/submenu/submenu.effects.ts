@@ -100,7 +100,7 @@ export class SubmenusEffects{
 
         })
       ),
-    { dispatch: true }
+    { dispatch: false }
   );
 
   eliminarMenu$ = createEffect(()=>  this.actions$.pipe(
@@ -157,18 +157,18 @@ export class SubmenusEffects{
 
         })
       ),
-    { dispatch: true }
+    { dispatch: false }
   );
 
   editarMenu$ = createEffect(()=>  this.actions$.pipe(
     ofType(MenusActions.EditarSubmenu),
-    exhaustMap(({id,nombre, page,pageSize})=> this.menuService.editarMenu(id,nombre)
+    exhaustMap(({id,idMenu,nombre, page,pageSize})=> this.menuService.editarSubmenu(id,nombre,idMenu)
                       .pipe(
-                        map((opcion) => (MenusActions.EditarSubmenuSuccess({page,pageSize}))),
+                        map(() => (MenusActions.EditarSubmenuSuccess({idMenu,page,pageSize}))),
                         catchError((error) => of(MenusActions.EditarSubmenuFail({error})))
                       )
                 )
-    )
+    ),
   )
 
   editarMenuSuccess$ = createEffect(()=>  this.actions$.pipe(
@@ -177,7 +177,7 @@ export class SubmenusEffects{
       this.alertService.open('El Registro se actualizo correctamente', undefined, { icon: 'success' });
 
      }),
-     exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,true)
+     exhaustMap(({idMenu,page, pageSize})=> this.menuService.buscarSubmenusByMenu(idMenu,page,pageSize,false)
      .pipe(
       map((listado)=>{
         const items= listado.items.map((listado)=>{
@@ -189,7 +189,8 @@ export class SubmenusEffects{
           }
 
           return {
-            ...listado
+            ...listado,
+            esEliminado:false
           }
 
         })
@@ -198,9 +199,9 @@ export class SubmenusEffects{
           items
         }
       }),
-       map((paginacion) => (MenusActions.CargarListadoDeSubmenusSuccess({listado:paginacion}))),
-       catchError((error) => of(MenusActions.CargarListadoDeSubmenusFail({error})))
-     )
+      map((paginacion) => (MenusActions.CargarListadoDeSubmenusSuccess({listado:paginacion}))),
+      catchError((error) => of(MenusActions.CargarListadoDeSubmenusFail({error})))
+    )
 )
    ),
   )
@@ -214,7 +215,7 @@ export class SubmenusEffects{
 
         })
       ),
-    { dispatch: true }
+      { dispatch: false }
   );
 
   setModalConsulta$ = createEffect(()=>  this.actions$.pipe(

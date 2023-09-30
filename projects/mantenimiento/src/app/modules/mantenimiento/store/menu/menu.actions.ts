@@ -179,4 +179,5 @@ export const irASubmenuMenu= createAction(
 
 export const RegresarAMenus =  createAction(
   '[Menu] Regresar A Menus',
+  props<{page:number, pageSize:number}>()
 );
