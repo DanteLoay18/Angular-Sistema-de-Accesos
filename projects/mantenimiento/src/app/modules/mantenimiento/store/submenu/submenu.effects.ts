@@ -326,7 +326,7 @@ export class SubmenusEffects{
 
   agregarOpcionesMenu$ = createEffect(()=>  this.actions$.pipe(
     ofType(MenusActions.agregarOpcionesSubmenu),
-    exhaustMap(({id,idOpcion})=> this.menuService.agregarOpcionSubmenu(id,idOpcion)
+    exhaustMap(({id,idOpcion, items})=> this.menuService.agregarOpcionSubmenu(id,idOpcion,items)
                       .pipe(
                         map(() => (MenusActions.agregarOpcionesSubmenuSuccess({id}) )),
                         catchError((error) => of(MenusActions.agregarOpcionesSubmenuFail({error})))

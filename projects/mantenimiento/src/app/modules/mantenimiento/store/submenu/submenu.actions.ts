@@ -176,7 +176,7 @@ export const deleteOpcionesSubmenuFail= createAction(
 
 export const agregarOpcionesSubmenu= createAction(
   '[Submenu] Agregar Opciones Submenu',
-  props<{ id:string,idOpcion:string}>()
+  props<{ id:string,idOpcion:string, items:string[]}>()
 );
 
 export const agregarOpcionesSubmenuSuccess= createAction(

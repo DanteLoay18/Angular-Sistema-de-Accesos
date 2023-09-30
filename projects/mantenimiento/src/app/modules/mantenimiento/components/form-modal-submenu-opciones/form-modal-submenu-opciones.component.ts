@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { AlertService, FormModel, FormType, ISubmitOptions, Validators } from 'ngx-sigape';
 import { IMenu } from '../../interfaces/menu.interface';
 import * as SubmenuActions from '../../store/submenu/submenu.actions'
+import { Opcion } from '../agregar-opcion/agregar-opcion.component';
 
 @Component({
   selector: 'app-form-modal-submenu-opciones',
@@ -20,8 +21,8 @@ export class FormModalSubmenuOpcionesComponent {
   form!: FormModel<IMenu>;
 
   ngOnInit(): void {
-    this.state$.subscribe(({menu})=>{
-      this.buildForm(menu.modal.form,menu.modal.type );
+    this.state$.subscribe(({submenu})=>{
+      this.buildForm(submenu.modalExtra.form,submenu.modalExtra.type );
     })
   }
 
@@ -53,8 +54,7 @@ export class FormModalSubmenuOpcionesComponent {
       this.state$.pipe(
         take(1)
       ).subscribe(({submenu})=>{
-
-          this.store.dispatch(SubmenuActions.agregarOpcionesSubmenu({id:submenu.modalSistema.idMenu, idOpcion:this.form.model['sistema'].value}))
+          this.store.dispatch(SubmenuActions.agregarOpcionesSubmenu({id:submenu.modalExtra.idMenu, idOpcion:this.form.model['sistema'].value, items:submenu.modalExtra.source.items.map(({_id}:any)=> _id)}))
 
 
       })

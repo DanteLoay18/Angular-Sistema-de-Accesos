@@ -154,7 +154,7 @@ export class MenuService {
     return this.http.put<IMenu>( urlPeticion,{sistema }, {headers} );
   }
 
-  agregarOpcionSubmenu(id:string, opcion:string ){
+  agregarOpcionSubmenu(id:string, opcion:string, items:string[]){
     const urlPeticion   = `${ this.baseUrl }/api/menu/updateMenu/${id}`;
 
     let token = localStorage.getItem('token');
@@ -162,7 +162,9 @@ export class MenuService {
     const headers = new HttpHeaders()
       .set('Authorization', `Bearer ${ token }`);
 
-    return this.http.put<IMenu>( urlPeticion,{opciones: {opcion} }, {headers} );
+      let opciones: string[] = items.slice();
+      opciones.push(opcion);
+    return this.http.put<IMenu>( urlPeticion,{opciones }, {headers} );
   }
 
   buscarSubmenusByMenu(id:string, page:number, pageSize:number, esSubmenu:boolean){
