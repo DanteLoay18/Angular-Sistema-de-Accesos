@@ -83,6 +83,14 @@ export class FormModalMenuSistemaComponent {
 
   handleClose = () => {
     this.dialogRef.close();
+    let page:number=0;
+    let pageSize:number=0;
+    this.state$.subscribe(({menu})=>{
+      page=menu.source.page;
+      pageSize=menu.source.pageSize;
+    });
+
+    this.store.dispatch(MenusActions.CargarListadoDeMenus({page,pageSize}))
   };
 
   handleDelete(idSistema:string){

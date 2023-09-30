@@ -82,6 +82,18 @@ export class FormModalSubmenuOpcionesComponent {
 
   handleClose = () => {
     this.dialogRef.close();
+    let page:number=0;
+    let pageSize:number=0;
+    let idMenu:string="";
+    let titulo:string=""
+    this.state$.subscribe(({submenu})=>{
+      page=submenu.source.page;
+      pageSize=submenu.source.pageSize;
+      idMenu=submenu.current.idMenu;
+      titulo=submenu.current.titulo;
+    });
+
+    this.store.dispatch(SubmenuActions.CargarListadoDeSubmenus({id:idMenu, titulo,page,pageSize}))
   };
 
   handleDelete(idOpcion:string){
