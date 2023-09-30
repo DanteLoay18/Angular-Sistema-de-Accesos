@@ -64,16 +64,18 @@ export class FormModalSubmenuComponent {
       let page:number=0;
       let pageSize:number=0;
       let type!:FormType;
-      let id:string=""
+      let id:string="";
+      let idMenu:string=""
       this.store.select('mantenimiento').subscribe(({submenu})=>{
         page=submenu.source.page;
         pageSize=submenu.source.pageSize;
-        type=submenu.modal.type
-        id=submenu.modal.codigoOpcion
+        type=submenu.modal.type;
+        id=submenu.modal.codigoSubmenu;
+        idMenu=submenu.current.idMenu;
       })
 
       if(type===FormType.REGISTRAR){
-        this.store.dispatch(SubmenuActions.AgregarSubmenu({nombre:this.form.model['nombre'].value, esSubmenu:true,  page,pageSize}));
+        this.store.dispatch(SubmenuActions.AgregarSubmenu({idMenu,nombre:this.form.model['nombre'].value,  page,pageSize}));
         this.dialogRef.close();
       }else if(type===FormType.EDITAR){
         this.store.dispatch(SubmenuActions.EditarSubmenu({id,nombre:this.form.model['nombre'].value, page,pageSize}));

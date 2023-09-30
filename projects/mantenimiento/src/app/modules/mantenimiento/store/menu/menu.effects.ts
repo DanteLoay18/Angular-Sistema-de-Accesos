@@ -26,7 +26,8 @@ export class MenusEffects{
                             if(Array.isArray(listado.submenus)){
                               return {
                                 ...listado,
-                                submenus:listado.submenus?.length
+                                submenus:listado.submenus?.length,
+                                sistema: listado.sistema ? 'SI' :'NO'
                               };
                             }
 
@@ -190,6 +191,26 @@ export class MenusEffects{
     ofType(MenusActions.BuscarMenu),
     exhaustMap(({nombre, icono, url,page, pageSize})=> this.menuService.buscarMenuPaginado(nombre, false,page,pageSize,icono, url ,)
                       .pipe(
+                        map((listado)=>{
+                          const items= listado.items.map((listado)=>{
+                            if(Array.isArray(listado.submenus)){
+                              return {
+                                ...listado,
+                                submenus:listado.submenus?.length,
+                                sistema: listado.sistema ? 'SI' :'NO'
+                              };
+                            }
+
+                            return {
+                              ...listado
+                            }
+
+                          })
+                          return {
+                            ...listado,
+                            items
+                          }
+                        }),
                         map((paginacion) => (MenusActions.BuscarMenuSuccess({listado:paginacion}))),
                         catchError((error) => of(MenusActions.BuscarMenuFail({error})))
                       )

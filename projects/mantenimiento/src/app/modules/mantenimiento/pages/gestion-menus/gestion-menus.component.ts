@@ -190,9 +190,9 @@ export class GestionMenusComponent implements OnInit{
   async handleDeleteMenu(id:string){
     let page:number;
     let pageSize:number;
-    this.store.select('mantenimiento').subscribe(({sistema})=>{
-      page=sistema.source.page;
-      pageSize=sistema.source.pageSize
+    this.store.select('mantenimiento').subscribe(({menu})=>{
+      page=menu.source.page;
+      pageSize=menu.source.pageSize
     })
     this.alertService.open('¿Está seguro de eliminar el registro?', undefined, { confirm: true }).then((confirm) => {
       if (confirm) {
@@ -205,13 +205,15 @@ export class GestionMenusComponent implements OnInit{
   async handleDeleteSubmenu(id:string){
     let page:number;
     let pageSize:number;
-    this.store.select('mantenimiento').subscribe(({sistema})=>{
-      page=sistema.source.page;
-      pageSize=sistema.source.pageSize
+    let idMenu:string;
+    this.store.select('mantenimiento').subscribe(({submenu})=>{
+      page=submenu.source.page;
+      pageSize=submenu.source.pageSize
+      idMenu=submenu.current.idMenu
     })
     this.alertService.open('¿Está seguro de eliminar el registro?', undefined, { confirm: true }).then((confirm) => {
       if (confirm) {
-         this.store.dispatch(SubmenusActions.EliminarSubmenu({id,page,pageSize}));
+         this.store.dispatch(SubmenusActions.EliminarSubmenu({id,idMenu,page,pageSize}));
 
       }
     });
@@ -242,7 +244,7 @@ export class GestionMenusComponent implements OnInit{
 
  handleSubmenuMenu(id:string, nombre:string){
     this.store.dispatch(MenusActions.irASubmenuMenu({id}));
-    this.store.dispatch(SubmenusActions.CargarListadoDeSubmenus({id,titulo:`Listado de Submenus de ${nombre}`, page:1, pageSize:10}))
+    this.store.dispatch(SubmenusActions.CargarListadoDeSubmenus({id,titulo:`Listado de Submenus de ${this.capitalizarPalabras(nombre)}`, page:1, pageSize:10}))
  }
 
  handleRegresarAMenus(){

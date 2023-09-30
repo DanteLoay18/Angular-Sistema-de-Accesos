@@ -143,4 +143,16 @@ export class MenuService {
 
     return this.http.get<Paginado<IMenu>>( url, {headers} );
   }
+
+  agregarSubmenu(idMenu:string, nombre:string){
+    const url   = `${ this.baseUrl }/api/menu/create-submenu`;
+
+    let token = localStorage.getItem('token');
+
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${ token }`);
+
+
+    return this.http.post<IMenu>( url, {idMenu, nombre}, {headers} );
+  }
 }

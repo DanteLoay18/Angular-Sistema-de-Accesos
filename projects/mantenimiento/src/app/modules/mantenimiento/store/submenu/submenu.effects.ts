@@ -47,9 +47,9 @@ export class SubmenusEffects{
 
   agregarMenu$ = createEffect(()=>  this.actions$.pipe(
     ofType(MenusActions.AgregarSubmenu),
-    exhaustMap(({nombre,esSubmenu,page,pageSize})=> this.menuService.agregarMenu(nombre,esSubmenu )
+    exhaustMap(({idMenu,nombre,page,pageSize})=> this.menuService.agregarSubmenu(idMenu,nombre )
                       .pipe(
-                        map(() => (MenusActions.AgregarSubmenuSuccess({page,pageSize}))),
+                        map(() => (MenusActions.AgregarSubmenuSuccess({idMenu,page,pageSize}))),
                         catchError((error) => of(MenusActions.AgregarSubmenuFail({error})))
                       )
                 )
@@ -62,7 +62,7 @@ export class SubmenusEffects{
       this.alertService.open(`<div style="color: black;">El registro se guardo correctamente</div>`, '', { icon: "success", htmlContent: true });
 
      }),
-     exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,true)
+     exhaustMap(({idMenu,page, pageSize})=> this.menuService.buscarSubmenusByMenu(idMenu,page,pageSize,false)
      .pipe(
       map((listado)=>{
         const items= listado.items.map((listado)=>{
@@ -83,8 +83,8 @@ export class SubmenusEffects{
           items
         }
       }),
-       map((paginacion) => (MenusActions.CargarListadoDeSubmenusSuccess({listado:paginacion}))),
-       catchError((error) => of(MenusActions.CargarListadoDeSubmenusFail({error})))
+      map((paginacion) => (MenusActions.CargarListadoDeSubmenusSuccess({listado:paginacion}))),
+      catchError((error) => of(MenusActions.CargarListadoDeSubmenusFail({error})))
      )
 )
    )
@@ -104,9 +104,9 @@ export class SubmenusEffects{
 
   eliminarMenu$ = createEffect(()=>  this.actions$.pipe(
     ofType(MenusActions.EliminarSubmenu),
-    exhaustMap(({id, page,pageSize})=> this.menuService.eliminarMenu(id)
+    exhaustMap(({id,idMenu, page,pageSize})=> this.menuService.eliminarMenu(id)
                       .pipe(
-                        map(() => (MenusActions.EliminarSubmenuSuccess({page,pageSize}))),
+                        map(() => (MenusActions.EliminarSubmenuSuccess({idMenu,page,pageSize}))),
                         catchError((error) => of(MenusActions.EliminarSubmenuFail({error})))
                       )
                 )
@@ -119,7 +119,7 @@ export class SubmenusEffects{
       this.alertService.open('Registro eliminado', undefined, { icon: 'success' });
 
      }),
-     exhaustMap(({page, pageSize})=> this.menuService.obtenerMenusPaginado(page,pageSize,true)
+     exhaustMap(({idMenu,page, pageSize})=> this.menuService.buscarSubmenusByMenu(idMenu,page,pageSize,false)
      .pipe(
       map((listado)=>{
         const items= listado.items.map((listado)=>{
@@ -140,8 +140,8 @@ export class SubmenusEffects{
           items
         }
       }),
-       map((paginacion) => (MenusActions.CargarListadoDeSubmenusSuccess({listado:paginacion}))),
-       catchError((error) => of(MenusActions.CargarListadoDeSubmenusFail({error})))
+      map((paginacion) => (MenusActions.CargarListadoDeSubmenusSuccess({listado:paginacion}))),
+      catchError((error) => of(MenusActions.CargarListadoDeSubmenusFail({error})))
      )
 )
    ),

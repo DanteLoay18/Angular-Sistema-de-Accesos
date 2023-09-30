@@ -48,7 +48,7 @@ export const estadoInicial: IDataGridElement<IMenu>= {
      error:null,
      type:null,
      form: new Menu(),
-     codigoSistema:''
+     codigoSubmenu:''
   }
 };
 
@@ -62,8 +62,8 @@ export const SubmenuReducer = createReducer(
   on(SubmenuActions.AgregarSubmenuSuccess, (state) => ({ ...state,busqueda:{...state.busqueda,  esBusqueda:false}, modal:{ ...state.modal,isLoading:false, error:null}})),
   on(SubmenuActions.AgregarSubmenuFail, (state, {error}) => ({ ...state, modal:{ ...state.modal,isLoading:false, error:error} })),
   on(SubmenuActions.SetModalNuevo, (state)=> ({...state, modal:{ ...state.modal, title:"Agregar Submenu", type:FormType.REGISTRAR}})),
-  on(SubmenuActions.SetModalReadOnly, (state,{id})=> ({...state, modal:{ ...state.modal, title:'Consulta de Submenu', isLoading:true, type:FormType.CONSULTAR, codigoOpcion:id}})),
-  on(SubmenuActions.SetModalEditar, (state,{id})=> ({...state, modal:{ ...state.modal, title:'Editar Submenu ', isLoading:true, type:FormType.EDITAR, codigoOpcion:id}})),
+  on(SubmenuActions.SetModalReadOnly, (state,{id})=> ({...state, modal:{ ...state.modal, title:'Consulta de Submenu', isLoading:true, type:FormType.CONSULTAR, codigoSubmenu:id}})),
+  on(SubmenuActions.SetModalEditar, (state,{id})=> ({...state, modal:{ ...state.modal, title:'Editar Submenu ', isLoading:true, type:FormType.EDITAR, codigoSubmenu:id}})),
   on(SubmenuActions.CargarDataModalSuccess, (state,{menu})=> ({...state, modal:{ ...state.modal, form: Menu.createSubmenu(menu.nombre), isLoading:false}})),
   on(SubmenuActions.EliminarSubmenu, (state)=> ({...state})),
   on(SubmenuActions.EliminarSubmenuSuccess, (state)=> ({...state,busqueda:{...state.busqueda,  esBusqueda:false}})),

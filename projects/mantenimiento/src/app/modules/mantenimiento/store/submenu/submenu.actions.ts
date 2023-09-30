@@ -21,12 +21,12 @@ export const CargarListadoDeSubmenusFail= createAction(
 
 export const AgregarSubmenu= createAction(
   '[Submenu] Agregar Submenu',
-  props<{ nombre:string, esSubmenu:boolean,page:number, pageSize:number}>()
+  props<{ idMenu:string, nombre:string,page:number, pageSize:number}>()
 );
 
 export const AgregarSubmenuSuccess= createAction(
   '[Submenu] Agregar Submenu Success',
-  props<{ page:number, pageSize:number}>()
+  props<{ idMenu:string,page:number, pageSize:number}>()
 );
 
 export const AgregarSubmenuFail= createAction(
@@ -59,12 +59,12 @@ export const EstadoInicialModal= createAction(
 
 export const EliminarSubmenu= createAction(
   '[Submenu] Eliminar Submenu ',
-  props<{ id: string, page:number, pageSize:number}>()
+  props<{ id: string, idMenu:string, page:number, pageSize:number}>()
 );
 
 export const EliminarSubmenuSuccess= createAction(
   '[Submenu] Eliminar Submenu Success',
-  props<{ page:number, pageSize:number}>()
+  props<{idMenu:string,page:number, pageSize:number}>()
 );
 
 export const EliminarSubmenuFail= createAction(
