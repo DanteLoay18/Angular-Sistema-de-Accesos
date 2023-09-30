@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
 import {  IPerfiles, ISistema } from '@sac/core';
 import { FormModalSubmenuComponent } from '../../components/form-modal-submenu/form-modal-submenu.component';
 import { FormModalMenuSistemaComponent } from '../../components/form-modal-menu-sistema/form-modal-menu-sistema.component';
+import { FormModalSubmenuOpcionesComponent } from '../../components/form-modal-submenu-opciones/form-modal-submenu-opciones.component';
 @Component({
   selector: 'app-gestion-menus',
   templateUrl: './gestion-menus.component.html',
@@ -163,6 +164,9 @@ export class GestionMenusComponent implements OnInit{
       case 'SUBMENUS':
         this.handleSubmenuMenu(e.item._id,e.item.nombre)
         break;
+      case 'OPCIONES':
+        this.handleModalSubmenuOpciones(e.item._id, e.item.nombre)
+        break;
       default:
         break;
 		}
@@ -219,7 +223,10 @@ export class GestionMenusComponent implements OnInit{
     });
   }
 
-
+  handleModalSubmenuOpciones(id:string, submenuNombre:string){
+    this.store.dispatch(SubmenusActions.setModalOpciones({id, submenuNombre}));
+    this.dialogService.open(FormModalSubmenuOpcionesComponent,'md')
+  }
 
   handleModalMenuSistema(id:string, menuNombre:string){
     this.store.dispatch(MenusActions.setModalSistema({id, menuNombre}));
@@ -246,6 +253,7 @@ export class GestionMenusComponent implements OnInit{
     this.store.dispatch(MenusActions.irASubmenuMenu({id}));
     this.store.dispatch(SubmenusActions.CargarListadoDeSubmenus({id,titulo:`Listado de Submenus de ${this.capitalizarPalabras(nombre)}`, page:1, pageSize:10}))
  }
+
 
  handleRegresarAMenus(){
   let page=1;

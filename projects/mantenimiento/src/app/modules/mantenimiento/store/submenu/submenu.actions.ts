@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { IDataGridColumnDefinition, IDataGridSource } from "ngx-sigape";
+import { IComboList, IDataGridColumnDefinition, IDataGridSource } from "ngx-sigape";
 import { IMenu,IMenuResponse } from "../../interfaces/menu.interface";
 
 
@@ -51,7 +51,7 @@ export const SetModalNuevo= createAction(
 
 export const CargarDataModalSuccess= createAction(
   '[Submenu] Cargar Data Modal Success',
-  props<{ menu : IMenu}>()
+  props<{ menu : IMenuResponse}>()
 );
 
 export const EstadoInicialModal= createAction(
@@ -132,4 +132,59 @@ export const limpiarItemsTabla = createAction(
   '[Submenu] Limpiar items tabla'
 )
 
+//ACCIONES DE OPCIONES
 
+export const setModalOpciones= createAction(
+  '[Submenu] Set Modal SubmenuOpciones',
+  props<{ id:string, submenuNombre:string}>()
+)
+
+export const SetModalOpcionesSuccess= createAction(
+  '[Submenu] Set Modal Opciones Success',
+  props<{ opciones: any, cantidad:number }>()
+);
+
+export const SetModalOpcionesFail= createAction(
+  '[Submenu] Set Modal Opciones Success',
+  props<{ error: any }>()
+);
+
+
+export const SetModalOpcionesVacio= createAction(
+  '[Submenu] Set Modal Opciones Vacio',
+  props<{ cantidad:number}>()
+);
+
+export const CargarComboBoxModalOpciones= createAction(
+  '[Submenu] Cargar Combo box Modal Opciones',
+  props<{ opcionesList:IComboList}>()
+);
+
+export const deleteOpcionesSubmenu= createAction(
+  '[Submenu] Delete Opciones Submenu',
+  props<{ id:string, idOpcion:string}>()
+);
+
+export const deleteOpcionesSubmenuSuccess= createAction(
+  '[Submenu] Delete Opciones Submenu Success'
+);
+
+export const deleteOpcionesSubmenuFail= createAction(
+  '[Submenu] Delete Opciones Submenu Fail',
+  props<{ error:any}>()
+);
+
+export const agregarOpcionesSubmenu= createAction(
+  '[Submenu] Agregar Opciones Submenu',
+  props<{ id:string,idOpcion:string}>()
+);
+
+export const agregarOpcionesSubmenuSuccess= createAction(
+  '[Submenu] Agregar Opciones Submenu Success',
+  props<{ id:string}>()
+);
+
+export const agregarOpcionesSubmenuFail= createAction(
+  '[Submenu] Agregar Opciones Submenu Fail',
+  props<{error:any}>()
+);

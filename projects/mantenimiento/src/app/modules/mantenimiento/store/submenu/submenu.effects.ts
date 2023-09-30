@@ -2,9 +2,10 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, of } from 'rxjs';
 import * as MenusActions from './submenu.actions'
-import { map, catchError, tap } from 'rxjs/operators';
-import { AlertService } from 'ngx-sigape';
+import { map, catchError, tap, filter } from 'rxjs/operators';
+import { AlertService, ComboList } from 'ngx-sigape';
 import { MenuService } from '../../service/menu.service';
+import { OpcionService } from '../../service/opcion.service';
 
 
 @Injectable()
@@ -13,6 +14,7 @@ export class SubmenusEffects{
 
   private actions$ = inject(Actions);
   private menuService= inject(MenuService);
+  private opcionesService= inject(OpcionService);
   private alertService= inject(AlertService);
 
   listarMenu$ = createEffect(()=>  this.actions$.pipe(
@@ -251,6 +253,103 @@ export class SubmenusEffects{
     )
   )
 
+  setModalMenuOpciones$ = createEffect(()=>  this.actions$.pipe(
+    ofType(MenusActions.setModalOpciones),
+    exhaustMap(({id})=> this.menuService.buscarMenuPorId(id)
+                      .pipe(
+                        map(({opciones})=> {
+                          if(Array.isArray(opciones)){
+                            return opciones.length>0 ? {opciones, cantidad:1} : {opciones, cantidad:0};
+                          }
+                          return {opciones ,cantidad:0};
+                        }),
+                        map(({opciones, cantidad}) => ( MenusActions.SetModalOpcionesSuccess({opciones, cantidad}))),
+                      )
+                )
+    )
+  )
+
+  setModalMenuOpcionesSuccess$ = createEffect(()=>  this.actions$.pipe(
+    ofType(MenusActions.SetModalOpcionesSuccess),
+    exhaustMap(({opciones})=> this.opcionesService.obtenerOpcionesPaginado(1,10)
+                      .pipe(
+                        map(({items})=>{
+                          const opcionList= opciones.map((opcion:any)=>opcion.nombre)
+
+                          return items.filter((item:any)=> !opcionList.includes(item.nombre)).map((item:any)=>{
+
+                            return {
+                              label:item.nombre,
+                              value:item._id
+                            }
+                        })}),
+                        map((item)=>new ComboList(item)),
+                        map((opcionesList) => (MenusActions.CargarComboBoxModalOpciones({opcionesList}) )),
+                      )
+                )
+    )
+  )
+
+
+
+
+  deleteOpcionesMenu$ = createEffect(()=>  this.actions$.pipe(
+    ofType(MenusActions.deleteOpcionesSubmenu),
+    exhaustMap(({id,idOpcion})=> this.menuService.eliminarOpcionSubmenu(id,idOpcion)
+                      .pipe(
+
+                        map((sistemasList) => (MenusActions.deleteOpcionesSubmenuSuccess() )),
+                        catchError((error) => of(MenusActions.deleteOpcionesSubmenuFail({error})))
+                      )
+                )
+    )
+  )
+
+  deleteOpcionesMenuSuccess$ = createEffect(()=>  this.actions$.pipe(
+    ofType(MenusActions.deleteOpcionesSubmenuSuccess),
+    exhaustMap(()=> this.opcionesService.obtenerOpcionesPaginado(1,10)
+                      .pipe(
+                        map(({items})=>{return items.map((item:any)=>{
+
+                            return {
+                              label:item.nombre,
+                              value:item._id
+                            }
+                        })}),
+                        map((item)=>new ComboList(item)),
+                        map((opcionesList) => (MenusActions.CargarComboBoxModalOpciones({opcionesList}) )),
+                      )
+                )
+    )
+  )
+
+
+  agregarOpcionesMenu$ = createEffect(()=>  this.actions$.pipe(
+    ofType(MenusActions.agregarOpcionesSubmenu),
+    exhaustMap(({id,idOpcion})=> this.menuService.agregarOpcionSubmenu(id,idOpcion)
+                      .pipe(
+                        map(() => (MenusActions.agregarOpcionesSubmenuSuccess({id}) )),
+                        catchError((error) => of(MenusActions.agregarOpcionesSubmenuFail({error})))
+                      )
+                )
+    )
+  )
+
+  agregarOpcionesMenuSuccess$ = createEffect(()=>  this.actions$.pipe(
+    ofType(MenusActions.agregarOpcionesSubmenuSuccess),
+     exhaustMap(({id})=> this.menuService.buscarMenuPorId(id)
+                            .pipe(
+                              map(({opciones})=> {
+                                if(Array.isArray(opciones)){
+                                  return opciones.length>0 ? {opciones, cantidad:1} : {opciones, cantidad:0};
+                                }
+                                return {opciones ,cantidad:0};
+                              }),
+                              map(({opciones, cantidad}) => ( MenusActions.SetModalOpcionesSuccess({opciones, cantidad}))),
+                            )),
+
+    )
+  )
 
 
 }

@@ -50,7 +50,7 @@ export const SetModalNuevo= createAction(
 
 export const CargarDataModalSuccess= createAction(
   '[Menu] Cargar Data Modal Success',
-  props<{ menu : IMenu}>()
+  props<{ menu : IMenuResponse}>()
 );
 
 export const EstadoInicialModal= createAction(
@@ -117,6 +117,8 @@ export const CargarDataGridMenus = createAction(
   props<{ columna: IDataGridColumnDefinition}>()
 )
 
+//ACCIONES DE MENU - SISTEMA
+
 export const setModalSistema= createAction(
   '[Menu] Set Modal MenuSistema',
   props<{ id:string, menuNombre:string}>()
@@ -171,6 +173,8 @@ export const agregarSistemaMenuFail= createAction(
   '[Menu] Agregar sistema Menu Fail',
   props<{error:any}>()
 );
+
+
 
 export const irASubmenuMenu= createAction(
   '[Menu] Ir A submenu',

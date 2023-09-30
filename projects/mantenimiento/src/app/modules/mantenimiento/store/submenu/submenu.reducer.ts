@@ -49,6 +49,42 @@ export const estadoInicial: IDataGridElement<IMenuResponse>= {
      type:null,
      form: new Menu(),
      codigoSubmenu:''
+  },
+  modalExtra:{
+    title: 'Opciones al que pertence',
+    isLoading: false,
+    error: null,
+    type: null,
+    form: new Menu(),
+    gridDefinition: {
+            columns: [
+
+            { label: 'Nombre', field: 'nombre' },
+            {  label: 'Acciones', field: 'buttons',
+              buttons: [
+                {
+                  action: 'ELIMINAR',
+                  icon: 'delete',
+                  color: "primary",
+                  tooltip: 'Eliminar',
+                }
+              ]}
+        ],
+      },
+    source: {
+        items: [
+        ],
+        page: 1,
+        pageSize: 10,
+        total: 0,
+        orderBy: undefined,
+        orderDir: undefined
+    },
+    idMenu: '',
+    submenuNombre:'',
+    comboLists: {
+      opciones: {},
+    }
   }
 };
 
@@ -83,6 +119,31 @@ export const SubmenuReducer = createReducer(
                                                                                                     columna
                                                                                                   ]
                                                                                                 }})),
-  on(SubmenuActions.limpiarItemsTabla, (state)=> ({...state, source:{items:[]}}))
+  on(SubmenuActions.limpiarItemsTabla, (state)=> ({...state, source:{items:[]}})),
+  on(SubmenuActions.setModalOpciones, (state, {id,submenuNombre})=>({...state, modalExtra:{...state.modalExtra, idMenu:id,type:FormType.REGISTRAR,submenuNombre, isLoading:true}})),
+  on(SubmenuActions.SetModalOpcionesSuccess, (state,{opciones,cantidad})=>({...state, modalExtra:{...state.modalExtra, source:{
+                                                                                                      ...state.source,
+                                                                                                      items:[
+                                                                                                        ...opciones
+                                                                                                      ],
+                                                                                                      total:cantidad
+                                                                                                      },
+                                                                                                      isLoading:true}})),
+  on(SubmenuActions.SetModalOpcionesFail, (state, {error})=>({...state, modalExtra:{...state.modalExtra, error, isLoading:false}})),
+  on(SubmenuActions.CargarComboBoxModalOpciones, (state, {opcionesList})=>({...state, modalExtra:{...state.modalExtra,isLoading:false,  comboLists: {
+                                                                                                                          opciones:{...opcionesList}
+                                                                                                                        }}})),
+  on(SubmenuActions.deleteOpcionesSubmenu, (state)=>({...state, modalExtra:{...state.modalExtra,isLoading:true}})),
+  on(SubmenuActions.deleteOpcionesSubmenuSuccess, (state,)=>({...state, modalExtra:{...state.modalExtra,isLoading:false,source:{
+                                                                                                                              ...state.source,
+                                                                                                                              items:[
+
+                                                                                                                              ],
+                                                                                                                              total:0
+                                                                                                                              },}})),
+  on(SubmenuActions.deleteOpcionesSubmenuFail, (state, {error})=>({...state, modalExtra:{...state.modalExtra,isLoading:false, error }})),
+  on(SubmenuActions.agregarOpcionesSubmenu, (state)=>({...state, modalExtra:{...state.modalExtra,isLoading:true}})),
+  on(SubmenuActions.agregarOpcionesSubmenuSuccess, (state,)=>({...state, modalExtra:{...state.modalExtra,isLoading:false}})),
+  on(SubmenuActions.agregarOpcionesSubmenuFail, (state, {error})=>({...state, modalExtra:{...state.modalExtra,isLoading:false, error }})),
 
   );

@@ -1,17 +1,18 @@
 import { Component, inject } from '@angular/core';
+import { Observable, of, take } from 'rxjs';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { AlertService, ComboList, FormModel, FormType, IComboList, ISubmitOptions, Validators } from 'ngx-sigape';
+import { AlertService, FormModel, FormType, ISubmitOptions, Validators } from 'ngx-sigape';
 import { IMenu } from '../../interfaces/menu.interface';
-import { Observable, of, take } from 'rxjs';
-import * as MenusActions from '../../store/menu/menu.actions'
+import * as SubmenuActions from '../../store/submenu/submenu.actions'
+
 @Component({
-  selector: 'app-form-modal-menu-sistema',
-  templateUrl: './form-modal-menu-sistema.component.html',
-  styleUrls: ['./form-modal-menu-sistema.component.scss']
+  selector: 'app-form-modal-submenu-opciones',
+  templateUrl: './form-modal-submenu-opciones.component.html',
+  styleUrls: ['./form-modal-submenu-opciones.component.scss']
 })
-export class FormModalMenuSistemaComponent {
-  private dialogRef = inject(MatDialogRef<FormModalMenuSistemaComponent>);
+export class FormModalSubmenuOpcionesComponent {
+  private dialogRef = inject(MatDialogRef<FormModalSubmenuOpcionesComponent>);
   private store= inject(Store);
   private alertService= inject(AlertService);
   validators:any;
@@ -51,12 +52,10 @@ export class FormModalMenuSistemaComponent {
 
       this.state$.pipe(
         take(1)
-      ).subscribe(({menu})=>{
-        if(menu.modalSistema.source.items.length>0){
-          this.alertService.open('No se puede agregar un sistema, ya existe uno, primero eliminelo', undefined, { icon: 'error' });
-        }else{
-          this.store.dispatch(MenusActions.agregarSistemaMenu({id:menu.modalSistema.idMenu, idSistema:this.form.model['sistema'].value}))
-        }
+      ).subscribe(({submenu})=>{
+
+          this.store.dispatch(SubmenuActions.agregarOpcionesSubmenu({id:submenu.modalSistema.idMenu, idOpcion:this.form.model['sistema'].value}))
+
 
       })
     }
@@ -85,14 +84,14 @@ export class FormModalMenuSistemaComponent {
     this.dialogRef.close();
   };
 
-  handleDelete(idSistema:string){
+  handleDelete(idOpcion:string){
 
-    this.alertService.open('¿Está seguro de eliminar el sistema del menu?', undefined, { confirm: true }).then((confirm) => {
+    this.alertService.open('¿Está seguro de eliminar la opcion del submenu?', undefined, { confirm: true }).then((confirm) => {
       if (confirm) {
         this.state$.pipe(
           take(1)
-        ).subscribe(({menu})=>{
-          this.store.dispatch(MenusActions.deleteSistemaMenu({id:menu.modalSistema.idMenu, idSistema}))
+        ).subscribe(({submenu})=>{
+          this.store.dispatch(SubmenuActions.deleteOpcionesSubmenu({id:submenu.modalExtra.idMenu, idOpcion}))
         })
 
       }

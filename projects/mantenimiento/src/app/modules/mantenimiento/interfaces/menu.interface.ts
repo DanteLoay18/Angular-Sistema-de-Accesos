@@ -1,3 +1,4 @@
+import { IOpcion } from "./opcion.interface";
 
 
 export interface IMenu{
@@ -23,6 +24,6 @@ export interface IMenuResponse{
   url?:string;
   esEliminado:boolean;
   sistema?: string | IFormMenuSistema;
-  opciones?:string[] | number;
+  opciones?:string[] | number | IOpcion[];
   submenus?:IMenuResponse[] | number;
 }

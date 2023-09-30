@@ -9,4 +9,5 @@ export interface IDataGridElement<T> {
   current:any;
   modal: any;
   modalSistema?:any;
+  modalExtra?:any;
 }

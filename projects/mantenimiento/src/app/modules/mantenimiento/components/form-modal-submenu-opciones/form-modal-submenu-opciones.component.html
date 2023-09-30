@@ -1,0 +1,40 @@
+<ng-container *ngIf="state$ | async as state">
+  <ngx-sigape-modal-container [title]="state.submenu.modalExtra.title" [loading]="state.submenu.modalExtra.isLoading" (on-dismiss)="handleClose()"
+  [cancelLabel]="'Cerrar'" [cancelIcon]="'close'"
+
+   [formType]="state.submenu.modalExtra.type" [showOkButton]="false">
+    <mat-card>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-md-12 pb-3">
+            <h3>{{state.submenu.modalExtra.submenuNombre}}</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <ngx-sigape-form-model-field variant="select" label="Listado de opciones" bindLabel="label"
+              bindValue="value" [disabled]="state.submenu.modalExtra.isLoading"
+              [formModelField]="form.model['sistema']" [options]="state.submenu.modalExtra.comboLists.opciones"
+              (on-change)="handleInputChange($event)"
+              [hideRequiredIndicator]="true">
+            </ngx-sigape-form-model-field>
+          </div>
+          <div class="col-md-4 align-self-end" style="margin-left: -12px;">
+            <ngx-sigape-base-button label="Vincular" color="accent" icon="add_circle" (on-click)="handleSubmit()"
+              [disabled]="state.submenu.modalExtra.isLoading">
+            </ngx-sigape-base-button>
+          </div>
+        </div>
+        <br>
+        <div class="form-row">
+          <div class="col-md-12">
+            <ngx-sigape-data-grid [loading]="state.submenu.modalExtra.isLoading" [source]="state.submenu.modalExtra.source" [definition]="state.submenu.modalExtra.gridDefinition"
+            (on-click-button)="handleClickButton($event)" (on-load-data)="handleLoadData($event)"
+            >
+          </ngx-sigape-data-grid>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ngx-sigape-modal-container>
+</ng-container>
