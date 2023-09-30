@@ -1,7 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { IComboList, IDataGridColumnDefinition, IDataGridSource } from "ngx-sigape";
-import { IFormMenuSistema, IMenu } from "../../interfaces/menu.interface";
-import { ISistema } from "@sac/core";
+import { IMenu, IMenuResponse } from "../../interfaces/menu.interface";
 
 
 
@@ -12,7 +11,7 @@ export const CargarListadoDeMenus= createAction(
 
 export const CargarListadoDeMenusSuccess= createAction(
   '[Menu] Cargar Listado Success',
-  props<{ listado:IDataGridSource<IMenu>}>()
+  props<{ listado:IDataGridSource<IMenuResponse>}>()
 );
 
 export const CargarListadoDeMenusFail= createAction(
@@ -95,7 +94,7 @@ export const BuscarMenu= createAction(
 
 export const BuscarMenuSuccess= createAction(
   '[Menu] Buscar Menu Success',
-  props<{ listado:IDataGridSource<IMenu>}>()
+  props<{ listado:IDataGridSource<IMenuResponse>}>()
 );
 
 export const BuscarMenuFail= createAction(

@@ -6,9 +6,9 @@ import * as SubmenuActions from './submenu.actions'
 import { FormType } from "ngx-sigape";
 
 import { Menu } from "../../classes/menu.class";
-import { IMenu } from "../../interfaces/menu.interface";
+import {  IMenuResponse } from "../../interfaces/menu.interface";
 
-export const estadoInicial: IDataGridElement<IMenu>= {
+export const estadoInicial: IDataGridElement<IMenuResponse>= {
   error: null,
   loading: false,
   definition: {

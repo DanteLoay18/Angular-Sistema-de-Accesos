@@ -26,7 +26,7 @@ export class MenusEffects{
                             if(Array.isArray(listado.submenus)){
                               return {
                                 ...listado,
-                                submenus:listado.submenus?.length,
+                                submenus:listado.submenus?.filter(({esEliminado})=>!esEliminado).length,
                                 sistema: listado.sistema ? 'SI' :'NO'
                               };
                             }

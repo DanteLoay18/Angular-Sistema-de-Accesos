@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment.development';
 import { Observable } from 'rxjs';
 import { IOpcion } from '../interfaces/opcion.interface';
 import { Paginado } from '../interfaces/paginado.interface';
-import { IMenu } from '../interfaces/menu.interface';
+import { IMenu, IMenuResponse } from '../interfaces/menu.interface';
 
 
 
@@ -19,7 +19,7 @@ export class MenuService {
 
 
 
-  obtenerMenusPaginado(page:number, pageSize:number, esSubmenu:boolean):Observable<Paginado<IMenu>>{
+  obtenerMenusPaginado(page:number, pageSize:number, esSubmenu:boolean):Observable<Paginado<IMenuResponse>>{
 
     const url   = `${ this.baseUrl }/api/menu/findAllMenus?page=${page}&pageSize=${pageSize}&esSubmenu=${esSubmenu}`;
 
@@ -29,7 +29,7 @@ export class MenuService {
       .set('Authorization', `Bearer ${ token }`);
 
 
-    return this.http.get<Paginado<IMenu>>( url, {headers} );
+    return this.http.get<Paginado<IMenuResponse>>( url, {headers} );
   }
 
   agregarMenu(nombre:string,esSubmenu:boolean, icono?:string, url?:string):Observable<IMenu>{
@@ -58,7 +58,7 @@ export class MenuService {
     return this.http.get<IMenu>( url, {headers} );
   }
 
-  buscarMenuPaginado(nombre:string,esSubmenu:boolean, page:number, pageSize:number, icono?:string, url?:string):Observable<Paginado<IMenu>>{
+  buscarMenuPaginado(nombre:string,esSubmenu:boolean, page:number, pageSize:number, icono?:string, url?:string):Observable<Paginado<IMenuResponse>>{
 
     const queryParams:any = {};
 
@@ -82,7 +82,7 @@ export class MenuService {
       .set('Authorization', `Bearer ${ token }`);
 
 
-    return this.http.get<Paginado<IMenu>>( urlPeticion, {headers, params:{...queryParams,esSubmenu,page, pageSize}} );
+    return this.http.get<Paginado<IMenuResponse>>( urlPeticion, {headers, params:{...queryParams,esSubmenu,page, pageSize}} );
 
 
   }
@@ -141,7 +141,7 @@ export class MenuService {
       .set('Authorization', `Bearer ${ token }`);
 
 
-    return this.http.get<Paginado<IMenu>>( url, {headers} );
+    return this.http.get<Paginado<IMenuResponse>>( url, {headers} );
   }
 
   agregarSubmenu(idMenu:string, nombre:string){

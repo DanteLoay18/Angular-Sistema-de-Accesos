@@ -8,13 +8,13 @@ import * as fromMenu from './menu/menu.reducer';
 import * as fromSubmenu from './submenu/submenu.reducer'
 import { IDataGridElement } from '../interfaces/dataGridElement.interface';
 import { ISistema } from '../interfaces/sistema.interface';
-import { IMenu } from '../interfaces/menu.interface';
+import { IMenuResponse } from '../interfaces/menu.interface';
 
 export interface MantenimientoState {
     opcion: IDataGridElement<IOpcion>;
     sistema: IDataGridElement<ISistema>;
-    menu: IDataGridElement<IMenu>;
-    submenu:IDataGridElement<IMenu>
+    menu: IDataGridElement<IMenuResponse>;
+    submenu:IDataGridElement<IMenuResponse>
 }
 
 export interface State extends fromRoot.AppState {

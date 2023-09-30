@@ -29,7 +29,8 @@ export class SubmenusEffects{
                             }
 
                             return {
-                              ...listado
+                              ...listado,
+                              esEliminado:false
                             }
 
                           })
